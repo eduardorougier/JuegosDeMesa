@@ -1,0 +1,2069 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Juegos de Mesa — Hub</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card: #1e293b;
+      --card-light: #283548;
+      --accent: #38bdf8;
+      --ninos: #4ade80;
+      --familia: #38bdf8;
+      --adultos: #f472b6;
+      --lobo: #ef4444;
+      --aldeano: #34d399;
+      --adm: #f59e0b;
+      --imp: #a855f7;
+      --charla: #2dd4bf;
+      --text: #f8fafc;
+      --muted: #94a3b8;
+      --danger: #f43f5e;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      padding: 1rem 1.15rem 2.5rem;
+      text-align: center;
+    }
+    .container {
+      width: 100%;
+      max-width: 440px;
+      display: flex;
+      flex-direction: column;
+      gap: 0.9rem;
+    }
+
+    /* CARRUSEL SELECTOR DE JUEGOS */
+    .game-carousel {
+      background: var(--card);
+      border-radius: 18px;
+      padding: 0.65rem 0.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+    }
+    .nav-arrow {
+      background: var(--card-light);
+      color: var(--text);
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      font-size: 1.35rem;
+      font-weight: 800;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.1s ease, background-color 0.15s ease;
+      flex-shrink: 0;
+    }
+    .nav-arrow:active {
+      transform: scale(0.92);
+      background: rgba(56, 189, 248, 0.2);
+    }
+    .carousel-center {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-width: 0;
+      user-select: none;
+    }
+    .game-kicker {
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--muted);
+      font-weight: 700;
+    }
+    .game-title {
+      font-size: 1.15rem;
+      font-weight: 900;
+      letter-spacing: 0.5px;
+      color: var(--text);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 100%;
+      margin: 0.15rem 0;
+    }
+    .carousel-dots {
+      display: flex;
+      gap: 0.35rem;
+      margin-top: 0.2rem;
+    }
+    .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: rgba(148, 163, 184, 0.35);
+      transition: all 0.2s ease;
+    }
+    .dot.active {
+      width: 16px;
+      border-radius: 4px;
+      background: var(--accent);
+    }
+
+
+    /* BOTONES DE ACCIÓN RÁPIDA EN CARRUSEL */
+    .carousel-kicker-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+    }
+    .help-pill-btn {
+      background: rgba(56, 189, 248, 0.16);
+      color: var(--accent);
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      border-radius: 999px;
+      padding: 0.15rem 0.55rem;
+      font-size: 0.68rem;
+      font-weight: 800;
+      letter-spacing: 0.4px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      transition: transform 0.1s ease, background-color 0.15s ease;
+    }
+    .help-pill-btn:active {
+      transform: scale(0.92);
+      background: rgba(56, 189, 248, 0.28);
+    }
+    .reset-game-pill-btn {
+      background: rgba(244, 63, 94, 0.14);
+      color: #fda4af;
+      border: 1px solid rgba(244, 63, 94, 0.35);
+      border-radius: 999px;
+      padding: 0.15rem 0.55rem;
+      font-size: 0.68rem;
+      font-weight: 800;
+      letter-spacing: 0.4px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.2rem;
+      transition: transform 0.1s ease, background-color 0.15s ease;
+    }
+    .reset-game-pill-btn:active {
+      transform: scale(0.92);
+      background: rgba(244, 63, 94, 0.28);
+    }
+
+    /* MODALES GENERALES (REGLAS Y CONFIRMACIÓN) */
+    .rules-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(2, 6, 23, 0.78);
+      backdrop-filter: blur(4px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1.25rem;
+      z-index: 1000;
+      animation: fadeIn 0.18s ease;
+    }
+    .rules-overlay.open {
+      display: flex;
+    }
+    .rules-modal {
+      background: var(--card);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 22px;
+      padding: 1.4rem 1.25rem;
+      width: 100%;
+      max-width: 410px;
+      text-align: left;
+      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.6);
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+    .rules-modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 0.5rem;
+    }
+    .rules-modal-kicker {
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 1.3px;
+      color: var(--accent);
+      font-weight: 800;
+    }
+    .rules-modal-title {
+      font-size: 1.25rem;
+      font-weight: 900;
+      color: var(--text);
+      margin-top: 0.1rem;
+    }
+    .rules-close-x {
+      background: var(--card-light);
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      color: var(--text);
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: 800;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+    .rules-body {
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+      font-size: 0.92rem;
+      color: #e2e8f0;
+      line-height: 1.45;
+    }
+    .rules-list {
+      padding-left: 1.15rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+    }
+    .rules-list li strong {
+      color: var(--text);
+    }
+    .rules-tip-box {
+      background: var(--bg);
+      border-left: 3px solid var(--accent);
+      padding: 0.65rem 0.8rem;
+      border-radius: 0 10px 10px 0;
+      font-size: 0.84rem;
+      color: var(--muted);
+    }
+    .rules-ok-btn {
+      background: var(--accent);
+      color: #0f172a;
+      border: none;
+      border-radius: 12px;
+      padding: 0.85rem;
+      font-size: 1rem;
+      font-weight: 800;
+      cursor: pointer;
+      margin-top: 0.2rem;
+    }
+    .rules-ok-btn:active { transform: scale(0.98); }
+    .modal-btn-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.55rem;
+      margin-top: 0.2rem;
+    }
+
+    /* VISTAS DE JUEGOS */
+    .game-view {
+      display: none;
+      flex-direction: column;
+      gap: 0.9rem;
+      animation: fadeIn 0.2s ease;
+    }
+    .game-view.active {
+      display: flex;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0.4; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .sub-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 0.25rem;
+    }
+    .game-subtitle {
+      font-size: 0.82rem;
+      color: var(--muted);
+      font-weight: 600;
+    }
+    .status-pills {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .wake-badge {
+      font-size: 0.7rem;
+      padding: 0.2rem 0.45rem;
+      border-radius: 6px;
+      background: rgba(74, 222, 128, 0.15);
+      color: var(--ninos);
+      font-weight: 700;
+      display: none;
+    }
+    .wake-badge.active {
+      display: inline-block;
+    }
+    .counter {
+      font-size: 0.82rem;
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    /* SELECTOR DE CATEGORÍA REUTILIZABLE (NIÑOS / FAMILIA / ADULTOS) */
+    .cat-selector {
+      display: flex;
+      gap: 0.4rem;
+      background: rgba(30, 41, 59, 0.75);
+      padding: 0.35rem;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+    .cat-pill {
+      flex: 1;
+      background: transparent;
+      color: var(--muted);
+      border: none;
+      border-radius: 10px;
+      padding: 0.5rem 0.2rem;
+      cursor: pointer;
+      transition: all 0.18s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.1rem;
+    }
+    .cat-title {
+      font-size: 0.9rem;
+      font-weight: 800;
+    }
+    .cat-age {
+      font-size: 0.68rem;
+      font-weight: 600;
+      opacity: 0.8;
+    }
+    .cat-pill.active[data-cat="ninos"] {
+      background: rgba(74, 222, 128, 0.18);
+      color: var(--ninos);
+    }
+    .cat-pill.active[data-cat="familia"] {
+      background: rgba(56, 189, 248, 0.18);
+      color: var(--familia);
+    }
+    .cat-pill.active[data-cat="adultos"] {
+      background: rgba(244, 114, 182, 0.18);
+      color: var(--adultos);
+    }
+
+    /* ESTILOS UNÁNIMO */
+    .card {
+      background: var(--card);
+      border-radius: 22px;
+      padding: 2rem 1.1rem;
+      box-shadow: 0 10px 28px rgba(0,0,0,0.38);
+      min-height: 165px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      border: 2px solid rgba(56, 189, 248, 0.25);
+      transition: border-color 0.2s ease;
+    }
+    .card.ninos { border-color: rgba(74, 222, 128, 0.38); }
+    .card.familia { border-color: rgba(56, 189, 248, 0.38); }
+    .card.adultos { border-color: rgba(244, 114, 182, 0.38); }
+    .badge {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 1.4px;
+      font-weight: 700;
+      opacity: 0.75;
+    }
+    .word {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      line-height: 1.18;
+      word-break: break-word;
+    }
+    .card.ninos .word { color: var(--ninos); }
+    .card.familia .word { color: var(--familia); }
+    .card.adultos .word { color: var(--adultos); }
+    .time-selector {
+      display: flex;
+      gap: 0.45rem;
+      justify-content: center;
+    }
+    .time-pill {
+      flex: 1;
+      background: var(--card);
+      color: var(--muted);
+      border: 1px solid rgba(148, 163, 184, 0.22);
+      border-radius: 10px;
+      padding: 0.45rem 0;
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .time-pill.active {
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--text);
+      border-color: var(--text);
+    }
+    .timer {
+      font-size: 2.4rem;
+      font-weight: 800;
+      color: var(--text);
+      font-variant-numeric: tabular-nums;
+      letter-spacing: 2px;
+    }
+    .timer.urgent {
+      color: var(--danger);
+      animation: pulse 0.8s infinite alternate;
+    }
+    @keyframes pulse {
+      from { opacity: 1; }
+      to { opacity: 0.5; }
+    }
+    .btn {
+      background: var(--accent);
+      color: #0f172a;
+      border: none;
+      border-radius: 14px;
+      padding: 1rem 1.25rem;
+      font-size: 1.1rem;
+      font-weight: 800;
+      cursor: pointer;
+      transition: transform 0.1s ease;
+    }
+    .btn.ninos { background: var(--ninos); }
+    .btn.familia { background: var(--familia); }
+    .btn.adultos { background: var(--adultos); }
+    .btn:active { transform: scale(0.97); }
+    .controls-row {
+      display: flex;
+      gap: 0.55rem;
+    }
+    .secondary-btn {
+      flex: 2;
+      background: var(--card);
+      color: var(--text);
+      border: 1px solid rgba(148, 163, 184, 0.3);
+      font-size: 0.95rem;
+      font-weight: 600;
+      padding: 0.8rem 0.9rem;
+      border-radius: 12px;
+      cursor: pointer;
+    }
+    .reset-btn {
+      flex: 1;
+      background: transparent;
+      color: var(--muted);
+      border: 1px solid rgba(148, 163, 184, 0.22);
+      font-size: 0.82rem;
+      font-weight: 600;
+      padding: 0.8rem 0.4rem;
+      border-radius: 12px;
+      cursor: pointer;
+    }
+    .secondary-btn:active, .reset-btn:active { transform: scale(0.98); }
+
+    /* ==========================================
+       ESTILOS SETUP & TARJETAS SECRETAS (LOBIZONES + IMPOSTOR)
+       ========================================== */
+    .setup-panel {
+      background: var(--card);
+      border-radius: 22px;
+      padding: 1.2rem 1.05rem;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      flex-direction: column;
+      gap: 0.9rem;
+      box-shadow: 0 10px 28px rgba(0,0,0,0.35);
+    }
+    .setup-row {
+      background: var(--bg);
+      border-radius: 14px;
+      padding: 0.8rem 0.95rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    .setup-label-group {
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      gap: 0.12rem;
+    }
+    .setup-title {
+      font-size: 0.96rem;
+      font-weight: 800;
+      color: var(--text);
+    }
+    .setup-sub {
+      font-size: 0.76rem;
+      color: var(--muted);
+    }
+    .stepper {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+    .stepper-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      border: 1px solid rgba(148, 163, 184, 0.3);
+      background: var(--card-light);
+      color: var(--text);
+      font-size: 1.2rem;
+      font-weight: 800;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .stepper-btn:active { transform: scale(0.92); }
+    .stepper-val {
+      font-size: 1.3rem;
+      font-weight: 900;
+      min-width: 26px;
+      text-align: center;
+      font-variant-numeric: tabular-nums;
+    }
+    .summary-bar {
+      display: flex;
+      gap: 0.6rem;
+    }
+    .role-pill {
+      flex: 1;
+      padding: 0.7rem 0.5rem;
+      border-radius: 12px;
+      font-weight: 800;
+      font-size: 0.88rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.15rem;
+    }
+    .role-pill.lobo {
+      background: rgba(239, 68, 68, 0.15);
+      color: #fca5a5;
+      border: 1px solid rgba(239, 68, 68, 0.35);
+    }
+    .role-pill.aldeano {
+      background: rgba(52, 211, 153, 0.15);
+      color: #6ee7b7;
+      border: 1px solid rgba(52, 211, 153, 0.35);
+    }
+    .role-pill-num {
+      font-size: 1.35rem;
+      font-weight: 900;
+    }
+    .btn-lobos {
+      background: linear-gradient(135deg, #ef4444, #b91c1c);
+      color: #fff;
+      border: none;
+      border-radius: 14px;
+      padding: 1.05rem 1.25rem;
+      font-size: 1.1rem;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 6px 18px rgba(239, 68, 68, 0.3);
+    }
+    .btn-lobos:active { transform: scale(0.97); }
+
+    .btn-imp {
+      background: linear-gradient(135deg, #a855f7, #7e22ce);
+      color: #fff;
+      border: none;
+      border-radius: 14px;
+      padding: 1.05rem 1.25rem;
+      font-size: 1.1rem;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 6px 18px rgba(168, 85, 247, 0.3);
+    }
+    .btn-imp:active { transform: scale(0.97); }
+
+    .names-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.45rem;
+      text-align: left;
+    }
+    .name-slot {
+      display: flex;
+      align-items: center;
+      background: var(--bg);
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      border-radius: 10px;
+      padding: 0.45rem 0.6rem;
+      gap: 0.4rem;
+    }
+    .name-slot:focus-within {
+      border-color: var(--imp);
+    }
+    .slot-num {
+      font-size: 0.72rem;
+      font-weight: 800;
+      color: var(--muted);
+      min-width: 16px;
+    }
+    .slot-input {
+      background: transparent;
+      border: none;
+      color: var(--text);
+      font-size: 0.88rem;
+      font-weight: 600;
+      width: 100%;
+      outline: none;
+    }
+    .copy-names-btn {
+      background: transparent;
+      border: 1px dashed rgba(168, 85, 247, 0.45);
+      color: #d8b4fe;
+      font-size: 0.76rem;
+      font-weight: 700;
+      padding: 0.4rem 0.7rem;
+      border-radius: 9px;
+      cursor: pointer;
+      align-self: center;
+    }
+
+    .secret-card {
+      background: var(--card);
+      border-radius: 24px;
+      padding: 2.1rem 1.25rem;
+      min-height: 295px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.85rem;
+      cursor: pointer;
+      user-select: none;
+      border: 2px solid rgba(148, 163, 184, 0.28);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.45);
+      transition: transform 0.12s ease, border-color 0.2s ease, background-color 0.2s ease;
+    }
+    .secret-card:active { transform: scale(0.98); }
+    .secret-card.hidden-state {
+      background: radial-gradient(circle at top, #283548, #1e293b);
+      border-color: rgba(56, 189, 248, 0.4);
+    }
+    .secret-card.hidden-imp {
+      background: radial-gradient(circle at top, #2e1d42, #1e293b);
+      border-color: rgba(168, 85, 247, 0.45);
+    }
+    .secret-card.revealed-lobo {
+      background: radial-gradient(circle at top, #450a0a, #1e1b24);
+      border-color: #ef4444;
+    }
+    .secret-card.revealed-aldeano {
+      background: radial-gradient(circle at top, #064e3b, #17252a);
+      border-color: #34d399;
+    }
+    .secret-card.revealed-imp {
+      background: radial-gradient(circle at top, #4c0519, #1e1b24);
+      border-color: #f43f5e;
+    }
+    .secret-card.revealed-word {
+      background: radial-gradient(circle at top, #0c4a6e, #1e293b);
+      border-color: #38bdf8;
+    }
+    .secret-card.finished-state {
+      background: var(--card);
+      border-color: rgba(250, 204, 21, 0.45);
+      cursor: default;
+    }
+    .player-turn-badge {
+      background: rgba(255, 255, 255, 0.12);
+      padding: 0.38rem 0.95rem;
+      border-radius: 999px;
+      font-size: 0.88rem;
+      font-weight: 800;
+      letter-spacing: 0.6px;
+      text-transform: uppercase;
+    }
+    .secret-icon {
+      font-size: 3.6rem;
+      line-height: 1;
+      margin: 0.15rem 0;
+    }
+    .secret-title {
+      font-size: 1.7rem;
+      font-weight: 900;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      line-height: 1.2;
+      word-break: break-word;
+    }
+    .secret-card.revealed-lobo .secret-title,
+    .secret-card.revealed-imp .secret-title { color: #fb7185; }
+    .secret-card.revealed-aldeano .secret-title { color: #34d399; }
+    .secret-card.revealed-word .secret-title { color: #38bdf8; }
+    .secret-cat-tag {
+      font-size: 0.78rem;
+      font-weight: 700;
+      background: rgba(56, 189, 248, 0.15);
+      color: #7dd3fc;
+      padding: 0.25rem 0.65rem;
+      border-radius: 8px;
+    }
+    .secret-hint {
+      font-size: 0.9rem;
+      color: var(--muted);
+      max-width: 270px;
+      line-height: 1.4;
+    }
+    .tap-cta {
+      margin-top: 0.35rem;
+      font-size: 0.8rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      padding: 0.55rem 1rem;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.12);
+      color: var(--text);
+    }
+    .lobos-actions {
+      display: flex;
+      gap: 0.55rem;
+    }
+    .reveal-all-box {
+      background: var(--bg);
+      border-radius: 14px;
+      padding: 0.9rem;
+      text-align: left;
+      border: 1px solid rgba(255,255,255,0.08);
+      display: none;
+      flex-direction: column;
+      gap: 0.4rem;
+      width: 100%;
+    }
+    .reveal-all-box.show { display: flex; }
+    .reveal-line {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.9rem;
+      padding: 0.28rem 0.4rem;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .reveal-line:last-child { border-bottom: none; }
+
+    /* ==========================================
+       ESTILOS AMIGOS DE MIERDA
+       ========================================== */
+    .adm-card {
+      background: radial-gradient(circle at top, #292118, #1e293b);
+      border-radius: 24px;
+      padding: 2.25rem 1.35rem;
+      min-height: 235px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.85rem;
+      border: 2px solid rgba(245, 158, 11, 0.45);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.42);
+    }
+    .adm-tag {
+      background: rgba(245, 158, 11, 0.16);
+      color: #fbbf24;
+      border: 1px solid rgba(245, 158, 11, 0.35);
+      font-size: 0.72rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1.3px;
+      padding: 0.3rem 0.75rem;
+      border-radius: 999px;
+    }
+    .adm-question {
+      font-size: 1.42rem;
+      font-weight: 800;
+      color: var(--text);
+      line-height: 1.32;
+      word-break: break-word;
+    }
+    .adm-rule-tip {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-top: 0.25rem;
+    }
+    .btn-adm {
+      background: linear-gradient(135deg, #f59e0b, #d97706);
+      color: #0f172a;
+      border: none;
+      border-radius: 14px;
+      padding: 1.05rem 1.25rem;
+      font-size: 1.1rem;
+      font-weight: 900;
+      cursor: pointer;
+      box-shadow: 0 6px 18px rgba(245, 158, 11, 0.25);
+    }
+    .btn-adm:active { transform: scale(0.97); }
+
+    /* ==========================================
+       ESTILOS CHARLA PROFUNDA (NIÑOS / FAMILIA / ADULTOS)
+       ========================================== */
+    .charla-card {
+      background: var(--card);
+      border-radius: 24px;
+      padding: 2.3rem 1.35rem;
+      min-height: 245px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.9rem;
+      border: 2px solid rgba(56, 189, 248, 0.38);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.4);
+      transition: border-color 0.2s ease, background 0.2s ease;
+    }
+    .charla-card.ninos {
+      background: radial-gradient(circle at top, #132e22, #1e293b);
+      border-color: rgba(74, 222, 128, 0.42);
+    }
+    .charla-card.familia {
+      background: radial-gradient(circle at top, #132a3e, #1e293b);
+      border-color: rgba(56, 189, 248, 0.42);
+    }
+    .charla-card.adultos {
+      background: radial-gradient(circle at top, #35182b, #1e293b);
+      border-color: rgba(244, 114, 182, 0.42);
+    }
+    .charla-tag {
+      font-size: 0.72rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1.3px;
+      padding: 0.3rem 0.75rem;
+      border-radius: 999px;
+      background: rgba(56, 189, 248, 0.15);
+      color: var(--familia);
+      border: 1px solid rgba(56, 189, 248, 0.32);
+    }
+    .charla-card.ninos .charla-tag {
+      background: rgba(74, 222, 128, 0.15);
+      color: var(--ninos);
+      border-color: rgba(74, 222, 128, 0.32);
+    }
+    .charla-card.adultos .charla-tag {
+      background: rgba(244, 114, 182, 0.15);
+      color: var(--adultos);
+      border-color: rgba(244, 114, 182, 0.32);
+    }
+    .charla-question {
+      font-size: 1.36rem;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.36;
+      word-break: break-word;
+    }
+    .charla-tip {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-top: 0.2rem;
+    }
+    .btn-charla {
+      background: var(--familia);
+      color: #0f172a;
+      border: none;
+      border-radius: 14px;
+      padding: 1.05rem 1.25rem;
+      font-size: 1.1rem;
+      font-weight: 900;
+      cursor: pointer;
+      transition: background-color 0.2s ease, transform 0.1s ease;
+    }
+    .btn-charla.ninos { background: var(--ninos); }
+    .btn-charla.familia { background: var(--familia); }
+    .btn-charla.adultos { background: var(--adultos); }
+    .btn-charla:active { transform: scale(0.97); }
+
+
+    /* ==========================================
+       ESTILOS PALABRA PROHIBIDA (TABÚ)
+       ========================================== */
+    .tabu-card {
+      background: var(--card);
+      border-radius: 24px;
+      padding: 1.5rem 1.25rem;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.42);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.85rem;
+      border: 2px solid rgba(56, 189, 248, 0.35);
+      transition: border-color 0.2s ease;
+    }
+    .tabu-card.ninos { border-color: rgba(74, 222, 128, 0.42); }
+    .tabu-card.familia { border-color: rgba(56, 189, 248, 0.42); }
+    .tabu-card.adultos { border-color: rgba(244, 114, 182, 0.42); }
+    .tabu-main-box {
+      width: 100%;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px dashed rgba(148, 163, 184, 0.28);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.3rem;
+    }
+    .tabu-target-word {
+      font-size: 1.85rem;
+      font-weight: 900;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      color: var(--familia);
+      line-height: 1.15;
+    }
+    .tabu-card.ninos .tabu-target-word { color: var(--ninos); }
+    .tabu-card.adultos .tabu-target-word { color: var(--adultos); }
+    .tabu-forbidden-label {
+      font-size: 0.68rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1.3px;
+      color: #fda4af;
+      opacity: 0.9;
+    }
+    .tabu-forbidden-list {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+    .tabu-forbidden-item {
+      background: rgba(244, 63, 94, 0.12);
+      border: 1px solid rgba(244, 63, 94, 0.26);
+      color: #fecdd3;
+      font-size: 1.02rem;
+      font-weight: 700;
+      padding: 0.45rem 0.75rem;
+      border-radius: 10px;
+      letter-spacing: 0.3px;
+    }
+    .tabu-hud {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--card);
+      border-radius: 14px;
+      padding: 0.6rem 1rem;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+    .tabu-timer {
+      font-size: 1.85rem;
+      font-weight: 900;
+      font-variant-numeric: tabular-nums;
+      letter-spacing: 1.5px;
+      color: var(--text);
+    }
+    .tabu-timer.urgent {
+      color: var(--danger);
+      animation: pulse 0.8s infinite alternate;
+    }
+    .tabu-round-score {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+    }
+    .tabu-pts-val {
+      font-size: 1.35rem;
+      font-weight: 900;
+      color: var(--ninos);
+    }
+    .tabu-pts-lbl {
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--muted);
+      font-weight: 700;
+    }
+    .tabu-action-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.55rem;
+    }
+    .btn-tabu-ok {
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+      color: #052e16;
+      border: none;
+      border-radius: 14px;
+      padding: 1rem 0.75rem;
+      font-size: 1.05rem;
+      font-weight: 900;
+      cursor: pointer;
+    }
+    .btn-tabu-fail {
+      background: linear-gradient(135deg, #f43f5e, #be123c);
+      color: #fff;
+      border: none;
+      border-radius: 14px;
+      padding: 1rem 0.75rem;
+      font-size: 1.05rem;
+      font-weight: 900;
+      cursor: pointer;
+    }
+    .btn-tabu-ok:active, .btn-tabu-fail:active { transform: scale(0.96); }
+
+
+    /* ==========================================
+       ESTILOS LONGITUD DE ONDA (WAVELENGTH)
+       ========================================== */
+    .onda-card {
+      background: var(--card);
+      border-radius: 24px;
+      padding: 1.35rem 1.15rem;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.42);
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      border: 2px solid rgba(56, 189, 248, 0.35);
+      transition: border-color 0.2s ease;
+    }
+    .onda-card.ninos { border-color: rgba(74, 222, 128, 0.42); }
+    .onda-card.familia { border-color: rgba(56, 189, 248, 0.42); }
+    .onda-card.adultos { border-color: rgba(244, 114, 182, 0.42); }
+
+    .onda-poles {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.65rem;
+      align-items: stretch;
+    }
+    .onda-pole {
+      background: var(--bg);
+      border-radius: 14px;
+      padding: 0.75rem 0.6rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 0.2rem;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+    .onda-pole.left {
+      border-left: 4px solid #38bdf8;
+    }
+    .onda-pole.right {
+      border-right: 4px solid #f43f5e;
+    }
+    .onda-pole-dir {
+      font-size: 0.65rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--muted);
+    }
+    .onda-pole-text {
+      font-size: 1rem;
+      font-weight: 900;
+      color: var(--text);
+      line-height: 1.2;
+    }
+
+    /* ESPECTRO INTERACTIVO */
+    .onda-spectrum-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 0.55rem;
+      padding: 0.35rem 0;
+    }
+    .onda-track {
+      position: relative;
+      height: 46px;
+      border-radius: 14px;
+      background: linear-gradient(90deg, #0284c7 0%, #334155 50%, #e11d48 100%);
+      border: 2px solid rgba(255, 255, 255, 0.15);
+      overflow: hidden;
+    }
+    /* Zona objetivo del psíquico */
+    .onda-target-zone {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 22%;
+      transform: translateX(-50%);
+      background: repeating-linear-gradient(
+        45deg,
+        rgba(250, 204, 21, 0.28),
+        rgba(250, 204, 21, 0.28) 6px,
+        rgba(250, 204, 21, 0.45) 6px,
+        rgba(250, 204, 21, 0.45) 12px
+      );
+      border-left: 2px solid #facc15;
+      border-right: 2px solid #facc15;
+      transition: opacity 0.2s ease;
+      pointer-events: none;
+    }
+    .onda-target-center {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      background: #fef08a;
+      box-shadow: 0 0 10px #facc15;
+      transform: translateX(-50%);
+      pointer-events: none;
+    }
+    .onda-target-zone.hidden,
+    .onda-target-center.hidden {
+      opacity: 0;
+    }
+    /* Aguja del equipo */
+    .onda-needle {
+      position: absolute;
+      top: -2px;
+      bottom: -2px;
+      width: 5px;
+      background: #ffffff;
+      box-shadow: 0 0 12px rgba(0,0,0,0.9), 0 0 6px #fff;
+      transform: translateX(-50%);
+      pointer-events: none;
+      z-index: 3;
+    }
+    .onda-slider {
+      width: 100%;
+      accent-color: #f8fafc;
+      height: 28px;
+      cursor: pointer;
+    }
+    .onda-readout {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.85rem;
+      font-weight: 800;
+      color: var(--muted);
+      padding: 0 0.2rem;
+    }
+    .onda-readout strong {
+      color: var(--text);
+      font-size: 1rem;
+    }
+    .onda-result-banner {
+      background: var(--bg);
+      border-radius: 12px;
+      padding: 0.75rem;
+      font-size: 0.92rem;
+      font-weight: 800;
+      border: 1px solid rgba(255,255,255,0.08);
+      display: none;
+    }
+    .onda-result-banner.show {
+      display: block;
+    }
+    .onda-btn-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.55rem;
+    }
+
+
+    /* ==========================================
+       ESTILOS TIME'S UP! (3 RONDAS)
+       ========================================== */
+    .tu-round-bar {
+      display: flex;
+      gap: 0.4rem;
+      background: rgba(30, 41, 59, 0.75);
+      padding: 0.35rem;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+    .tu-round-pill {
+      flex: 1;
+      background: transparent;
+      color: var(--muted);
+      border: none;
+      border-radius: 10px;
+      padding: 0.45rem 0.2rem;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.1rem;
+      transition: all 0.15s ease;
+    }
+    .tu-round-pill.active {
+      background: rgba(250, 204, 21, 0.18);
+      color: #fde047;
+    }
+    .tu-r-num {
+      font-size: 0.82rem;
+      font-weight: 900;
+    }
+    .tu-r-desc {
+      font-size: 0.65rem;
+      font-weight: 600;
+      opacity: 0.85;
+    }
+    .tu-card {
+      background: var(--card);
+      border-radius: 24px;
+      padding: 2rem 1.2rem;
+      min-height: 185px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      border: 2px solid rgba(250, 204, 21, 0.35);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.42);
+    }
+    .tu-rule-banner {
+      background: rgba(250, 204, 21, 0.12);
+      color: #fef08a;
+      border: 1px solid rgba(250, 204, 21, 0.28);
+      font-size: 0.75rem;
+      font-weight: 800;
+      padding: 0.3rem 0.8rem;
+      border-radius: 999px;
+    }
+    .tu-word {
+      font-size: 1.9rem;
+      font-weight: 900;
+      color: var(--text);
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      line-height: 1.2;
+      word-break: break-word;
+    }
+    .tu-deck-info {
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+    .tu-setup-strip {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--bg);
+      padding: 0.55rem 0.85rem;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.06);
+      font-size: 0.85rem;
+      font-weight: 700;
+    }
+
+
+    /* ==========================================
+       ESTILOS FAKE ARTIST (ARTISTA FALSO)
+       ========================================== */
+    .btn-fake {
+      background: linear-gradient(135deg, #ec4899, #be185d);
+      color: #fff;
+      border: none;
+      border-radius: 14px;
+      padding: 1.05rem 1.25rem;
+      font-size: 1.1rem;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 6px 18px rgba(236, 72, 153, 0.3);
+    }
+    .btn-fake:active { transform: scale(0.97); }
+    .fake-color-dot {
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      margin-right: 0.35rem;
+      vertical-align: middle;
+    }
+
+    /* ANOTADOR DE PUNTOS COMPARTIDO */
+    .scoreboard {
+      margin-top: 0.4rem;
+      background: var(--card);
+      border-radius: 20px;
+      padding: 1.1rem;
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+    .score-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .score-title {
+      font-size: 0.95rem;
+      font-weight: 800;
+      letter-spacing: 0.6px;
+      text-transform: uppercase;
+      color: var(--text);
+    }
+    .clear-scores-btn {
+      background: transparent;
+      border: 1px solid rgba(244, 63, 94, 0.4);
+      color: #fda4af;
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 0.3rem 0.6rem;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .add-player-form {
+      display: flex;
+      gap: 0.45rem;
+    }
+    .player-input {
+      flex: 1;
+      background: var(--bg);
+      border: 1px solid rgba(148, 163, 184, 0.28);
+      color: var(--text);
+      padding: 0.65rem 0.8rem;
+      border-radius: 10px;
+      font-size: 0.95rem;
+      outline: none;
+    }
+    .player-input:focus { border-color: var(--accent); }
+    .add-btn {
+      background: var(--card-light);
+      color: var(--text);
+      border: 1px solid rgba(148, 163, 184, 0.3);
+      padding: 0 1rem;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+    .player-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.55rem;
+    }
+    .player-row {
+      background: var(--bg);
+      border-radius: 12px;
+      padding: 0.6rem 0.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      border: 1px solid rgba(255, 255, 255, 0.04);
+    }
+    .player-row.leader {
+      border-color: rgba(250, 204, 21, 0.45);
+      background: rgba(250, 204, 21, 0.05);
+    }
+    .player-info {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      min-width: 0;
+      flex: 1;
+    }
+    .player-name {
+      font-weight: 700;
+      font-size: 0.98rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .score-controls {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+    .step-btn {
+      background: var(--card-light);
+      color: var(--text);
+      border: none;
+      border-radius: 8px;
+      min-width: 34px;
+      height: 34px;
+      font-weight: 800;
+      font-size: 0.92rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .step-btn.plus {
+      background: rgba(56, 189, 248, 0.18);
+      color: var(--accent);
+    }
+    .step-btn:active { transform: scale(0.92); }
+    .player-pts {
+      font-size: 1.2rem;
+      font-weight: 800;
+      min-width: 36px;
+      text-align: center;
+      font-variant-numeric: tabular-nums;
+    }
+    .del-player {
+      background: transparent;
+      border: none;
+      color: var(--muted);
+      font-size: 1rem;
+      padding: 0.2rem 0.35rem;
+      cursor: pointer;
+      opacity: 0.6;
+    }
+    .empty-players {
+      text-align: center;
+      font-size: 0.84rem;
+      color: var(--muted);
+      padding: 0.6rem 0;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <!-- SELECTOR TIPO CARRUSEL -->
+    <nav class="game-carousel" id="gameCarousel">
+      <button class="nav-arrow" onclick="requestSwitchGame(-1)" aria-label="Juego anterior">&#8249;</button>
+      <div class="carousel-center">
+        <div class="carousel-kicker-row">
+          <span class="game-kicker" id="gameCounterLabel">Juego 1 de 9</span>
+          <button type="button" class="help-pill-btn" onclick="openGameRules()" aria-label="Cómo se juega">? Reglas</button>
+          <button type="button" class="reset-game-pill-btn" onclick="resetCurrentGame()" aria-label="Reiniciar juego actual">↻ Reiniciar</button>
+        </div>
+        <div class="game-title" id="carouselGameTitle">UNÁNIMO</div>
+        <div class="carousel-dots" id="carouselDots"></div>
+      </div>
+      <button class="nav-arrow" onclick="requestSwitchGame(1)" aria-label="Siguiente juego">&#8250;</button>
+    </nav>
+
+    <!-- VISTA 1: UNÁNIMO -->
+    <main id="view-unanimo" class="game-view active">
+      <div class="sub-header">
+        <span class="game-subtitle">Coincidencias en papel</span>
+        <div class="status-pills">
+          <span class="wake-badge" id="wakeBadge">Pantalla activa</span>
+          <div class="counter" id="roundCounter">Ronda 0 | 500 rest.</div>
+        </div>
+      </div>
+
+      <div class="cat-selector">
+        <button class="cat-pill" data-cat="ninos" onclick="setCategory('ninos', this)">
+          <span class="cat-title">Niños</span>
+          <span class="cat-age">+6 años</span>
+        </button>
+        <button class="cat-pill active" data-cat="familia" onclick="setCategory('familia', this)">
+          <span class="cat-title">Familia</span>
+          <span class="cat-age">+10 años</span>
+        </button>
+        <button class="cat-pill" data-cat="adultos" onclick="setCategory('adultos', this)">
+          <span class="cat-title">Adultos</span>
+          <span class="cat-age">+18 años</span>
+        </button>
+      </div>
+      
+      <div class="card familia" id="cardBox">
+        <div class="badge" id="catBadge">Mazo Familia (+10 años)</div>
+        <div class="word" id="wordDisplay">¡Listos!</div>
+      </div>
+
+      <div class="time-selector">
+        <button class="time-pill active" data-sec="60" onclick="setDuration(60, this)">60s</button>
+        <button class="time-pill" data-sec="90" onclick="setDuration(90, this)">90s</button>
+        <button class="time-pill" data-sec="120" onclick="setDuration(120, this)">120s</button>
+      </div>
+
+      <div class="timer" id="timerDisplay">01:00</div>
+
+      <button class="btn familia" id="nextBtn" onclick="nextRound()">Siguiente tarjeta</button>
+      
+      <div class="controls-row">
+        <button class="secondary-btn" id="timerBtn" onclick="toggleTimer()">Iniciar tiempo</button>
+        <button class="reset-btn" onclick="resetDeck()">Mezclar mazo</button>
+      </div>
+    </main>
+
+    <!-- VISTA 2: LOS LOBIZONES DE ENTRE RÍOS -->
+    <main id="view-lobizones" class="game-view">
+      <div class="sub-header">
+        <span class="game-subtitle">Reparto secreto de roles</span>
+        <div class="counter" id="lobosStatusHeader">Configuración</div>
+      </div>
+
+      <div id="lobosSetupPanel" class="setup-panel">
+        <div class="setup-row">
+          <div class="setup-label-group">
+            <span class="setup-title">Total de jugadores</span>
+            <span class="setup-sub">Mínimo 4, máximo 20</span>
+          </div>
+          <div class="stepper">
+            <button class="stepper-btn" onclick="adjustLobosConfig('total', -1)">-</button>
+            <span class="stepper-val" id="lobosTotalVal">8</span>
+            <button class="stepper-btn" onclick="adjustLobosConfig('total', 1)">+</button>
+          </div>
+        </div>
+
+        <div class="setup-row">
+          <div class="setup-label-group">
+            <span class="setup-title">Lobizones</span>
+            <span class="setup-sub">Infiltrados en el pueblo</span>
+          </div>
+          <div class="stepper">
+            <button class="stepper-btn" onclick="adjustLobosConfig('wolves', -1)">-</button>
+            <span class="stepper-val" id="lobosWolvesVal">2</span>
+            <button class="stepper-btn" onclick="adjustLobosConfig('wolves', 1)">+</button>
+          </div>
+        </div>
+
+        <div class="summary-bar">
+          <div class="role-pill lobo">
+            <span>🐺 Lobizones</span>
+            <span class="role-pill-num" id="summaryWolves">2</span>
+          </div>
+          <div class="role-pill aldeano">
+            <span>🏡 Aldeanos</span>
+            <span class="role-pill-num" id="summaryVillagers">6</span>
+          </div>
+        </div>
+
+        <button class="btn-lobos" onclick="startLobosGame()">Repartir tarjetas</button>
+      </div>
+
+      <div id="lobosPlayPanel" style="display: none; flex-direction: column; gap: 0.9rem;">
+        <div id="secretCard" class="secret-card hidden-state" onclick="handleSecretCardTap()"></div>
+        <div id="revealAllBox" class="reveal-all-box"></div>
+        <div class="lobos-actions">
+          <button class="secondary-btn" id="toggleAllBtn" onclick="toggleRevealAll()" style="display:none;">Ver todos los roles</button>
+          <button class="reset-btn" onclick="backToLobosSetup()">Nueva partida</button>
+        </div>
+      </div>
+    </main>
+
+    <!-- VISTA 3: AMIGOS DE MIERDA -->
+    <main id="view-amigos" class="game-view">
+      <div class="sub-header">
+        <span class="game-subtitle">Señalen a la cuenta de 3</span>
+        <div class="counter" id="admCounter">Ronda 0 | 120 rest.</div>
+      </div>
+
+      <div class="adm-card">
+        <span class="adm-tag">💩 Pregunta de la ronda</span>
+        <div class="adm-question" id="admQuestionDisplay">Tocá "Siguiente tarjeta" para arrancar el bardo</div>
+        <div class="adm-rule-tip">Quien recibe más dedos señalándolo suma 1 punto abajo</div>
+      </div>
+
+      <button class="btn-adm" onclick="nextAdmCard()">Siguiente tarjeta</button>
+
+      <div class="controls-row">
+        <button class="reset-btn" onclick="resetAdmDeck()">Mezclar mazo de Amigos de Mierda</button>
+      </div>
+    </main>
+
+    <!-- VISTA 4: EL IMPOSTOR -->
+    <main id="view-impostor" class="game-view">
+      <div class="sub-header">
+        <span class="game-subtitle">Descubrí quién no sabe la palabra</span>
+        <div class="counter" id="impStatusHeader">Configuración</div>
+      </div>
+
+      <div id="impSetupPanel" class="setup-panel">
+        <div class="cat-selector" id="impCatSelector">
+          <button class="cat-pill" data-cat="ninos" onclick="setImpCategory('ninos', this)">
+            <span class="cat-title">Niños</span>
+            <span class="cat-age">+6 años</span>
+          </button>
+          <button class="cat-pill active" data-cat="familia" onclick="setImpCategory('familia', this)">
+            <span class="cat-title">Familia</span>
+            <span class="cat-age">+10 años</span>
+          </button>
+          <button class="cat-pill" data-cat="adultos" onclick="setImpCategory('adultos', this)">
+            <span class="cat-title">Adultos</span>
+            <span class="cat-age">+18 años</span>
+          </button>
+        </div>
+
+        <div class="setup-row">
+          <div class="setup-label-group">
+            <span class="setup-title">Jugadores</span>
+            <span class="setup-sub">Mínimo 3, máximo 16</span>
+          </div>
+          <div class="stepper">
+            <button class="stepper-btn" onclick="adjustImpConfig('total', -1)">-</button>
+            <span class="stepper-val" id="impTotalVal">5</span>
+            <button class="stepper-btn" onclick="adjustImpConfig('total', 1)">+</button>
+          </div>
+        </div>
+
+        <div class="setup-row">
+          <div class="setup-label-group">
+            <span class="setup-title">Impostores</span>
+            <span class="setup-sub">No conocen la palabra secreta</span>
+          </div>
+          <div class="stepper">
+            <button class="stepper-btn" onclick="adjustImpConfig('impostors', -1)">-</button>
+            <span class="stepper-val" id="impCountVal">1</span>
+            <button class="stepper-btn" onclick="adjustImpConfig('impostors', 1)">+</button>
+          </div>
+        </div>
+
+        <div class="names-grid" id="impNamesGrid"></div>
+
+        <button type="button" class="copy-names-btn" id="copyFromScoreBtn" onclick="importNamesFromScoreboard()" style="display:none;">
+          ↻ Traer nombres del anotador de abajo
+        </button>
+
+        <button class="btn-imp" onclick="startImpGame()">Sortear palabra y roles</button>
+      </div>
+
+      <div id="impPlayPanel" style="display: none; flex-direction: column; gap: 0.9rem;">
+        <div id="impSecretCard" class="secret-card hidden-imp" onclick="handleImpCardTap()"></div>
+        <div id="impRevealAllBox" class="reveal-all-box"></div>
+        <div class="lobos-actions">
+          <button class="secondary-btn" id="impToggleAllBtn" onclick="toggleImpRevealAll()" style="display:none;">Revelar palabra e impostor</button>
+          <button class="reset-btn" onclick="backToImpSetup()">Nueva ronda</button>
+        </div>
+      </div>
+    </main>
+
+    <!-- VISTA 5: CHARLA PROFUNDA (NIÑOS / FAMILIA / ADULTOS) -->
+    <main id="view-charla" class="game-view">
+      <div class="sub-header">
+        <span class="game-subtitle">Todos responden la misma tarjeta</span>
+        <div class="counter" id="charlaCounter">Ronda 0 | 40 rest.</div>
+      </div>
+
+      <div class="cat-selector" id="charlaCatSelector">
+        <button class="cat-pill" data-cat="ninos" onclick="setCharlaCategory('ninos', this)">
+          <span class="cat-title">Niños</span>
+          <span class="cat-age">+6 años</span>
+        </button>
+        <button class="cat-pill active" data-cat="familia" onclick="setCharlaCategory('familia', this)">
+          <span class="cat-title">Familia</span>
+          <span class="cat-age">+10 años</span>
+        </button>
+        <button class="cat-pill" data-cat="adultos" onclick="setCharlaCategory('adultos', this)">
+          <span class="cat-title">Adultos</span>
+          <span class="cat-age">+18 años</span>
+        </button>
+      </div>
+
+      <div class="charla-card familia" id="charlaCardBox">
+        <span class="charla-tag" id="charlaBadge">💬 Mazo Familia (+10 años)</span>
+        <div class="charla-question" id="charlaQuestionDisplay">Tocá "Siguiente tarjeta" y cada uno responde en ronda</div>
+        <div class="charla-tip">Escuchen sin interrumpir y repregunten si quieren profundizar</div>
+      </div>
+
+      <button class="btn-charla familia" id="charlaNextBtn" onclick="nextCharlaCard()">Siguiente tarjeta</button>
+
+      <div class="controls-row">
+        <button class="reset-btn" onclick="resetCharlaDeck()">Mezclar mazo actual</button>
+      </div>
+    </main>
+
+    <!-- VISTA 6: PALABRA PROHIBIDA (TABÚ) -->
+    <main id="view-tabu" class="game-view">
+      <div class="sub-header">
+        <span class="game-subtitle">Hacé adivinar sin decir lo prohibido</span>
+        <div class="counter" id="tabuCounter">50 tarjetas</div>
+      </div>
+
+      <div class="cat-selector" id="tabuCatSelector">
+        <button class="cat-pill" data-cat="ninos" onclick="setTabuCategory('ninos', this)">
+          <span class="cat-title">Niños</span>
+          <span class="cat-age">+6 años</span>
+        </button>
+        <button class="cat-pill active" data-cat="familia" onclick="setTabuCategory('familia', this)">
+          <span class="cat-title">Familia</span>
+          <span class="cat-age">+10 años</span>
+        </button>
+        <button class="cat-pill" data-cat="adultos" onclick="setTabuCategory('adultos', this)">
+          <span class="cat-title">Adultos</span>
+          <span class="cat-age">+18 años</span>
+        </button>
+      </div>
+
+      <div class="tabu-hud">
+        <div class="tabu-timer" id="tabuTimerDisplay">01:00</div>
+        <button class="secondary-btn" id="tabuStartBtn" onclick="toggleTabuTurn()" style="flex:0; padding: 0.55rem 1rem; font-size:0.9rem;">▶ Iniciar turno</button>
+        <div class="tabu-round-score">
+          <span class="tabu-pts-val" id="tabuTurnPts">0</span>
+          <span class="tabu-pts-lbl">Aciertos turno</span>
+        </div>
+      </div>
+
+      <div class="tabu-card familia" id="tabuCardBox">
+        <div class="tabu-main-box">
+          <span class="badge" id="tabuBadge">Mazo Familia (+10 años)</span>
+          <div class="tabu-target-word" id="tabuTargetWord">¡LISTOS!</div>
+        </div>
+        <span class="tabu-forbidden-label">🚫 Palabras prohibidas</span>
+        <div class="tabu-forbidden-list" id="tabuForbiddenList">
+          <div class="tabu-forbidden-item" style="opacity:0.6;">Tocá "Iniciar turno" para revelar</div>
+        </div>
+      </div>
+
+      <div class="tabu-action-grid">
+        <button class="btn-tabu-ok" onclick="tabuCardResult(1)">✓ ¡Adivinó! (+1)</button>
+        <button class="btn-tabu-fail" onclick="tabuCardResult(-1)">✕ Tabú / Pasar</button>
+      </div>
+
+      <div class="controls-row">
+        <button class="reset-btn" onclick="resetTabuDeck()">Mezclar mazo Tabú</button>
+      </div>
+    </main>
+
+    <!-- VISTA 7: LONGITUD DE ONDA -->
+    <main id="view-onda" class="game-view">
+      <div class="sub-header">
+        <span class="game-subtitle">Adiviná el punto exacto en la escala</span>
+        <div class="counter" id="ondaCounter">40 tarjetas</div>
+      </div>
+
+      <div class="cat-selector" id="ondaCatSelector">
+        <button class="cat-pill" data-cat="ninos" onclick="setOndaCategory('ninos', this)">
+          <span class="cat-title">Niños</span>
+          <span class="cat-age">+6 años</span>
+        </button>
+        <button class="cat-pill active" data-cat="familia" onclick="setOndaCategory('familia', this)">
+          <span class="cat-title">Familia</span>
+          <span class="cat-age">+10 años</span>
+        </button>
+        <button class="cat-pill" data-cat="adultos" onclick="setOndaCategory('adultos', this)">
+          <span class="cat-title">Adultos</span>
+          <span class="cat-age">+18 años</span>
+        </button>
+      </div>
+
+      <div class="onda-card familia" id="ondaCardBox">
+        <div class="onda-poles">
+          <div class="onda-pole left">
+            <span class="onda-pole-dir">◀ 0%</span>
+            <div class="onda-pole-text" id="ondaLeftPole">Frío</div>
+          </div>
+          <div class="onda-pole right">
+            <span class="onda-pole-dir">100% ▶</span>
+            <div class="onda-pole-text" id="ondaRightPole">Caliente</div>
+          </div>
+        </div>
+
+        <div class="onda-spectrum-wrap">
+          <div class="onda-track">
+            <div class="onda-target-zone" id="ondaTargetZone" style="left: 50%;"></div>
+            <div class="onda-target-center" id="ondaTargetCenter" style="left: 50%;"></div>
+            <div class="onda-needle" id="ondaNeedle" style="left: 50%;"></div>
+          </div>
+          <input type="range" min="0" max="100" value="50" class="onda-slider" id="ondaSlider" oninput="updateOndaNeedle(this.value)">
+          <div class="onda-readout">
+            <span>Aguja equipo: <strong id="ondaGuessVal">50%</strong></span>
+            <span id="ondaTargetLabel">Objetivo: <strong>50%</strong></span>
+          </div>
+        </div>
+
+        <div class="onda-result-banner" id="ondaResultBanner"></div>
+      </div>
+
+      <div class="onda-btn-row">
+        <button class="secondary-btn" id="ondaToggleTargetBtn" onclick="toggleOndaTarget()">🙈 Ocultar objetivo</button>
+        <button class="btn familia" id="ondaActionBtn" onclick="revealOndaResult()" style="padding: 0.85rem 0.75rem; font-size: 1rem;">🎯 Comprobar</button>
+      </div>
+
+      <div class="controls-row">
+        <button class="secondary-btn" onclick="nextOndaCard()">Siguiente espectro</button>
+        <button class="reset-btn" onclick="resetOndaDeck()">Mezclar</button>
+      </div>
+    </main>
+
+    <!-- VISTA 8: TIME'S UP! -->
+    <main id="view-timesup" class="game-view">
+      <div class="sub-header">
+        <span class="game-subtitle">Mismo mazo en 3 rondas</span>
+        <div class="counter" id="tuCounter">0 / 30 en bolsa</div>
+      </div>
+
+      <div class="cat-selector" id="tuCatSelector">
+        <button class="cat-pill" data-cat="ninos" onclick="setTuCategory('ninos', this)">
+          <span class="cat-title">Niños</span>
+          <span class="cat-age">+6 años</span>
+        </button>
+        <button class="cat-pill active" data-cat="familia" onclick="setTuCategory('familia', this)">
+          <span class="cat-title">Familia</span>
+          <span class="cat-age">+10 años</span>
+        </button>
+        <button class="cat-pill" data-cat="adultos" onclick="setTuCategory('adultos', this)">
+          <span class="cat-title">Adultos</span>
+          <span class="cat-age">+18 años</span>
+        </button>
+      </div>
+
+      <!-- SELECTOR DE FASE (RONDA 1, 2, 3) -->
+      <div class="tu-round-bar" id="tuRoundSelector">
+        <button class="tu-round-pill active" data-round="1" onclick="setTuPhase(1, this)">
+          <span class="tu-r-num">Ronda 1</span>
+          <span class="tu-r-desc">Describir</span>
+        </button>
+        <button class="tu-round-pill" data-round="2" onclick="setTuPhase(2, this)">
+          <span class="tu-r-num">Ronda 2</span>
+          <span class="tu-r-desc">1 Palabra</span>
+        </button>
+        <button class="tu-round-pill" data-round="3" onclick="setTuPhase(3, this)">
+          <span class="tu-r-num">Ronda 3</span>
+          <span class="tu-r-desc">Mímica</span>
+        </button>
+      </div>
+
+      <div class="tabu-hud">
+        <div class="tabu-timer" id="tuTimerDisplay">00:30</div>
+        <button class="secondary-btn" id="tuStartBtn" onclick="toggleTuTurn()" style="flex:0; padding: 0.55rem 1rem; font-size:0.9rem;">▶ Iniciar 30s</button>
+        <div class="tabu-round-score">
+          <span class="tabu-pts-val" id="tuTurnPts">0</span>
+          <span class="tabu-pts-lbl">Aciertos</span>
+        </div>
+      </div>
+
+      <div class="tu-card">
+        <span class="tu-rule-banner" id="tuPhaseBanner">🗣️ Ronda 1: Describí sin nombrar</span>
+        <div class="tu-word" id="tuWordDisplay">¡LISTOS!</div>
+        <div class="tu-deck-info" id="tuSubInfo">Tocá "Iniciar 30s" para sacar de la bolsa</div>
+      </div>
+
+      <div class="tabu-action-grid">
+        <button class="btn-tabu-ok" onclick="tuCardResult(true)">✓ ¡Adivinó! (+1)</button>
+        <button class="secondary-btn" id="tuPassBtn" onclick="tuCardResult(false)" style="padding: 1rem 0.75rem; font-size: 1rem;">⏭ Pasar tarjeta</button>
+      </div>
+
+      <div class="controls-row">
+        <button class="secondary-btn" onclick="refillTuRound()">↻ Volver a meter las 30 tarjetas</button>
+        <button class="reset-btn" onclick="newTuBag()">Nueva bolsa</button>
+      </div>
+    </main>
+
+    <!-- VISTA 9: FAKE ARTIST -->
+    <main id="view-fake" class="game-view">
+      <div class="sub-header">
+        <span class="game-subtitle">Dibujen entre todos en una hoja</span>
+        <div class="counter" id="fakeStatusHeader">Configuración</div>
+      </div>
+
+      <div id="fakeSetupPanel" class="setup-panel">
+        <div class="cat-selector" id="fakeCatSelector">
+          <button class="cat-pill" data-cat="ninos" onclick="setFakeCategory('ninos', this)">
+            <span class="cat-title">Niños</span>
+            <span class="cat-age">+6 años</span>
+          </button>
+          <button class="cat-pill active" data-cat="familia" onclick="setFakeCategory('familia', this)">
+            <span class="cat-title">Familia</span>
+            <span class="cat-age">+10 años</span>
+          </button>
+          <button class="cat-pill" data-cat="adultos" onclick="setFakeCategory('adultos', this)">
+            <span class="cat-title">Adultos</span>
+            <span class="cat-age">+18 años</span>
+          </button>
+        </div>
+
+        <div class="setup-row">
+          <div class="setup-label-group">
+            <span class="setup-title">Artistas en la mesa</span>
+            <span class="setup-sub">Mínimo 4, máximo 12</span>
+          </div>
+          <div class="stepper">
+            <button class="stepper-btn" onclick="adjustFakeConfig(-1)">-</button>
+            <span class="stepper-val" id="fakeTotalVal">5</span>
+            <button class="stepper-btn" onclick="adjustFakeConfig(1)">+</button>
+          </div>
+        </div>
+
+        <div class="names-grid" id="fakeNamesGrid"></div>
+
+        <button type="button" class="copy-names-btn" id="fakeCopyFromScoreBtn" onclick="importFakeNamesFromScoreboard()" style="display:none; border-color: rgba(236, 72, 153, 0.45); color: #f9a8d4;">
+          ↻ Traer nombres del anotador de abajo
+        </button>
+
+        <button class="btn-fake" onclick="startFakeGame()">Repartir roles de dibujo</button>
+      </div>
+
+      <div id="fakePlayPanel" style="display: none; flex-direction: column; gap: 0.9rem;">
+        <div id="fakeSecretCard" class="secret-card hidden-imp" onclick="handleFakeCardTap()"></div>
+        <div id="fakeRevealAllBox" class="reveal-all-box"></div>
+        <div class="lobos-actions">
+          <button class="secondary-btn" id="fakeToggleAllBtn" onclick="toggleFakeRevealAll()" style="display:none;">Revelar dibujo e impostor</button>
+          <button class="reset-btn" onclick="backToFakeSetup()">Nueva obra</button>
+        </div>
+      </div>
+    </main>
+
+    <!-- ANOTADOR DE PUNTOS UNIVERSAL PARA LA MESA -->
+    <section class="scoreboard">
+      <div class="score-header">
+        <span class="score-title">Anotador de puntos</span>
+        <button class="clear-scores-btn" onclick="resetAllScores()">Poner en 0</button>
+      </div>
+
+      <form class="add-player-form" onsubmit="addPlayer(event)">
+        <input type="text" id="playerNameInput" class="player-input" placeholder="Nombre del jugador..." maxlength="18" autocomplete="off">
+        <button type="submit" class="add-btn">+ Sumar</button>
+      </form>
+
+      <div class="player-list" id="playerList"></div>
+    </section>
+  </div>
+
+  <!-- MODAL EXPLICACIÓN DE REGLAS -->
+  <div class="rules-overlay" id="rulesOverlay" onclick="closeGameRules(event)">
+    <div class="rules-modal" onclick="event.stopPropagation()">
+      <div class="rules-modal-header">
+        <div>
+          <div class="rules-modal-kicker">Cómo se juega</div>
+          <div class="rules-modal-title" id="rulesModalTitle">UNÁNIMO</div>
+        </div>
+        <button type="button" class="rules-close-x" onclick="closeGameRules()" aria-label="Cerrar">✕</button>
+      </div>
+      <div class="rules-body" id="rulesModalBody"></div>
+      <button type="button" class="rules-ok-btn" onclick="closeGameRules()">¡Entendido!</button>
+    </div>
+  </div>
+
+  <!-- MODAL CONFIRMACIÓN CAMBIO DE JUEGO (PARTIDA EN CURSO) -->
+  <div class="rules-overlay" id="confirmOverlay" onclick="closeConfirmModal(false)">
+    <div class="rules-modal" onclick="event.stopPropagation()">
+      <div class="rules-modal-header">
+        <div>
+          <div class="rules-modal-kicker">Partida en curso</div>
+          <div class="rules-modal-title">¿Cambiar de juego?</div>
+        </div>
+        <button type="button" class="rules-close-x" onclick="closeConfirmModal(false)" aria-label="Cerrar">✕</button>
+      </div>
+      <div class="rules-body">
+        <p>Hay una partida activa en este juego. Si cambiás ahora, se perderá el progreso actual.</p>
+        <div class="rules-tip-box">💡 Podés terminar la ronda o reanudar el turno antes de salir.</div>
+      </div>
+      <div class="modal-btn-row">
+        <button type="button" class="secondary-btn" onclick="closeConfirmModal(false)">Continuar jugando</button>
+        <button type="button" class="rules-ok-btn" style="background: #f43f5e; color: #fff; margin-top: 0;" onclick="closeConfirmModal(true)">Sí, cambiar</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ==========================================
+    // REGISTRO DE JUEGOS DEL CARRUSEL
+    // ==========================================
+    const GAMES = [
+      { id: 'unanimo', title: 'UNÁNIMO' },
+      { id: 'lobizones', title: 'LOS LOBIZONES DE ENTRE RÍOS' },
+      { id: 'amigos', title: 'AMIGOS DE MIERDA' },
+      { id: 'impostor', title: 'EL IMPOSTOR' },
+      { id: 'charla', title: 'CHARLA PROFUNDA' },
+      { id: 'tabu', title: 'PALABRA PROHIBIDA' },
+      { id: 'onda', title: 'LONGITUD DE ONDA' },
+      { id: 'timesup', title: "TIME'S UP!" },
+      { id: 'fake', title: 'FAKE ARTIST' }
+    ];
+
+    const DECKS = {"ninos": ["Perro", "Gato", "León", "Elefante", "Jirafa", "Mono", "Tigre", "Oso", "Cebra", "Hipopótamo", "Cocodrilo", "Serpiente", "Tortuga", "Conejo", "Caballo", "Vaca", "Cerdo", "Oveja", "Gallina", "Pato", "Pingüino", "Delfín", "Ballena", "Tiburón", "Pulpo", "Cangrejo", "Estrella de mar", "Medusa", "Foca", "Caballito de mar", "Águila", "Búho", "Loro", "Flamenco", "Tucán", "Paloma", "Colibrí", "Pavo real", "Avestruz", "Murciélago", "Mariposa", "Abeja", "Hormiga", "Araña", "Mariquita", "Grillo", "Mosquito", "Caracol", "Gusano", "Libélula", "Rana", "Sapo", "Camaleón", "Iguana", "Dinosaurio", "Tiranosaurio", "Dragón", "Unicornio", "Canguro", "Koala", "Panda", "Lobo", "Zorro", "Ardilla", "Erizo", "Castor", "Mapache", "Ciervo", "Camello", "Llama", "Burro", "Cabra", "Ratón", "Hámster", "Pez payaso", "Pez globo", "Reno", "Oso polar", "Morsa", "Gorila", "Helado", "Pizza", "Hamburguesa", "Papas fritas", "Chocolate", "Caramelo", "Chupetín", "Alfajor", "Dulce de leche", "Galletitas", "Torta de cumpleaños", "Pochoclo", "Pancho", "Milanesa", "Fideos", "Arroz", "Sopa", "Ensalada", "Huevo frito", "Queso", "Pan", "Manteca", "Mermelada", "Miel", "Cereal", "Leche", "Jugo de naranja", "Limonada", "Licuado", "Chocolatada", "Manzana", "Banana", "Naranja", "Frutilla", "Sandía", "Melón", "Uva", "Durazno", "Pera", "Ananá", "Limón", "Cereza", "Kiwi", "Zanahoria", "Tomate", "Lechuga", "Papa", "Choclo", "Brócoli", "Zapallo", "Empanada", "Taco", "Sushi", "Donas", "Medialuna", "Churros", "Panqueques", "Waffles", "Gelatina", "Flan", "Budín", "Magdalena", "Malvavisco", "Algodón de azúcar", "Gomitas", "Chicle", "Turrón", "Huevos de Pascua", "Rosca de Reyes", "Sándwich", "Tostada", "Yogur", "Aceituna", "Palta", "Salchicha", "Escuela", "Mochila", "Lápiz", "Goma de borrar", "Sacapuntas", "Regla", "Tijera", "Plasticola", "Cuaderno", "Carpeta", "Cartuchera", "Marcadores", "Lápices de colores", "Crayones", "Témperas", "Pincel", "Acuarelas", "Plastilina", "Pizarrón", "Tiza", "Fibrón", "Maestra", "Profesor", "Recreo", "Patio", "Aula", "Biblioteca", "Libro", "Cuento", "Diccionario", "Mapa", "Globo terráqueo", "Compás", "Escuadra", "Calculadora", "Computadora", "Tablet", "Campana", "Timbre", "Bandera", "Acto escolar", "Excursión", "Tarea", "Examen", "Boletín", "Guardapolvo", "Uniforme", "Merienda", "Cantimplora", "Lonchera", "Microscopio", "Lupa", "Imán", "Flauta", "Tambor", "Pelota", "Muñeca", "Auto de juguete", "Tren de juguete", "Bloques", "Rompecabezas", "Yoyó", "Trompo", "Barrilete", "Patines", "Patineta", "Bicicleta", "Triciclo", "Monopatín", "Tobogán", "Hamaca", "Sube y baja", "Calesita", "Pelotero", "Castillo inflable", "Escondidas", "Mancha", "Rayuela", "Saltar la soga", "Piedra, papel o tijera", "Adivinanza", "Trabalenguas", "Chiste", "Títere", "Marioneta", "Disfraz", "Antifaz", "Varita mágica", "Espada de madera", "Escudo", "Corona", "Peluche", "Osito", "Robot", "Cohete", "Canicas", "Bolitas", "Cartas", "Dados", "Dominó", "Ajedrez", "Damas", "Lotería", "Bingo", "Videojuego", "Joystick", "Consola", "Burbuja", "Pistola de agua", "Bombucha", "Aro hula-hula", "Cama elástica", "Zancos", "Casa del árbol", "Carpa", "Linterna", "Binoculares", "Walkie-talkie", "Alcancia", "Figuritas", "Superhéroe", "Princesa", "Príncipe", "Rey", "Reina", "Caballero", "Mago", "Bruja", "Hada", "Duende", "Gigante", "Ogro", "Pirata", "Sirena", "Fantasma", "Vampiro", "Momia", "Hombre lobo", "Zombi", "Monstruo", "Extraterrestre", "Astronauta", "Ninja", "Samurái", "Vaquero", "Indio", "Detective", "Espía", "Payaso", "Acróbata", "Malabarista", "Domador", "Genio de la lámpara", "Caperucita Roja", "Pinocho", "Cenicienta", "Blancanieves", "Peter Pan", "Papá Noel", "Ratón Pérez", "Reyes Magos", "Conejo de Pascua", "Elfo", "Centauro", "Fénix", "Pegaso", "Yeti", "Cíclope", "Troll", "Gnomo", "Capitán", "Marinero", "Explorador", "Científico loco", "Inventor", "Cazador de tesoros", "Espantapájaros", "Muñeco de nieve", "Ángel", "Playa", "Mar", "Océano", "Isla", "Montaña", "Volcán", "Bosque", "Selva", "Desierto", "Río", "Lago", "Cascada", "Cueva", "Nieve", "Hielo", "Nube", "Lluvia", "Tormenta", "Arcoíris", "Sol", "Luna", "Estrella", "Planeta", "Espacio", "Galaxia", "Cometa", "Tierra", "Cielo", "Viento", "Trueno", "Relámpago", "Charco", "Barro", "Arena", "Piedra", "Árbol", "Flor", "Pasto", "Hoja", "Rama", "Semilla", "Raíz", "Jardín", "Plaza", "Parque", "Zoológico", "Acuario", "Granja", "Circo", "Cine", "Teatro", "Museo", "Castillo", "Palacio", "Faro", "Puente", "Túnel", "Piscina", "Camping", "Hospital", "Cuartel de bomberos", "Comisaría", "Supermercado", "Panadería", "Juguetería", "Casa", "Cama", "Almohada", "Frazada", "Pijama", "Pantuflas", "Cepillo de dientes", "Pasta dental", "Jabón", "Shampoo", "Toalla", "Espejo", "Peine", "Bañera", "Ducha", "Inodoro", "Sillón", "Mesa", "Silla", "Lámpara", "Reloj", "Teléfono", "Televisor", "Control remoto", "Heladera", "Horno", "Escoba", "Balde", "Llave", "Puerta", "Ventana", "Escalera", "Techo", "Chimenea", "Zapatillas", "Medias", "Pantalón", "Remera", "Buzo", "Campera", "Gorro", "Bufanda", "Guantes", "Paraguas", "Piloto de lluvia", "Gafas de sol", "Malla", "Ojotas", "Cinturón", "Bolso", "Cumpleaños", "Piñata", "Velitas", "Regalo", "Globo", "Auto", "Colectivo", "Tren", "Subte", "Avión", "Helicóptero", "Barco", "Submarino", "Cohete espacial", "Camión", "Ambulancia", "Camión de bomberos", "Patrullero", "Tractor", "Grúa", "Moto", "Globo aerostático", "Teleférico", "Fútbol", "Básquet", "Tenis", "Natación", "Karate", "Taekwondo", "Gimnasia artística", "Danza", "Atletismo", "Ciclismo", "Surf", "Esquí", "Rojo", "Azul", "Amarillo", "Verde", "Violeta", "Rosa", "Blanco", "Negro", "Dorado", "Círculo", "Cuadrado", "Triángulo", "Estrella fugaz", "Corazón", "Granjero", "Bombero"], "familia": ["Rockero", "Azul", "Asado", "Playa", "Invierno", "Verano", "Otoño", "Primavera", "Navidad", "Año Nuevo", "Cumpleaños", "Boda", "Luna de miel", "Mudanza", "Vacaciones", "Camping", "Hotel", "Aeropuerto", "Avión", "Crucero", "Tren", "Subte", "Colectivo", "Taxi", "Autopista", "Peaje", "Estación de servicio", "Taller mecánico", "Supermercado", "Feria", "Shopping", "Cine", "Teatro", "Concierto", "Estadio", "Gimnasio", "Peluquería", "Dentista", "Hospital", "Farmacia", "Banco", "Correo", "Biblioteca", "Museo", "Zoológico", "Parque de diversiones", "Circo", "Casino", "Restaurante", "Pizzería", "Cafetería", "Heladería", "Panadería", "Carnicería", "Verdulería", "Kiosco", "Ferretería", "Librería", "Juguetería", "Veterinaria", "Granja", "Campo", "Montaña", "Desierto", "Selva", "Bosque", "Isla desierta", "Volcán", "Terremoto", "Tormenta", "Inundación", "Apagón", "Incendio", "Robo", "Juicio", "Cárcel", "Detective", "Espía", "Vampiro", "Fantasma", "Extraterrestre", "Pirata", "Vaquero", "Astronauta", "Mago", "Payaso", "Científico", "Artista", "Fotógrafo", "Periodista", "Abogado", "Arquitecto", "Ingeniero", "Médico", "Enfermero", "Bombero", "Policía", "Piloto", "Capitán", "Chef", "Desayuno", "Almuerzo", "Merienda", "Cena", "Picada", "Mate", "Café", "Té", "Vino", "Cerveza", "Pizza", "Empanadas", "Milanesa", "Pasta", "Sushi", "Hamburguesa", "Ensalada", "Postre", "Helado", "Chocolate", "Domingo en familia", "Sobremesa", "Reunión familiar", "Foto familiar", "Álbum de fotos", "Herencia", "Apellido", "Árbol genealógico", "Mascota", "Pasear al perro", "Limpieza general", "Lavar los platos", "Lavar la ropa", "Planchar", "Cocinar", "Hacer las compras", "Lista del súper", "Heladera vacía", "Tupper", "Microondas", "Lavarropas", "Aspiradora", "Aire acondicionado", "Estufa", "Ventilador", "Cortina", "Alfombra", "Sillón", "Colchón", "Almohada", "Despertador", "Siesta", "Insomnio", "Pesadilla", "Sueño", "Bostezo", "Resfrío", "Fiebre", "Curita", "Termómetro", "Botiquín", "Receta médica", "Análisis de sangre", "Vacuna", "Anteojos", "Lentes de contacto", "Paraguas", "Valija", "Pasaporte", "Documento", "Billetera", "Llaves", "Llave perdida", "Celular sin batería", "Cargador", "Wi-Fi", "Contraseña", "Control remoto", "Televisor", "Serie", "Película", "Noticiero", "Publicidad", "Radio", "Podcast", "Música", "Guitarra", "Piano", "Batería", "Karaoke", "Baile", "Fiesta", "Disfraz", "Carnaval", "Halloween", "Pascuas", "Día del Padre", "Día de la Madre", "Día del Niño", "Día del Amigo", "Regalo", "Sorpresa", "Tarjeta de felicitación", "Ramo de flores", "Bombones", "Brindis", "Vela", "Fuegos artificiales", "Globos", "Piñata", "Jardín", "Parrilla", "Piscina", "Balcón", "Terraza", "Garaje", "Sótano", "Altillo", "Ascensor", "Escalera", "Fútbol", "Mundial", "Penal", "Árbitro", "Gol", "Hinchada", "Camiseta", "Tenis", "Pádel", "Básquet", "Vóley", "Rugby", "Golf", "Natación", "Ciclismo", "Maratón", "Boxeo", "Artes marciales", "Yoga", "Meditación", "Ajedrez", "Truco", "Póker", "Chinchón", "Generala", "Dominó", "Rompecabezas", "Crucigrama", "Sopa de letras", "Sudoku", "Bingo", "Lotería", "Rifa", "Bingo familiar", "Juego de mesa", "Dados", "Cartas", "Fichas", "Tablero", "Trampa", "Empate", "Victoria", "Derrota", "Trofeo", "Medalla", "Entrenamiento", "Lesión", "Calambre", "Transpiración", "Ducha fría", "Pesca", "Caza", "Senderismo", "Escalada", "Esquí", "Surf", "Buceo", "Navegar", "Velero", "Kayak", "Bicicleta", "Patineta", "Patines", "Lectura", "Novela", "Historieta", "Poesía", "Pintura", "Escultura", "Cerámica", "Carpintería", "Costura", "Tejido", "Jardinería", "Huerta", "Colección", "Antigüedad", "Subasta", "Reciclaje", "Ecología", "Egipto", "Pirámide", "Faraón", "Roma", "Gladiador", "Grecia", "Mitología", "Edad Media", "Castillo", "Caballero", "Vikingo", "Renacimiento", "Revolución", "Independencia", "Dinosaurio", "Fósil", "Evolución", "Prehistoria", "Cavernícola", "Fuego", "Rueda", "Invención", "Electricidad", "Gravedad", "Telescopio", "Microscopio", "Satélite", "Cohete", "Luna", "Marte", "Sistema Solar", "Eclipse", "Meteorito", "Agujero negro", "Ovni", "Robot", "Inteligencia Artificial", "Internet", "Redes sociales", "Correo electrónico", "Fotografía", "Selfie", "Video", "Cine mudo", "Dibujos animados", "Ciencia ficción", "Terror", "Comedia", "Drama", "Documental", "Circo Romano", "Ópera", "Ballet", "Orquesta", "Rock", "Jazz", "Tango", "Folklore", "Pop", "Reggaetón", "Arcoíris", "Amanecer", "Atardecer", "Medianoche", "Mediodía", "Calendario", "Reloj de arena", "Brújula", "Mapa", "Frontera", "Aduana", "Idioma", "Diccionario", "Acento", "Traducción", "Viaje", "Turista", "Guía turístico", "Souvenir", "Postal", "Moneda", "Billete", "Ahorro", "Alcancía", "Impuesto", "Factura", "Presupuesto", "Oferta", "Descuento", "Garantía", "Devolución", "Queja", "Propina", "Cuenta", "Reserva", "Fila", "Espera", "Turno", "Puntualidad", "Alegría", "Tristeza", "Enojo", "Miedo", "Vergüenza", "Orgullo", "Envidia", "Celos", "Nostalgia", "Paciencia", "Curiosidad", "Valentía", "Generosidad", "Honestidad", "Mentira", "Secreto", "Chisme", "Rumor", "Promesa", "Perdón", "Disculpa", "Agradecimiento", "Saludo", "Despedida", "Abrazo", "Beso", "Risa", "Carcajada", "Llanto", "Lágrima", "Suspiro", "Grito", "Susurro", "Silencio", "Ruido", "Eco", "Sombra", "Reflejo", "Espejo", "Laberinto", "Misterio", "Pista", "Sospechoso", "Coartada", "Testigo", "Tesoro", "Mapa del tesoro", "Nudo", "Cuerda", "Puente", "Muro", "Puerta cerrada", "Candado", "Llave maestra", "Caja fuerte", "Alarma", "Semáforo", "Multa", "Embotellamiento", "Choque", "Grúa", "Pinchazo", "Rueda de auxilio", "Gato hidráulico", "GPS", "Perdido", "Atajo", "Desvío", "Curva", "Túnel", "Maleta", "Equipaje de mano", "Turbulencia", "Despegue", "Aterrizaje", "Jet lag", "Bronceado", "Quemadura de sol", "Protector solar", "Repelente", "Picadura", "Mosquito", "Alergia", "Estornudo", "Tos", "Dolor de cabeza", "Dolor de muelas", "Vendas", "Yeso", "Muletas", "Silla de ruedas", "Ambulancia", "Camilla", "Carpintero", "Plomero", "Electricista", "Pintor", "Albañil", "Jardinero", "Cerrajero", "Sastre"], "adultos": ["Reunión de consorcio", "Expensas", "Alquiler", "Hipoteca", "Garantía propietaria", "Inflación", "Dólar", "Plazo fijo", "Tarjeta de crédito", "Resumen de tarjeta", "Cuotas sin interés", "Débito automático", "Transferencia", "CBU", "Clave fiscal", "AFIP / ARCA", "Contador", "Factura", "Recibo de sueldo", "Aguinaldo", "Bono anual", "Aumento de sueldo", "Entrevista laboral", "Currículum", "LinkedIn", "Renuncia", "Despido", "Indemnización", "Jubilación", "Pensión", "Obra social", "Prepaga", "Reintegro", "Copago", "Turno médico", "Chequeo anual", "Colesterol", "Presión arterial", "Estrés", "Burnout", "Terapia", "Psicólogo", "Psiquiatra", "Ansiedad", "Crisis de los 30", "Crisis de los 40", "Canas", "Calvicie", "Arrugas", "Crema antiage", "Dieta", "Gimnasio en enero", "Nutricionista", "Ayuno intermitente", "Proteína", "Suplementos", "Dolor de espalda", "Ciático", "Contractura", "Masajista", "Osteópata", "Kinesiología", "Home office", "Reunión por Zoom", "Micrófono muteado", "Compartir pantalla", "Correo corporativo", "En copia", "Para ayer", "Urgente", "Minuta", "Excel", "Presentación", "Jefe", "Subordinado", "Compañero tóxico", "Radio pasillo", "After office", "Fiesta de fin de año", "Amigo invisible", "Licencia por enfermedad", "Vacaciones pendientes", "Feriado puente", "Fin de semana largo", "Trámite bancario", "Fila en el banco", "Cajero automático sin plata", "Home banking", "Token", "Estafa virtual", "Spam", "Grupo de WhatsApp", "Audio de 5 minutos", "Visto", "Última conexión", "Bloqueado", "Silenciar grupo", "Sticker", "Meme", "Hilo de Twitter", "Algoritmo", "Suscripción", "Contraseña olvidada", "Autenticación en dos pasos", "Nube llena", "Backup", "Actualización", "Pantalla azul", "Router", "Cortes de luz", "Primera cita", "Tinder", "Match", "Ghosting", "Friendzone", "Casi algo", "Ex pareja", "Bloqueo de ex", "Stalkear", "Celos", "Infidelidad", "Amante", "Trampa", "Mentira piadosa", "Discusión de pareja", "Dormir en el sillón", "Aniversario", "Propuesta de matrimonio", "Anillo de compromiso", "Despedida de soltero", "Despedida de soltera", "Casamiento civil", "Iglesia", "Mesa de los solteros", "Ramo de novia", "Liga", "Vals", "Barra libre", "Cotillón", "Luna de miel", "Suegra", "Suegro", "Cuñado", "Concuñado", "Familia política", "Divorcio", "Separación", "División de bienes", "Cuota alimentaria", "Tenencia", "Convivencia", "Mudarse juntos", "Compartir gastos", "Reparto de tareas", "Lado de la cama", "Ronquidos", "Robar la frazada", "Baño ocupado", "Pelo en la ducha", "Tapa del inodoro", "Boda de plata", "Boda de oro", "Terapia de pareja", "Amor a primera vista", "Flechazo", "Beso", "Caricia", "Abrazo", "Chamuyo", "Levante", "Boliche", "Patovica", "Lista VIP", "Consumición", "Previas", "Trago", "Fernet", "Cerveza artesanal", "Vino tinto", "Espumante", "Brindis", "Shot", "Tequila", "Resaca", "Ibuprofeno", "Acidez", "Gastritis", "Café negro", "Bajón", "Pancho a las 5 AM", "Taxi de madrugada", "Uber", "Control de alcoholemia", "Multa de tránsito", "Acarreo", "Estacionamiento medido", "Trapito", "VTV", "Seguro del auto", "Choque", "Piquete", "Corte de calle", "Paro de transporte", "Hora pico", "Subte lleno", "Aire acondicionado roto", "Vecino ruidoso", "Fiesta arriba", "Perro que ladra", "Consorcio", "Grupo de mamis y papis", "Acto escolar", "Disfraz a último momento", "Cartulina el domingo", "Feria de ciencias", "Reunión de padres", "Cuaderno de comunicados", "Piojos", "Pediatra", "Guardia médica", "Pañales", "Mamadera", "Chupete", "Cochecito", "Sillita del auto", "Berrinche", "Cuento antes de dormir", "Vaso de agua", "Pesadilla", "Diente flojo", "Ratón Pérez", "Cumpleaños infantil", "Salón de fiestas", "Animador", "Souvenir", "Piñata", "Torta temática", "Niñera", "Abuelos al rescate", "Colonia de vacaciones", "Club", "Cuota del club", "Partido el sábado", "Torneo", "Tribuna", "Viaje de egresados", "Bariloche", "Previa adolescente", "Permiso para salir", "Horario de vuelta", "Primer auto", "Registro de conducir", "Examen práctico", "Estacionar en paralelo", "Universidad", "Carrera", "Tesis", "Recibida", "Huevos y harina", "Independizarse", "Primer departamento", "Garantía", "Flete", "Pintar antes de entregar", "Depósito", "Inmobiliaria", "Comisión", "Escritura", "Mudanza", "Cajas sin abrir", "Elecciones", "Cuarto oscuro", "Boleta", "Presidente de mesa", "Veda electoral", "Encuesta", "Debate presidencial", "Campaña", "Promesa electoral", "Corrupción", "Impuestos", "Subsidio", "Paritarias", "Sindicato", "Huelga", "Manifestación", "Noticiero", "Cadena nacional", "Fake news", "Conspiración", "Horóscopo", "Carta natal", "Mercurio retrógrado", "Tarot", "Brujería", "Cábala", "Superstición", "Martes 13", "Gato negro", "Espejo roto", "Bingo", "Quiniela", "Lotería", "Casino", "Tragamonedas", "Ruleta", "Apuesta", "Póker", "Farol", "All-in", "Serie de Netflix", "Maratón de series", "Spoiler", "Tráiler", "Crítica", "Premios Oscar", "Alfombra roja", "Paparazzi", "Famoso", "Influencer", "Canje", "Publicidad encubierta", "Cancelación", "Hater", "Troll", "Viral", "Trending topic", "Podcast", "Streaming", "Suscriptor", "Ovni", "Área 51", "Fantasmas", "Espiritismo", "Ouija", "Casa embrujada", "Cementerio", "Velorio", "Testamento", "Cremación", "Seguros de vida", "Inmortalidad", "Reencarnación", "Karma", "Destino", "Casualidad", "Deja vu", "Intuición", "Corazonada", "Nostalgia", "Infancia", "Adolescencia", "Juventud", "Vejez", "Sabiduría", "Experiencia", "Arrepentimiento", "Segundas oportunidades", "Propósitos de año nuevo", "Motel", "Albergue transitorio", "Lencería", "Juguete sexual", "Sex shop", "Kamasutra", "Fantasía", "Fetiche", "Striptease", "Despedida", "Borrachera", "Laguna mental", "Mensaje borracho", "Llamada a las 3 AM", "Vergüenza ajena", "Papelón", "Trágame tierra", "Error de grupo", "Mandar captura al interesado", "Audio equivocado", "Saludar a quien no te saluda", "Confundir nombre", "Preguntar si está embarazada", "Mal aliento", "Transpiración", "Mancha en la ropa", "Cierre abierto", "Papel en el zapato", "Flatulencia", "Eructo", "Baño sin papel", "Inodoro tapado", "Olor en el ascensor", "Invitado que no se va", "Indirecta", "Sarcasmo", "Ironía", "Doble sentido", "Albur", "Chiste verde", "Humor negro", "Tabú", "Censura", "Secreto a voces", "Chisme de oficina", "Escándalo", "Infidelidad descubierta", "Mensaje comprometedor", "Contraseña del celular", "Modo incógnito", "Historial de búsqueda", "Cámara encendida por error", "Micrófono abierto", "Filtro fallido", "Foto comprometida", "Tatuaje de ex", "Tatuaje arrepentido", "Piercing", "Cirugía estética", "Botox", "Peluca", "Implante capilar", "Viagra", "Menopausia", "Andropausia", "Sofocos", "Insomnio", "Pastilla para dormir", "Antidepresivo", "Relajante muscular", "Colonoscopia", "Proctólogo", "Urólogo", "Ginecólogo", "Mamografía", "Análisis de orina", "Dieta líquida", "Intoxicación", "Empacho", "Vómito", "Maratón de baño", "Guardia de hospital", "Sueros", "Inyección", "Miedo a las agujas", "Desmayo", "Golpe de calor", "Insolación", "Resaca moral", "Culpabilidad", "Excusa barata", "Llegar tarde", "Plantón", "Dejar plantado", "Cobrar deuda", "Prestar plata", "Amigo ratón", "Dividir la cuenta", "El que pide lo más caro", "Propina rata", "Impuesto a las ganancias", "Bienes personales", "Monotributo", "Recategorización", "Factura electrónica", "Vencimiento", "Mora", "Intereses", "Veraz", "Préstamo personal", "Plazo fijo UVA", "Criptomoneda", "Bitcoin", "Billetera virtual", "QR", "Posnet sin señal", "Efectivo", "Cambio chico", "Billete falso", "Cajero roto", "Seguro de hogar", "Siniestro", "Franquicia", "Perito", "Denuncia policial", "Testigo", "Mediación", "Carta documento", "Telegrama", "Burocracia", "Sellado", "Apostilla", "Trámite online", "Página caída", "Captcha", "Soy un robot", "Términos y condiciones", "Cookies", "Suscripción oculta", "Dar de baja", "Call center"]};
+
+    const ADM_DECK = ["¿Quién de nosotros sería el primero en morir en una película de terror?", "¿Quién tiene más chances de terminar preso por una estupidez?", "¿Quién vendería a sus amigos por un millón de dólares sin dudarlo?", "¿Quién de la mesa es el peor conductor?", "¿Quién se haría el dormido para no ayudar a levantar la mesa?", "¿Quién tiene más probabilidades de unirse a una secta?", "¿Quién lloraría si le cortan el Wi-Fi por un fin de semana?", "¿Quién de nosotros se casaría por interés económico?", "¿Quién sería el primero en practicar canibalismo si nos perdemos en la cordillera?", "¿Quién manda los audios de WhatsApp más largos e insoportables?", "¿Quién tiene el historial de búsqueda más turbina de toda la mesa?", "¿Quién se anotaría en un reality show para hacerse famoso a cualquier costo?", "¿Quién fingiría una enfermedad grave para faltar a un compromiso?", "¿Quién de nosotros es el más rata a la hora de dividir la cuenta?", "¿Quién volvería con su ex más tóxico después de jurar que nunca más?", "¿Quién tiene más chances de caer en una estafa piramidal?", "¿Quién sería capaz de robarse algo de un hotel o restaurante?", "¿Quién se pondría a llorar en medio de una discusión laboral?", "¿Quién de la mesa tiene el peor gusto para vestirse?", "¿Quién se olvidaría el cumpleaños de su propia pareja?", "¿Quién tardaría menos de 24 horas en traicionar un secreto de Estado?", "¿Quién de nosotros envejecería convirtiéndose en el viejo más gruñón del barrio?", "¿Quién se quedaría mirando cómo roban a otro sin hacer absolutamente nada?", "¿Quién tiene más chances de terminar viviendo en una combi sin bañarse?", "¿Quién es el más chamuyero cuando cuenta una anécdota?", "¿Quién de nosotros sería el peor presidente del país?", "¿Quién se emborracharía primero en una fiesta de empresa?", "¿Quién stalkea a sus ex hasta el año 2014 en Instagram?", "¿Quién pediría lo más caro del menú sabiendo que después dividimos en partes iguales?", "¿Quién se haría el boludo cuando llega el momento de pagar el asado?", "¿Quién tiene más probabilidades de tener una doble familia secreta?", "¿Quién sería capaz de googlear sus síntomas y convencerse de que le quedan 3 días de vida?", "¿Quién de nosotros sobreviviría menos tiempo en una isla desierta?", "¿Quién es el más infiel potencial de este grupo?", "¿Quién se pondría a pelear con un desconocido en los comentarios de redes sociales?", "¿Quién tiene más chances de casarse en Las Vegas borracho?", "¿Quién dejaría plantado a un amigo por una cita de último momento?", "¿Quién de la mesa es el más dramático por cualquier pavada?", "¿Quién se robaría el crédito del trabajo de otro compañero?", "¿Quién tiene más probabilidades de terminar viviendo con 15 gatos?", "¿Quién sería el primero en paniquear durante una turbulencia en un avión?", "¿Quién es el más probable que mande un mensaje comprometedor al grupo equivocado?", "¿Quién se haría una cirugía estética que le quede horrible?", "¿Quién tiene la risa más contagiosa pero insoportable?", "¿Quién de nosotros se haría influencer de consejos de vida sin tener su vida ordenada?", "¿Quién tardaría más en devolver plata prestada?", "¿Quién sería capaz de comerse algo que se cayó al piso hace más de 10 segundos?", "¿Quién de la mesa tiene más chances de ser abducido por extraterrestres y que lo devuelvan?", "¿Quién se queja de todo pero nunca propone ningún plan?", "¿Quién llegaría tarde hasta a su propio velorio?", "¿Quién sería el primero en traicionar al grupo en un apocalipsis zombi?", "¿Quién tiene más chances de terminar trabajando en un circo?", "¿Quién se haría el lesionado para no jugar o no hacer fuerza?", "¿Quién tiene más probabilidades de quedarse encerrado en un baño público?", "¿Quién es el más probable que se quede dormido en medio de una película en el cine?", "¿Quién de nosotros compraría un curso online de 'cómo hacerte millonario'?", "¿Quién tiene el ego más grande de toda esta mesa?", "¿Quién se pondría a llorar si pierde en un juego de mesa?", "¿Quién sería capaz de revisar el celular de su pareja mientras duerme?", "¿Quién de nosotros tiene más chances de ganar la lotería y perder el ticket?", "¿Quién is el más propenso a hacer un papelón monumental en una primera cita?", "¿Quién se colaría en una fila fingiendo demencia?", "¿Quién tiene más probabilidades de hacerse un tatuaje del que se arrepienta al día siguiente?", "¿Quién de la mesa es el más chusma y sabe los rumores de todo el mundo?", "¿Quién sería el peor compañero de departamento para convivir?", "¿Quién se llevaría los tuppers de comida de una fiesta sin avisar?", "¿Quién tiene más chances de terminar en la guardia por un accidente doméstico ridículo?", "¿Quién de nosotros es el más manipulador cuando quiere conseguir algo?", "¿Quién sería capaz de fingir que no vio a un conocido en la calle para no saludarlo?", "¿Quién tiene más probabilidades de convertirse en un acumulador compulsivo?", "¿Quién es el más probable que se enamore en menos de 48 horas?", "¿Quién de nosotros tendría un canal de OnlyFans si estuviera desesperado de plata?", "¿Quién se haría el experto en un tema del que no tiene la más mínima idea?", "¿Quién es el que peor baila de toda la mesa?", "¿Quién tiene más chances de perder el pasaporte justo antes de embarcar?", "¿Quién sería capaz de regalar algo usado que le regalaron antes?", "¿Quién de nosotros es el más rencoroso y no olvida nada ni en 20 años?", "¿Quién se quedaría con el vuelto si el cajero se equivoca a su favor?", "¿Quién tiene más probabilidades de ser cancelado en redes sociales?", "¿Quién es el más probable que llame a su ex a las 4 de la mañana?", "¿Quién de nosotros sería el peor psicólogo por falta de empatía?", "¿Quién se pondría a discutir con el árbitro en un partido amistoso?", "¿Quién tiene más chances de quedarse sin batería justo cuando más se lo necesita?", "¿Quién sería capaz de comerse la porción de comida que otro guardó en la heladera?", "¿Quién de la mesa es el más hipocondríaco?", "¿Quién tiene más probabilidades de terminar en un programa de chimentos?", "¿Quién es el más propenso a confundir el nombre de su pareja con el de un ex?", "¿Quién de nosotros se haría amigo del ladrón si nos entran a robar?", "¿Quién tardaría horas en elegir qué pedir en un restaurante y después pediría lo mismo de siempre?", "¿Quién tiene más chances de olvidarse a un hijo o mascota en algún lado?", "¿Quién es el más probable que se ría en un momento súper serio como un velorio?", "¿Quién de nosotros se compraría algo carísimo que nunca va a usar?", "¿Quién sería el primero en abandonar un grupo de WhatsApp sin dar explicaciones?", "¿Quién tiene más probabilidades de ser expulsado de un boliche o bar?", "¿Quién es el más probable que invente una excusa ridícula para cancelar un plan a último minuto?", "¿Quién de la mesa tiene menos filtro para decir las cosas?", "¿Quién sería capaz de sabotear a un amigo para ganar una apuesta?", "¿Quién tiene más chances de terminar viviendo en otro país sin saber el idioma?", "¿Quién is el más probable que se quede pelado o con canas antes que todos?", "¿Quién de nosotros es claramente el 'amigo de mierda' oficial de este grupo?", "¿Quién sería capaz de pedir plata prestada y después subir fotos de vacaciones?", "¿Quién tiene más chances de chocar estacionando en un lugar completamente vacío?", "¿Quién se pondría a cantar karaoke desafinando como si estuviera en el Luna Park?", "¿Quién de nosotros es el mais probable que crea en teorías conspirativas ridículas?", "¿Quién dejaría el baño tapado en casa ajena y saldría silbando bajito?", "¿Quién tiene más probabilidades de hacerse famoso por un video viral haciendo el ridículo?", "¿Quién es el más probable que se quede dormido en una juntada antes de las 12?", "¿Quién de nosotros se haría el ofendido para no pedir perdón cuando sabe que se equivocó?", "¿Quién sería capaz de usar la tarjeta de crédito de otro 'sin querer'?", "¿Quién tiene más chances de terminar casado con alguien que conoció hace dos semanas?", "¿Quién is el más probable que se pierda usando Google Maps?", "¿Quién de nosotros tiene más chances de sobrevivir a una guerra nuclear como una cucaracha?", "¿Quién sería capaz de criticar a alguien y saludarlo a los dos segundos con un abrazo?", "¿Quién is el más probable que mande un audio llorando por una borrachera?", "¿Quién de la mesa tiene el humor más negro e irrecuperable?", "¿Quién se anotaría en el gimnasio en enero, pagaría el año entero y no iría nunca?", "¿Quién tiene más chances de terminar en una comisaría por discutir con un policía?", "¿Quién sería capaz de spoilear el final de una serie a propósito?", "¿Quién is el más probable que se quede encerrado afuera de su casa en ropa interior?", "¿Quién de nosotros es el que peor consejo sentimental da?"];
+
+    const IMPOSTOR_DECKS = {"ninos": [{"w": "Perro", "c": "Animal"}, {"w": "Gato", "c": "Animal"}, {"w": "León", "c": "Animal"}, {"w": "Elefante", "c": "Animal"}, {"w": "Jirafa", "c": "Animal"}, {"w": "Pingüino", "c": "Animal"}, {"w": "Delfín", "c": "Animal"}, {"w": "Tiburón", "c": "Animal"}, {"w": "Mariposa", "c": "Insecto"}, {"w": "Abeja", "c": "Insecto"}, {"w": "Tortuga", "c": "Animal"}, {"w": "Conejo", "c": "Animal"}, {"w": "Dinosaurio", "c": "Animal"}, {"w": "Unicornio", "c": "Fantasía"}, {"w": "Dragón", "c": "Fantasía"}, {"w": "Mono", "c": "Animal"}, {"w": "Cocodrilo", "c": "Animal"}, {"w": "Canguro", "c": "Animal"}, {"w": "Oso Panda", "c": "Animal"}, {"w": "Pulpo", "c": "Animal"}, {"w": "Helado", "c": "Comida"}, {"w": "Pizza", "c": "Comida"}, {"w": "Hamburguesa", "c": "Comida"}, {"w": "Papas fritas", "c": "Comida"}, {"w": "Chocolate", "c": "Dulce"}, {"w": "Alfajor", "c": "Dulce"}, {"w": "Pochoclo", "c": "Comida"}, {"w": "Pancho", "c": "Comida"}, {"w": "Milanesa", "c": "Comida"}, {"w": "Fideos", "c": "Comida"}, {"w": "Torta de cumpleaños", "c": "Dulce"}, {"w": "Caramelo", "c": "Dulce"}, {"w": "Manzana", "c": "Fruta"}, {"w": "Banana", "c": "Fruta"}, {"w": "Sandía", "c": "Fruta"}, {"w": "Frutilla", "c": "Fruta"}, {"w": "Naranja", "c": "Fruta"}, {"w": "Chupetín", "c": "Dulce"}, {"w": "Galletitas", "c": "Comida"}, {"w": "Donas", "c": "Dulce"}, {"w": "Escuela", "c": "Lugar"}, {"w": "Playa", "c": "Lugar"}, {"w": "Zoológico", "c": "Lugar"}, {"w": "Circo", "c": "Lugar"}, {"w": "Plaza", "c": "Lugar"}, {"w": "Cine", "c": "Lugar"}, {"w": "Hospital", "c": "Lugar"}, {"w": "Supermercado", "c": "Lugar"}, {"w": "Castillo", "c": "Lugar"}, {"w": "Selva", "c": "Lugar"}, {"w": "Espacio", "c": "Lugar"}, {"w": "Granja", "c": "Lugar"}, {"w": "Pelota", "c": "Juguete"}, {"w": "Bicicleta", "c": "Transporte"}, {"w": "Patineta", "c": "Juguete"}, {"w": "Tobogán", "c": "Juego"}, {"w": "Hamaca", "c": "Juego"}, {"w": "Rompecabezas", "c": "Juego"}, {"w": "Barrilete", "c": "Juguete"}, {"w": "Peluche", "c": "Juguete"}, {"w": "Robot", "c": "Personaje"}, {"w": "Superhéroe", "c": "Personaje"}, {"w": "Princesa", "c": "Personaje"}, {"w": "Pirata", "c": "Personaje"}, {"w": "Astronauta", "c": "Profesión"}, {"w": "Bombero", "c": "Profesión"}, {"w": "Policía", "c": "Profesión"}, {"w": "Mago", "c": "Personaje"}, {"w": "Bruja", "c": "Personaje"}, {"w": "Payaso", "c": "Personaje"}, {"w": "Fantasma", "c": "Personaje"}, {"w": "Sirena", "c": "Fantasía"}, {"w": "Papá Noel", "c": "Personaje"}, {"w": "Ratón Pérez", "c": "Personaje"}, {"w": "Ninja", "c": "Personaje"}, {"w": "Detective", "c": "Profesión"}, {"w": "Avión", "c": "Transporte"}, {"w": "Tren", "c": "Transporte"}, {"w": "Cohete", "c": "Transporte"}, {"w": "Submarino", "c": "Transporte"}, {"w": "Barco", "c": "Transporte"}, {"w": "Auto", "c": "Transporte"}, {"w": "Helicóptero", "c": "Transporte"}, {"w": "Colectivo", "c": "Transporte"}, {"w": "Fútbol", "c": "Deporte"}, {"w": "Natación", "c": "Deporte"}, {"w": "Taekwondo", "c": "Deporte"}, {"w": "Tenis", "c": "Deporte"}, {"w": "Sol", "c": "Naturaleza"}, {"w": "Luna", "c": "Naturaleza"}, {"w": "Arcoíris", "c": "Naturaleza"}, {"w": "Nieve", "c": "Clima"}, {"w": "Lluvia", "c": "Clima"}, {"w": "Volcán", "c": "Naturaleza"}, {"w": "Árbol", "c": "Naturaleza"}, {"w": "Flor", "c": "Naturaleza"}, {"w": "Mochila", "c": "Objeto"}, {"w": "Lápiz", "c": "Útil"}, {"w": "Tijera", "c": "Útil"}, {"w": "Cepillo de dientes", "c": "Objeto"}, {"w": "Almohada", "c": "Objeto"}, {"w": "Paraguas", "c": "Objeto"}, {"w": "Linterna", "c": "Objeto"}, {"w": "Guitarra", "c": "Música"}, {"w": "Batería", "c": "Música"}, {"w": "Piano", "c": "Música"}, {"w": "Reloj", "c": "Objeto"}, {"w": "Zapatillas", "c": "Ropa"}, {"w": "Pijama", "c": "Ropa"}, {"w": "Gafas de sol", "c": "Accesorio"}, {"w": "Corona", "c": "Objeto"}, {"w": "Piñata", "c": "Fiesta"}, {"w": "Globo", "c": "Fiesta"}, {"w": "Regalo", "c": "Fiesta"}, {"w": "Cama elástica", "c": "Juego"}, {"w": "Carpita", "c": "Objeto"}, {"w": "Microscopio", "c": "Ciencia"}, {"w": "Lupa", "c": "Objeto"}, {"w": "Imán", "c": "Objeto"}, {"w": "Espejo", "c": "Objeto"}], "familia": [{"w": "Asado", "c": "Comida"}, {"w": "Mate", "c": "Bebida"}, {"w": "Empanadas", "c": "Comida"}, {"w": "Sushi", "c": "Comida"}, {"w": "Picada", "c": "Comida"}, {"w": "Café", "c": "Bebida"}, {"w": "Dulce de leche", "c": "Comida"}, {"w": "Facturas", "c": "Comida"}, {"w": "Aeropuerto", "c": "Lugar"}, {"w": "Camping", "c": "Actividad"}, {"w": "Crucero", "c": "Viaje"}, {"w": "Hotel", "c": "Lugar"}, {"w": "Supermercado", "c": "Lugar"}, {"w": "Peluquería", "c": "Lugar"}, {"w": "Dentista", "c": "Profesión"}, {"w": "Gimnasio", "c": "Lugar"}, {"w": "Biblioteca", "c": "Lugar"}, {"w": "Museo", "c": "Lugar"}, {"w": "Estadio", "c": "Lugar"}, {"w": "Casino", "c": "Lugar"}, {"w": "Ferretería", "c": "Comercio"}, {"w": "Farmacia", "c": "Comercio"}, {"w": "Kiosco", "c": "Comercio"}, {"w": "Shopping", "c": "Lugar"}, {"w": "Subte", "c": "Transporte"}, {"w": "Taxi", "c": "Transporte"}, {"w": "Peaje", "c": "Viaje"}, {"w": "Autopista", "c": "Lugar"}, {"w": "Taller mecánico", "c": "Lugar"}, {"w": "Estación de servicio", "c": "Lugar"}, {"w": "Mudanza", "c": "Situación"}, {"w": "Boda", "c": "Evento"}, {"w": "Navidad", "c": "Festividad"}, {"w": "Año Nuevo", "c": "Festividad"}, {"w": "Carnaval", "c": "Festividad"}, {"w": "Halloween", "c": "Festividad"}, {"w": "Vacaciones", "c": "Concepto"}, {"w": "Siesta", "c": "Hábito"}, {"w": "Insomnio", "c": "Salud"}, {"w": "Pesadilla", "c": "Sueño"}, {"w": "Apagón", "c": "Situación"}, {"w": "Tormenta", "c": "Clima"}, {"w": "Terremoto", "c": "Naturaleza"}, {"w": "Isla desierta", "c": "Lugar"}, {"w": "Pirámide", "c": "Historia"}, {"w": "Vikingo", "c": "Historia"}, {"w": "Gladiador", "c": "Historia"}, {"w": "Faraón", "c": "Historia"}, {"w": "Extraterrestre", "c": "Ciencia Ficción"}, {"w": "Agujero negro", "c": "Espacio"}, {"w": "Satélite", "c": "Tecnología"}, {"w": "Inteligencia Artificial", "c": "Tecnología"}, {"w": "Wi-Fi", "c": "Tecnología"}, {"w": "Contraseña", "c": "Tecnología"}, {"w": "Selfie", "c": "Fotografía"}, {"w": "Karaoke", "c": "Entretenimiento"}, {"w": "Truco", "c": "Juego"}, {"w": "Ajedrez", "c": "Juego"}, {"w": "Bingo", "c": "Juego"}, {"w": "Rompecabezas", "c": "Juego"}, {"w": "Mundial de Fútbol", "c": "Deporte"}, {"w": "Penal", "c": "Deporte"}, {"w": "Árbitro", "c": "Deporte"}, {"w": "Pádel", "c": "Deporte"}, {"w": "Maratón", "c": "Deporte"}, {"w": "Yoga", "c": "Actividad"}, {"w": "Pesca", "c": "Actividad"}, {"w": "Jardinería", "c": "Hobby"}, {"w": "Parrilla", "c": "Objeto"}, {"w": "Microondas", "c": "Electrodoméstico"}, {"w": "Lavarropas", "c": "Electrodoméstico"}, {"w": "Aire acondicionado", "c": "Electrodoméstico"}, {"w": "Aspiradora", "c": "Electrodoméstico"}, {"w": "Despertador", "c": "Objeto"}, {"w": "Pasaporte", "c": "Documento"}, {"w": "Billetera", "c": "Objeto"}, {"w": "Llave", "c": "Objeto"}, {"w": "Caja fuerte", "c": "Objeto"}, {"w": "Brújula", "c": "Objeto"}, {"w": "Telescopio", "c": "Ciencia"}, {"w": "Semáforo", "c": "Ciudad"}, {"w": "Multa", "c": "Tránsito"}, {"w": "Embotellamiento", "c": "Tránsito"}, {"w": "Rueda de auxilio", "c": "Auto"}, {"w": "Arquitecto", "c": "Profesión"}, {"w": "Abogado", "c": "Profesión"}, {"w": "Periodista", "c": "Profesión"}, {"w": "Fotógrafo", "c": "Profesión"}, {"w": "Chef", "c": "Profesión"}, {"w": "Veterinario", "c": "Profesión"}, {"w": "Carpintero", "c": "Oficio"}, {"w": "Plomero", "c": "Oficio"}, {"w": "Electricista", "c": "Oficio"}, {"w": "Cerrajero", "c": "Oficio"}, {"w": "Espía", "c": "Personaje"}, {"w": "Vampiro", "c": "Ficción"}, {"w": "Magia", "c": "Entretenimiento"}, {"w": "Ópera", "c": "Arte"}, {"w": "Rock", "c": "Música"}, {"w": "Tango", "c": "Música"}, {"w": "Historieta", "c": "Lectura"}, {"w": "Cine mudo", "c": "Cine"}, {"w": "Spoiler", "c": "Cultura Pop"}, {"w": "Subasta", "c": "Evento"}, {"w": "Alcancía", "c": "Objeto"}, {"w": "Propina", "c": "Dinero"}, {"w": "Descuento", "c": "Compras"}, {"w": "Reciclaje", "c": "Ecología"}, {"w": "Protector solar", "c": "Verano"}, {"w": "Repelente", "c": "Verano"}, {"w": "Termómetro", "c": "Salud"}, {"w": "Vacuna", "c": "Salud"}, {"w": "Yeso", "c": "Salud"}, {"w": "Ambulancia", "c": "Emergencia"}, {"w": "Extintor", "c": "Seguridad"}, {"w": "Alarma", "c": "Seguridad"}, {"w": "Laberinto", "c": "Lugar"}, {"w": "Faro", "c": "Construcción"}, {"w": "Subte", "c": "Ciudad"}, {"w": "Sobremesa", "c": "Costumbre"}], "adultos": [{"w": "Reunión de consorcio", "c": "Vida Adulta"}, {"w": "Expensas", "c": "Finanzas"}, {"w": "Hipoteca", "c": "Finanzas"}, {"w": "Inflación", "c": "Economía"}, {"w": "Tarjeta de crédito", "c": "Finanzas"}, {"w": "Aguinaldo", "c": "Trabajo"}, {"w": "Entrevista laboral", "c": "Trabajo"}, {"w": "Home office", "c": "Trabajo"}, {"w": "After office", "c": "Social"}, {"w": "Burnout", "c": "Salud"}, {"w": "Terapia", "c": "Salud"}, {"w": "Crisis de los 40", "c": "Vida"}, {"w": "Ayuno intermitente", "c": "Dieta"}, {"w": "Ciático", "c": "Salud"}, {"w": "Colesterol", "c": "Salud"}, {"w": "Colonoscopia", "c": "Medicina"}, {"w": "Tinder", "c": "Citas"}, {"w": "Ghosting", "c": "Relaciones"}, {"w": "Friendzone", "c": "Relaciones"}, {"w": "Casi algo", "c": "Relaciones"}, {"w": "Ex pareja", "c": "Relaciones"}, {"w": "Infidelidad", "c": "Relaciones"}, {"w": "Divorcio", "c": "Legal"}, {"w": "Suegra", "c": "Familia"}, {"w": "Despedida de soltero", "c": "Fiesta"}, {"w": "Luna de miel", "c": "Viaje"}, {"w": "Anillo de compromiso", "c": "Pareja"}, {"w": "Terapia de pareja", "c": "Relaciones"}, {"w": "Resaca", "c": "Fiesta"}, {"w": "Fernet", "c": "Bebida"}, {"w": "Control de alcoholemia", "c": "Tránsito"}, {"w": "Acarreo", "c": "Tránsito"}, {"w": "Trapito", "c": "Calle"}, {"w": "Piquete", "c": "Ciudad"}, {"w": "Hora pico", "c": "Tránsito"}, {"w": "VTV", "c": "Auto"}, {"w": "Grupo de mamis y papis", "c": "WhatsApp"}, {"w": "Audio de 5 minutos", "c": "WhatsApp"}, {"w": "Modo incógnito", "c": "Internet"}, {"w": "Historial de búsqueda", "c": "Internet"}, {"w": "Estafa virtual", "c": "Seguridad"}, {"w": "Home banking", "c": "Finanzas"}, {"w": "Plazo fijo", "c": "Finanzas"}, {"w": "Criptomoneda", "c": "Finanzas"}, {"w": "Monotributo", "c": "Impuestos"}, {"w": "Contador", "c": "Profesión"}, {"w": "Carta documento", "c": "Legal"}, {"w": "Veraz", "c": "Finanzas"}, {"w": "Motel", "c": "Lugar"}, {"w": "Sex shop", "c": "Comercio"}, {"w": "Lencería", "c": "Ropa"}, {"w": "Kamasutra", "c": "Libro"}, {"w": "Viagra", "c": "Farmacia"}, {"w": "Menopausia", "c": "Salud"}, {"w": "Botox", "c": "Estética"}, {"w": "Implante capilar", "c": "Estética"}, {"w": "Tatuaje de ex", "c": "Error"}, {"w": "Mensaje borracho", "c": "Error"}, {"w": "Error de grupo", "c": "WhatsApp"}, {"w": "Micrófono abierto", "c": "Videollamada"}, {"w": "Cámara encendida", "c": "Videollamada"}, {"w": "Spoiler", "c": "Series"}, {"w": "Maratón de Netflix", "c": "Ocio"}, {"w": "Canje", "c": "Redes"}, {"w": "Hater", "c": "Redes"}, {"w": "Funado / Cancelado", "c": "Redes"}, {"w": "Algoritmo", "c": "Tecnología"}, {"w": "Suscripción oculta", "c": "Gastos"}, {"w": "Cuarto oscuro", "c": "Elecciones"}, {"w": "Veda electoral", "c": "Política"}, {"w": "Cadena nacional", "c": "Política"}, {"w": "Paritarias", "c": "Trabajo"}, {"w": "Mercurio retrógrado", "c": "Astrología"}, {"w": "Carta natal", "c": "Astrología"}, {"w": "Tarot", "c": "Esoterismo"}, {"w": "Ouija", "c": "Paranormal"}, {"w": "Testamento", "c": "Legal"}, {"w": "Velorio", "c": "Evento"}, {"w": "Cremación", "c": "Servicio"}, {"w": "Seguro de vida", "c": "Finanzas"}, {"w": "All-in", "c": "Póker"}, {"w": "Tragamonedas", "c": "Casino"}, {"w": "Quiniela", "c": "Apuestas"}, {"w": "Amigo invisible", "c": "Evento"}, {"w": "Dividir la cuenta", "c": "Salida"}, {"w": "Propina rata", "c": "Salida"}, {"w": "Deuda sin pagar", "c": "Dinero"}, {"w": "Garantía propietaria", "c": "Alquiler"}, {"w": "Inmobiliaria", "c": "Rubro"}, {"w": "Flete", "c": "Mudanza"}, {"w": "Cortes de luz", "c": "Verano"}, {"w": "Vecino ruidoso", "c": "Edificio"}, {"w": "Inodoro tapado", "c": "Emergencia"}, {"w": "Baño sin papel", "c": "Emergencia"}, {"w": "Mal aliento", "c": "Incómodo"}, {"w": "Cierre abierto", "c": "Incómodo"}, {"w": "Humor negro", "c": "Comedia"}, {"w": "Doble sentido", "c": "Lenguaje"}, {"w": "Sarcasmo", "c": "Actitud"}, {"w": "Indirecta", "c": "Comunicación"}, {"w": "Coartada", "c": "Misterio"}, {"w": "Chisme de oficina", "c": "Trabajo"}, {"w": "Radio pasillo", "c": "Trabajo"}, {"w": "Amigo con derechos", "c": "Relaciones"}, {"w": "Despedida de año", "c": "Trabajo"}, {"w": "Licencia médica", "c": "Trabajo"}, {"w": "Feriado puente", "c": "Calendario"}, {"w": "Jet lag", "c": "Viaje"}, {"w": "Equipaje perdido", "c": "Viaje"}, {"w": "Aduana", "c": "Frontera"}, {"w": "Dólar blue", "c": "Economía"}, {"w": "Call center", "c": "Servicio"}]};
+
+    // ==========================================
+    // LÓGICA DE CONFIRMACIÓN DE CAMBIO DE JUEGO
+    // ==========================================
+    let pendingSwitchDirection = 0;
+
+    function isGameInProgress() {
+      const current = GAMES[state.activeGameIdx];
+      if (!current) return false;
+
+      switch (current.id) {
+        case 'unanimo':
+          // Hay partida si ya se jugó al menos una ronda o faltan palabras en el mazo
+          return state.rounds[state.currentCat] > 0;
+        case 'lobizones':
+          // Hay partida si el panel de juego está visible (ya se repartieron roles)
+          return document.getElementById('lobosPlayPanel') && document.getElementById('lobosPlayPanel').style.display === 'flex';
+        case 'amigos':
+          return state.admRound > 0;
+        case 'impostor':
+          return document.getElementById('impPlayPanel') && document.getElementById('impPlayPanel').style.display === 'flex';
+        case 'charla':
+          return state.charlaRounds[state.charlaCat] > 0;
+        case 'tabu':
+          return tabuTurnActive || tabuTimeLeft < 60;
+        case 'onda':
+          // Consideramos en curso si ya se reveló o se movió respecto al inicio
+          return ondaSession.revealed || ondaSession.guess !== 50;
+        case 'timesup':
+          return state.tuRemaining.length < state.tuBag.length || tuTurnActive;
+        case 'fake':
+          return document.getElementById('fakePlayPanel') && document.getElementById('fakePlayPanel').style.display === 'flex';
+        default:
+          return false;
+      }
+    }
+
+    function requestSwitchGame(direction) {
+      if (isGameInProgress()) {
+        pendingSwitchDirection = direction;
+        document.getElementById('confirmOverlay').classList.add('open');
+      } else {
+        executeSwitchGame(direction);
+      }
+    }
+
+    function closeConfirmModal(confirmed) {
+      document.getElementById('confirmOverlay').classList.remove('open');
+      if (confirmed) {
+        executeSwitchGame(pendingSwitchDirection);
+      }
+      pendingSwitchDirection = 0;
+    }
+
+    function executeSwitchGame(direction) {
+      if (timerInterval) {
+        clearInterval(timerInterval);
+        timerInterval = null;
+        releaseWakeLock();
+        document.getElementById('timerBtn').innerText = 'Reanudar tiempo';
+      }
+      if (tabuInterval) {
+        clearInterval(tabuInterval);
+        tabuInterval = null;
+        releaseWakeLock();
+        document.getElementById('tabuStartBtn').innerText = '▶ Reanudar';
+      }
+      if (tuInterval) {
+        clearInterval(tuInterval);
+        tuInterval = null;
+        releaseWakeLock();
+        document.getElementById('tuStartBtn').innerText = '▶ Reanudar';
+      }
+      if (lobosSession && lobosSession.phase === 'revealed') {
+        lobosSession.phase = 'hidden';
+        renderSecretCard();
+      }
+      if (impSession && impSession.phase === 'revealed') {
+        impSession.phase = 'hidden';
+        renderImpSecretCard();
+      }
+      if (fakeSession && fakeSession.phase === 'revealed') {
+        fakeSession.phase = 'hidden';
+        renderFakeSecretCard();
+      }
+
+      state.activeGameIdx = (state.activeGameIdx + direction + GAMES.length) % GAMES.length;
+      renderCarousel();
+      saveState();
+    }
