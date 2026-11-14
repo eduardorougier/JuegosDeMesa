@@ -316,6 +316,15 @@
       font-weight: 500;
     }
 
+    
+    .cat-pill.active[data-mode] {
+      background: rgba(255, 255, 255, 0.12);
+      color: var(--text);
+    }
+    [data-theme="light"] .cat-pill.active[data-mode] {
+      background: rgba(0, 0, 0, 0.1);
+    }
+
     /* SELECTOR DE CATEGORÍA REUTILIZABLE (NIÑOS / FAMILIA / ADULTOS) */
     .cat-selector {
       display: flex;
@@ -1348,6 +1357,26 @@
     }
     .team-score-card.t-a { border-top: 4px solid #ef4444; }
     .team-score-card.t-b { border-top: 4px solid #3b82f6; }
+    
+    .team-name-input {
+      background: transparent;
+      border: none;
+      color: var(--text);
+      font-size: 0.95rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      text-align: center;
+      width: 100%;
+      outline: none;
+      border-bottom: 1px dashed rgba(255,255,255,0.2);
+      margin-bottom: 0.3rem;
+      padding-bottom: 0.15rem;
+    }
+    .team-name-input:focus {
+      border-bottom-color: var(--accent);
+    }
+
     .team-name {
       font-size: 0.9rem;
       font-weight: 800;
@@ -1437,6 +1466,151 @@
       display: none;
     }
     .tutti-btn-stop:active { transform: scale(0.95); }
+
+    
+    /* ==========================================
+       ESTILOS DADOS
+       ========================================== */
+    .die {
+      width: 68px;
+      height: 68px;
+      background-color: #f8fafc;
+      border-radius: 14px;
+      box-shadow: inset 0 4px #ffffff, inset 0 -4px #cbd5e1, 0 6px 14px rgba(0,0,0,0.4);
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: repeat(3, 1fr);
+      padding: 10px;
+      gap: 4px;
+      transform-style: preserve-3d;
+    }
+    .die-dot {
+      background-color: #1e293b;
+      border-radius: 50%;
+      width: 100%;
+      height: 100%;
+      box-shadow: inset 0 2px rgba(0,0,0,0.5);
+    }
+    
+    .face-1 .die-dot:nth-child(1) { grid-column: 2; grid-row: 2; }
+    
+    .face-2 .die-dot:nth-child(1) { grid-column: 3; grid-row: 1; }
+    .face-2 .die-dot:nth-child(2) { grid-column: 1; grid-row: 3; }
+    
+    .face-3 .die-dot:nth-child(1) { grid-column: 3; grid-row: 1; }
+    .face-3 .die-dot:nth-child(2) { grid-column: 2; grid-row: 2; }
+    .face-3 .die-dot:nth-child(3) { grid-column: 1; grid-row: 3; }
+    
+    .face-4 .die-dot:nth-child(1) { grid-column: 1; grid-row: 1; }
+    .face-4 .die-dot:nth-child(2) { grid-column: 3; grid-row: 1; }
+    .face-4 .die-dot:nth-child(3) { grid-column: 1; grid-row: 3; }
+    .face-4 .die-dot:nth-child(4) { grid-column: 3; grid-row: 3; }
+    
+    .face-5 .die-dot:nth-child(1) { grid-column: 1; grid-row: 1; }
+    .face-5 .die-dot:nth-child(2) { grid-column: 3; grid-row: 1; }
+    .face-5 .die-dot:nth-child(3) { grid-column: 2; grid-row: 2; }
+    .face-5 .die-dot:nth-child(4) { grid-column: 1; grid-row: 3; }
+    .face-5 .die-dot:nth-child(5) { grid-column: 3; grid-row: 3; }
+    
+    .face-6 .die-dot:nth-child(1) { grid-column: 1; grid-row: 1; }
+    .face-6 .die-dot:nth-child(2) { grid-column: 3; grid-row: 1; }
+    .face-6 .die-dot:nth-child(3) { grid-column: 1; grid-row: 2; }
+    .face-6 .die-dot:nth-child(4) { grid-column: 3; grid-row: 2; }
+    .face-6 .die-dot:nth-child(5) { grid-column: 1; grid-row: 3; }
+    .face-6 .die-dot:nth-child(6) { grid-column: 3; grid-row: 3; }
+
+    @keyframes shakeDice {
+      0% { transform: rotate(0deg) scale(1) translateY(0); }
+      25% { transform: rotate(15deg) scale(1.1) translateY(-5px); }
+      50% { transform: rotate(-15deg) scale(1.1) translateY(-10px); }
+      75% { transform: rotate(15deg) scale(1.1) translateY(-5px); }
+      100% { transform: rotate(0deg) scale(1) translateY(0); }
+    }
+    .rolling-fast {
+      animation: shakeDice 0.2s infinite linear;
+      filter: blur(1px);
+    }
+
+    @keyframes bumpDice {
+      0% { transform: scale(1.3) translateY(-15px) rotate(10deg); filter: blur(2px); }
+      50% { transform: scale(0.9) translateY(5px) rotate(-5deg); filter: blur(0); }
+      100% { transform: scale(1) translateY(0) rotate(0deg); }
+    }
+    .final-bump {
+      animation: bumpDice 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    }
+
+    
+    /* ==========================================
+       ESTILOS GENERALA
+       ========================================== */
+    .die.kept {
+      border: 4px solid var(--ninos);
+      transform: translateY(-8px);
+      box-shadow: inset 0 4px #ffffff, inset 0 -4px #cbd5e1, 0 12px 20px rgba(74, 222, 128, 0.3);
+    }
+    .generala-table-wrap {
+      overflow-x: auto;
+      width: 100%;
+      margin-top: 0.5rem;
+      background: var(--card);
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    .generala-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+      color: var(--text);
+    }
+    .generala-table th, .generala-table td {
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 0.6rem 0.2rem;
+      text-align: center;
+      min-width: 45px;
+    }
+    .generala-table th {
+      background: var(--card-light);
+      font-weight: 800;
+      text-transform: uppercase;
+      font-size: 0.7rem;
+      letter-spacing: 0.5px;
+    }
+    .generala-table td:first-child {
+      font-weight: 800;
+      background: rgba(0,0,0,0.2);
+      text-align: left;
+      padding-left: 0.6rem;
+      color: var(--accent);
+      white-space: nowrap;
+    }
+    select.gen-input {
+      width: 100%;
+      appearance: none;
+      -webkit-appearance: none;
+      background: transparent;
+      border: none;
+      color: var(--text);
+      text-align: center;
+      text-align-last: center;
+      font-weight: 900;
+      font-size: 1.15rem;
+      outline: none;
+      padding: 0;
+      cursor: pointer;
+    }
+    select.gen-input option {
+      background: var(--card);
+      color: var(--text);
+      text-align: center;
+      font-weight: 700;
+    }
+    select.gen-input.crossed {
+      color: var(--danger);
+    }
+    select.gen-input:focus {
+      color: var(--accent);
+    }
 
     /* ANOTADOR DE PUNTOS COMPARTIDO */
     .scoreboard {
@@ -1577,7 +1751,89 @@
       color: var(--muted);
       padding: 0.6rem 0;
     }
-  </style>
+  
+    :root {
+      --truco-eq1: #fca5a5;
+      --truco-eq2: #7dd3fc;
+      --truco-bg1: rgba(239,68,68,0.2);
+      --truco-bg2: rgba(56,189,248,0.2);
+    }
+
+    [data-theme="light"] {
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --card-light: #e2e8f0;
+      --text: #0f172a;
+      --muted: #64748b;
+      
+      --accent: #0284c7;
+      --ninos: #16a34a;
+      --familia: #0284c7;
+      --adultos: #be185d;
+      
+      --truco-eq1: #ef4444;
+      --truco-eq2: #0284c7;
+      --truco-bg1: rgba(239,68,68,0.1);
+      --truco-bg2: rgba(2,132,199,0.1);
+    }
+
+    [data-theme="light"] .game-carousel, 
+    [data-theme="light"] .rules-modal, 
+    [data-theme="light"] .setup-panel,
+    [data-theme="light"] .setup-row,
+    [data-theme="light"] .scoreboard,
+    [data-theme="light"] .cat-selector,
+    [data-theme="light"] .player-row,
+    [data-theme="light"] .reveal-all-box,
+    [data-theme="light"] .onda-pole,
+    [data-theme="light"] .tutti-roulette-box,
+    [data-theme="light"] #storyDiceGrid,
+    [data-theme="light"] #generalaDiceArea,
+    [data-theme="light"] .tu-setup-strip,
+    [data-theme="light"] .generala-table-wrap,
+    [data-theme="light"] .team-score-card,
+    [data-theme="light"] .name-slot,
+    [data-theme="light"] .player-input,
+    [data-theme="light"] .time-pill {
+      border-color: rgba(0, 0, 0, 0.1) !important;
+    }
+
+    [data-theme="light"] .nav-arrow,
+    [data-theme="light"] .rules-close-x,
+    [data-theme="light"] .stepper-btn,
+    [data-theme="light"] .add-btn,
+    [data-theme="light"] .step-btn,
+    [data-theme="light"] .t-btn {
+      border-color: rgba(0, 0, 0, 0.15) !important;
+      background: var(--card-light);
+    }
+
+    [data-theme="light"] .btn { color: #ffffff !important; }
+    [data-theme="light"] .btn-charla, [data-theme="light"] .rules-ok-btn { color: #ffffff !important; }
+    [data-theme="light"] .secondary-btn { background: var(--card-light); color: var(--text); border-color: rgba(0,0,0,0.15); }
+
+    [data-theme="light"] .secret-card.hidden-state { background: radial-gradient(circle at top, #e2e8f0, #ffffff); }
+    [data-theme="light"] .secret-card.hidden-imp { background: radial-gradient(circle at top, #f3e8ff, #ffffff); }
+    [data-theme="light"] .secret-card.revealed-lobo { background: radial-gradient(circle at top, #fef2f2, #ffffff); border-color: #ef4444; }
+    [data-theme="light"] .secret-card.revealed-aldeano { background: radial-gradient(circle at top, #f0fdf4, #ffffff); border-color: #10b981; }
+    [data-theme="light"] .secret-card.revealed-imp { background: radial-gradient(circle at top, #fff1f2, #ffffff); border-color: #f43f5e; }
+    [data-theme="light"] .secret-card.revealed-word { background: radial-gradient(circle at top, #f0f9ff, #ffffff); border-color: #38bdf8; }
+    
+    [data-theme="light"] .charla-card.ninos { background: radial-gradient(circle at top, #dcfce7, #ffffff); }
+    [data-theme="light"] .charla-card.familia { background: radial-gradient(circle at top, #e0f2fe, #ffffff); }
+    [data-theme="light"] .charla-card.adultos { background: radial-gradient(circle at top, #fce7f3, #ffffff); }
+    [data-theme="light"] .adm-card { background: radial-gradient(circle at top, #fef3c7, #ffffff); }
+    
+    [data-theme="light"] .player-turn-badge, [data-theme="light"] .tap-cta { background: rgba(0, 0, 0, 0.06); }
+    
+    [data-theme="light"] .die { background-color: #ffffff; box-shadow: inset 0 4px #f8fafc, inset 0 -4px #e2e8f0, 0 4px 10px rgba(0,0,0,0.15); }
+    [data-theme="light"] .die-dot { background-color: #334155; }
+    [data-theme="light"] .generala-table th, [data-theme="light"] .generala-table td { border-color: rgba(0,0,0,0.1); }
+    [data-theme="light"] .generala-table td:first-child { background: rgba(0,0,0,0.05); }
+
+    [data-theme="light"] #storyDiceGrid div { background: #f1f5f9 !important; border: 1px solid rgba(0,0,0,0.1); }
+
+</style>
 </head>
 <body>
 
@@ -1587,7 +1843,8 @@
       <button class="nav-arrow" onclick="switchGame(-1)" aria-label="Juego anterior">&#8249;</button>
       <div class="carousel-center">
         <div class="carousel-kicker-row">
-          <span class="game-kicker" id="gameCounterLabel">1/13</span>
+          <span class="game-kicker" id="gameCounterLabel">1/20</span>
+          <button type="button" class="help-pill-btn" onclick="toggleTheme()" aria-label="Modo Claro/Oscuro" id="themeToggleBtn">☀️</button>
           <button type="button" class="help-pill-btn" onclick="openGameRules()" aria-label="Cómo se juega">Reglas</button>
           <button type="button" class="reset-game-pill-btn" onclick="resetCurrentGame()" aria-label="Reiniciar juego actual">↻ Reiniciar</button>
         </div>
@@ -1685,6 +1942,12 @@
             <span class="role-pill-num" id="summaryVillagers">6</span>
           </div>
         </div>
+
+        <div class="names-grid" id="lobosNamesGrid"></div>
+
+        <button type="button" class="copy-names-btn" id="lobosCopyFromScoreBtn" onclick="importLobosNamesFromScoreboard()" style="display:none; border-color: rgba(239, 68, 68, 0.45); color: #fca5a5;">
+          ↻ Traer nombres del anotador de abajo
+        </button>
 
         <button class="btn-lobos" onclick="startLobosGame()">Repartir tarjetas</button>
       </div>
@@ -2055,21 +2318,33 @@
     <main id="view-mimica" class="game-view">
       <div class="sub-header">
         <span class="game-subtitle">Adivinen actuando sin hablar</span>
-        <div class="counter" id="mimicaCounter">100 tarjetas rest.</div>
+        <div class="counter" id="mimicaCounter">450 tarjetas rest.</div>
       </div>
 
-      <div class="cat-selector" id="mimicaCatSelector">
-        <button class="cat-pill active" data-cat="acciones" onclick="setMimicaCategory('acciones', this)">
+      <div class="cat-selector" id="mimicaLevelSelector">
+        <button class="cat-pill" data-lvl="ninos" onclick="setMimicaLevel('ninos', this)">
+          <span class="cat-title">Niños</span>
+          <span class="cat-age">+6 años</span>
+        </button>
+        <button class="cat-pill active" data-lvl="familia" onclick="setMimicaLevel('familia', this)">
+          <span class="cat-title">Familia</span>
+          <span class="cat-age">+10 años</span>
+        </button>
+        <button class="cat-pill" data-lvl="adultos" onclick="setMimicaLevel('adultos', this)">
+          <span class="cat-title">Adultos</span>
+          <span class="cat-age">+18 años</span>
+        </button>
+      </div>
+
+      <div class="cat-selector" id="mimicaCatSelector" style="margin-top: 0.2rem;">
+        <button class="cat-pill active" data-cat="acciones" onclick="toggleMimicaCat('acciones', this)">
           <span class="cat-title">Acciones</span>
-          <span class="cat-age">Cosas que hacemos</span>
         </button>
-        <button class="cat-pill" data-cat="peliculas" onclick="setMimicaCategory('peliculas', this)">
+        <button class="cat-pill active" data-cat="peliculas" onclick="toggleMimicaCat('peliculas', this)">
           <span class="cat-title">Películas</span>
-          <span class="cat-age">Cine y TV</span>
         </button>
-        <button class="cat-pill" data-cat="personajes" onclick="setMimicaCategory('personajes', this)">
+        <button class="cat-pill active" data-cat="personajes" onclick="toggleMimicaCat('personajes', this)">
           <span class="cat-title">Personajes</span>
-          <span class="cat-age">Reales / Ficción</span>
         </button>
       </div>
 
@@ -2083,7 +2358,7 @@
       <!-- ANOTADOR POR EQUIPOS INTEGRADO EN MÍMICA -->
       <div class="team-score-grid">
         <div class="team-score-card t-a">
-          <span class="team-name">Equipo A 🔴</span>
+          <input type="text" class="team-name-input" id="teamNameA" value="Equipo A 🔴" oninput="updateTeamName('A', this.value)" onfocus="this.select()">
           <div class="team-pts-row">
             <button class="t-btn" onclick="changeTeamScore('A', -1)">-</button>
             <span class="t-val" id="scoreTeamA">0</span>
@@ -2091,7 +2366,7 @@
           </div>
         </div>
         <div class="team-score-card t-b">
-          <span class="team-name">Equipo B 🔵</span>
+          <input type="text" class="team-name-input" id="teamNameB" value="Equipo B 🔵" oninput="updateTeamName('B', this.value)" onfocus="this.select()">
           <div class="team-pts-row">
             <button class="t-btn" onclick="changeTeamScore('B', -1)">-</button>
             <span class="t-val" id="scoreTeamB">0</span>
@@ -2102,15 +2377,15 @@
 
       <div class="controls-row">
         <button class="secondary-btn" id="mimicaTimerBtn" onclick="toggleMimicaTimer()">⏳ Iniciar 60s</button>
-        <button class="reset-btn" onclick="resetMimicaDeck()">Mezclar mazo</button>
+        <button class="reset-btn" onclick="resetMimicaDeck()">Mezclar activo</button>
       </div>
     </main>
 
     <!-- VISTA 11: TUTTI FRUTTI -->
     <main id="view-tuttifruti" class="game-view">
       <div class="sub-header">
-        <span class="game-subtitle">Ruleta rápida de letras</span>
-        <div class="counter">A — Z</div>
+        <span class="game-subtitle">Ruleta rápida sin repetir</span>
+        <div class="counter" id="tuttiCounter">27 letras rest.</div>
       </div>
 
       <div class="tutti-roulette-box">
@@ -2227,6 +2502,238 @@
       </div>
     </main>
 
+    <!-- VISTA 14: BOMBA DE TIEMPO -->
+    <main id="view-bomba" class="game-view">
+      <div class="sub-header">
+        <span class="game-subtitle">Pasa el celu antes que explote</span>
+        <div class="counter" id="bombaCounter">Listo</div>
+      </div>
+      <div class="cat-selector" id="bombaCatSelector">
+        <button class="cat-pill active" data-cat="ninos" onclick="setBombaCategory('ninos', this)">
+          <span class="cat-title">Niños</span>
+        </button>
+        <button class="cat-pill" data-cat="familia" onclick="setBombaCategory('familia', this)">
+          <span class="cat-title">Familia</span>
+        </button>
+        <button class="cat-pill" data-cat="adultos" onclick="setBombaCategory('adultos', this)">
+          <span class="cat-title">Adultos</span>
+        </button>
+      </div>
+
+      <div class="charla-card familia" id="bombaCardBox" style="min-height: 220px; position:relative; overflow:hidden;">
+        <span class="charla-tag" id="bombaBadge" style="position:relative; z-index:2;">Tema:</span>
+        <div class="charla-question" id="bombaWordDisplay" style="font-size: 1.8rem; position:relative; z-index:2;">Toca INICIAR BOMBA</div>
+        
+        <div id="bombaTickVisual" style="position:absolute; top:0; left:0; width:100%; height:100%; background:radial-gradient(circle, rgba(239, 68, 68, 0.4) 0%, transparent 70%); opacity:0; transition: opacity 0.1s ease; pointer-events:none;"></div>
+      </div>
+
+      <button class="btn-lobos" id="bombaActionBtn" style="font-size:1.3rem; padding: 1.5rem;" onclick="handleBombaAction()">💣 Iniciar Bomba</button>
+
+      <div class="controls-row">
+        <button class="reset-btn" onclick="resetBomba()">Frenar / Resetear</button>
+      </div>
+    </main>
+
+    <!-- VISTA 15: DADOS DE HISTORIAS -->
+    <main id="view-story" class="game-view">
+      <div class="sub-header">
+        <span class="game-subtitle">Inventá cuentos con íconos</span>
+        <div class="counter">9 Dados</div>
+      </div>
+      <div class="cat-selector" id="storyCatSelector">
+        <button class="cat-pill active" data-cat="ninos" onclick="setStoryCategory('ninos', this)">
+          <span class="cat-title">Fantasía</span>
+        </button>
+        <button class="cat-pill" data-cat="familia" onclick="setStoryCategory('familia', this)">
+          <span class="cat-title">Cotidianos</span>
+        </button>
+        <button class="cat-pill" data-cat="adultos" onclick="setStoryCategory('adultos', this)">
+          <span class="cat-title">Adultos</span>
+        </button>
+      </div>
+
+      <div style="background:var(--card); padding:1rem; border-radius:24px; border:2px solid rgba(255,255,255,0.1); display:grid; grid-template-columns:repeat(3, 1fr); gap:0.5rem;" id="storyDiceGrid">
+        <div style="background:var(--bg); aspect-ratio:1; display:flex; align-items:center; justify-content:center; font-size:3rem; border-radius:16px;">❓</div>
+        <div style="background:var(--bg); aspect-ratio:1; display:flex; align-items:center; justify-content:center; font-size:3rem; border-radius:16px;">❓</div>
+        <div style="background:var(--bg); aspect-ratio:1; display:flex; align-items:center; justify-content:center; font-size:3rem; border-radius:16px;">❓</div>
+        <div style="background:var(--bg); aspect-ratio:1; display:flex; align-items:center; justify-content:center; font-size:3rem; border-radius:16px;">❓</div>
+        <div style="background:var(--bg); aspect-ratio:1; display:flex; align-items:center; justify-content:center; font-size:3rem; border-radius:16px;">❓</div>
+        <div style="background:var(--bg); aspect-ratio:1; display:flex; align-items:center; justify-content:center; font-size:3rem; border-radius:16px;">❓</div>
+        <div style="background:var(--bg); aspect-ratio:1; display:flex; align-items:center; justify-content:center; font-size:3rem; border-radius:16px;">❓</div>
+        <div style="background:var(--bg); aspect-ratio:1; display:flex; align-items:center; justify-content:center; font-size:3rem; border-radius:16px;">❓</div>
+        <div style="background:var(--bg); aspect-ratio:1; display:flex; align-items:center; justify-content:center; font-size:3rem; border-radius:16px;">❓</div>
+      </div>
+
+      <button class="btn" style="background:linear-gradient(135deg, #f59e0b, #d97706); color:#fff; font-size:1.2rem;" onclick="rollStoryDice()">🎲 Tirar Dados</button>
+    </main>
+
+    <!-- VISTA 16: SOLO UNA -->
+    <main id="view-solouna" class="game-view">
+      <div class="sub-header">
+        <span class="game-subtitle">Cooperativo de pistas de 1 palabra</span>
+        <div class="counter" id="soloCounter">Cartas rest.</div>
+      </div>
+      <div class="cat-selector" id="soloCatSelector">
+        <button class="cat-pill active" data-cat="ninos" onclick="setSoloCategory('ninos', this)">
+          <span class="cat-title">Niños</span>
+        </button>
+        <button class="cat-pill" data-cat="familia" onclick="setSoloCategory('familia', this)">
+          <span class="cat-title">Familia</span>
+        </button>
+        <button class="cat-pill" data-cat="adultos" onclick="setSoloCategory('adultos', this)">
+          <span class="cat-title">Adultos</span>
+        </button>
+      </div>
+
+      <div class="card familia" id="soloCardBox" style="min-height: 200px;">
+        <span class="badge" id="soloBadge">La palabra es...</span>
+        <div class="word" id="soloWordDisplay" style="font-size:2.2rem; filter: blur(8px); transition: filter 0.3s ease;">*******</div>
+      </div>
+
+      <div class="controls-row">
+        <button class="secondary-btn" id="soloToggleBtn" onclick="toggleSoloWord()" style="flex:2; font-size:1.1rem; padding:1rem;">👁️ Ver / Ocultar</button>
+        <button class="btn familia" style="flex:2; font-size:1.1rem; padding:1rem;" onclick="nextSoloCard()">Siguiente ⏭</button>
+      </div>
+    </main>
+
+    <!-- VISTA 17: TRIVIA DE APUESTAS -->
+    <main id="view-trivia" class="game-view">
+      <div class="sub-header">
+        <span class="game-subtitle">Adiviná el número o apostá al que sabe</span>
+        <div class="counter" id="triviaCounter">Cartas rest.</div>
+      </div>
+      <div class="cat-selector" id="triviaCatSelector">
+        <button class="cat-pill active" data-cat="ninos" onclick="setTriviaCategory('ninos', this)">
+          <span class="cat-title">Niños</span>
+        </button>
+        <button class="cat-pill" data-cat="familia" onclick="setTriviaCategory('familia', this)">
+          <span class="cat-title">Familia</span>
+        </button>
+        <button class="cat-pill" data-cat="adultos" onclick="setTriviaCategory('adultos', this)">
+          <span class="cat-title">Adultos</span>
+        </button>
+      </div>
+
+      <div class="charla-card familia" id="triviaCardBox">
+        <span class="charla-tag" id="triviaBadge">Pregunta</span>
+        <div class="charla-question" id="triviaQuestionDisplay" style="font-size: 1.4rem;">Toca Siguiente para empezar</div>
+        <div id="triviaAnswerBox" style="display:none; width:100%; margin-top:1rem; padding:1rem; background:rgba(255,255,255,0.1); border-radius:12px;">
+            <div style="font-size:0.8rem; color:var(--muted); text-transform:uppercase; font-weight:800; letter-spacing:1px;">Respuesta exacta:</div>
+            <div id="triviaAnswerDisplay" style="font-size:2.5rem; font-weight:900; color:#4ade80;">0</div>
+        </div>
+      </div>
+
+      <div class="controls-row">
+        <button class="secondary-btn" id="triviaRevealBtn" onclick="revealTrivia()" style="flex:2; font-size:1rem; padding:1rem;" disabled>Revelar Respuesta</button>
+        <button class="btn familia" style="flex:2; font-size:1rem; padding:1rem;" onclick="nextTriviaCard()">Siguiente Pregunta</button>
+      </div>
+    </main>
+
+    <!-- VISTA 18: TIRADA DE DADOS -->
+    <main id="view-dados" class="game-view">
+      <div class="sub-header">
+        <span class="game-subtitle">Para jugar Catan, Generala o 10.000</span>
+        <div class="counter">Virtual</div>
+      </div>
+      
+      <div class="setup-row" style="margin-bottom: 0.5rem; background:var(--card);">
+          <div class="setup-label-group">
+            <span class="setup-title">Cantidad de dados</span>
+          </div>
+          <div class="stepper">
+            <button class="stepper-btn" onclick="adjustDiceCount(-1)">-</button>
+            <span class="stepper-val" id="diceCountVal">5</span>
+            <button class="stepper-btn" onclick="adjustDiceCount(1)">+</button>
+          </div>
+      </div>
+
+      <div style="background:var(--card); padding:2rem 1.5rem; border-radius:24px; border:2px solid rgba(255,255,255,0.1); display:flex; flex-wrap:wrap; align-items:center; justify-content:center; gap:1.2rem; min-height:220px;" id="diceDisplayArea">
+        <!-- Rendered by JS -->
+      </div>
+
+      <button class="btn" style="background:linear-gradient(135deg, #10b981, #047857); color:#fff; font-size:1.4rem; padding:1.25rem;" onclick="rollGenericDice()">🎲 Tirar Dados</button>
+    </main>
+
+    <!-- VISTA 19: GENERALA -->
+    <main id="view-generala" class="game-view">
+      <div class="sub-header">
+        <span class="game-subtitle">El clásico de los 5 dados</span>
+        <div class="counter" id="genRollCounter">Tirada 0/3</div>
+      </div>
+      
+      <div style="background:var(--card); padding:1.5rem 1rem; border-radius:24px; border:2px solid rgba(255,255,255,0.1); display:flex; flex-wrap:wrap; align-items:center; justify-content:center; gap:0.8rem; min-height:160px;" id="generalaDiceArea">
+        <!-- Dados generados por JS -->
+      </div>
+
+      <div class="controls-row">
+        <button class="btn" id="genRollBtn" style="flex:2; background:linear-gradient(135deg, #10b981, #047857); color:#fff; font-size:1.1rem; padding:1rem;" onclick="rollGenerala()">🎲 Tirar Dados</button>
+        <button class="secondary-btn" style="flex:1; font-size:0.9rem;" onclick="nextGeneralaTurn()">Siguiente turno</button>
+      </div>
+
+      <div class="rules-tip-box" style="text-align:left; margin-top:0.2rem; font-size:0.75rem;">
+        💡 Tocá los dados para "guardarlos". En la tabla escribí el puntaje o poné una <strong>X</strong> para tachar.
+      </div>
+
+      <div class="generala-table-wrap">
+        <table class="generala-table" id="generalaTable">
+           <!-- Tabla inyectada por JS -->
+        </table>
+      </div>
+    </main>
+
+    <!-- VISTA 20: ANOTADOR DE TRUCO / PUNTOS -->
+    <main id="view-anotador" class="game-view">
+      <div class="sub-header">
+        <span class="game-subtitle">Anotador en papel</span>
+        <div class="counter" id="anotadorMax">A 30 pts</div>
+      </div>
+      
+      <div class="cat-selector" id="anotadorModeSelector">
+        <button class="cat-pill active" data-mode="truco" onclick="setAnotadorMode('truco', this)">
+          <span class="cat-title">Truco (Cuadrados)</span>
+        </button>
+        <button class="cat-pill" data-mode="numeros" onclick="setAnotadorMode('numeros', this)">
+          <span class="cat-title">Números Normales</span>
+        </button>
+      </div>
+
+      <div style="display:flex; width:100%; gap:0.5rem; margin-top:0.2rem;">
+        <!-- Equipo 1 -->
+        <div style="flex:1; background:var(--card); border-radius:20px; border:2px solid var(--truco-bg1); padding:0.8rem; display:flex; flex-direction:column; align-items:center; gap:0.8rem;">
+          <input type="text" class="team-name-input" id="anoName1" value="Nosotros" style="font-size:1.1rem; color:var(--truco-eq1); border-bottom:1px dashed var(--truco-eq1);" onchange="updateAnoName('eq1', this.value)" onfocus="this.select()">
+          
+          <div id="anoVisual1" style="min-height: 230px; display:flex; flex-direction:column; align-items:center; justify-content:flex-start; gap:0.4rem; width:100%;">
+            <!-- Truco boxes or giant number -->
+          </div>
+          
+          <div style="display:flex; gap:0.4rem; width:100%; margin-top:auto;">
+            <button class="t-btn" style="flex:1; background:var(--truco-bg1); color:var(--truco-eq1); font-size:1.3rem; height: 42px;" onclick="changeAnoScore('eq1', -1)">-</button>
+            <button class="t-btn" style="flex:1; background:var(--truco-bg1); color:var(--truco-eq1); font-size:1.1rem; height: 42px;" onclick="changeAnoScore('eq1', 1)">+1</button>
+            <button class="t-btn" style="flex:1; background:var(--truco-bg1); color:var(--truco-eq1); font-size:1.1rem; height: 42px;" onclick="changeAnoScore('eq1', 3)">+3</button>
+          </div>
+        </div>
+
+        <!-- Equipo 2 -->
+        <div style="flex:1; background:var(--card); border-radius:20px; border:2px solid var(--truco-bg2); padding:0.8rem; display:flex; flex-direction:column; align-items:center; gap:0.8rem;">
+          <input type="text" class="team-name-input" id="anoName2" value="Ellos" style="font-size:1.1rem; color:var(--truco-eq2); border-bottom:1px dashed var(--truco-eq2);" onchange="updateAnoName('eq2', this.value)" onfocus="this.select()">
+          
+          <div id="anoVisual2" style="min-height: 230px; display:flex; flex-direction:column; align-items:center; justify-content:flex-start; gap:0.4rem; width:100%;">
+            <!-- Truco boxes or giant number -->
+          </div>
+          
+          <div style="display:flex; gap:0.4rem; width:100%; margin-top:auto;">
+            <button class="t-btn" style="flex:1; background:var(--truco-bg2); color:var(--truco-eq2); font-size:1.3rem; height: 42px;" onclick="changeAnoScore('eq2', -1)">-</button>
+            <button class="t-btn" style="flex:1; background:var(--truco-bg2); color:var(--truco-eq2); font-size:1.1rem; height: 42px;" onclick="changeAnoScore('eq2', 1)">+1</button>
+            <button class="t-btn" style="flex:1; background:var(--truco-bg2); color:var(--truco-eq2); font-size:1.1rem; height: 42px;" onclick="changeAnoScore('eq2', 3)">+3</button>
+          </div>
+        </div>
+      </div>
+      
+      <div class="controls-row">
+        <button class="reset-btn" onclick="resetAnotador()">Poner el partido en 0</button>
+      </div>
+    </main>
+
     <!-- ANOTADOR DE PUNTOS UNIVERSAL PARA LA MESA -->
     <section class="scoreboard">
       <div class="score-header">
@@ -2275,7 +2782,14 @@
       { id: 'mimica', title: 'DÍGALO CON MÍMICA' },
       { id: 'tuttifruti', title: 'TUTTI FRUTTI' },
       { id: 'espia', title: 'EL ESPÍA' },
-      { id: 'preferis', title: '¿QUÉ PREFERÍS?' }
+      { id: 'preferis', title: '¿QUÉ PREFERÍS?' },
+      { id: 'bomba', title: 'BOMBA DE TIEMPO' },
+      { id: 'story', title: 'DADOS DE HISTORIAS' },
+      { id: 'solouna', title: 'SOLO UNA' },
+      { id: 'trivia', title: 'TRIVIA DE APUESTAS' },
+      { id: 'dados', title: 'TIRADA DE DADOS' },
+      { id: 'generala', title: 'GENERALA' },
+      { id: 'anotador', title: 'ANOTADOR TRUCO' }
     ];
 
     const DECKS = {"ninos": ["Perro", "Gato", "León", "Elefante", "Jirafa", "Mono", "Tigre", "Oso", "Cebra", "Hipopótamo", "Cocodrilo", "Serpiente", "Tortuga", "Conejo", "Caballo", "Vaca", "Cerdo", "Oveja", "Gallina", "Pato", "Pingüino", "Delfín", "Ballena", "Tiburón", "Pulpo", "Cangrejo", "Estrella de mar", "Medusa", "Foca", "Caballito de mar", "Águila", "Búho", "Loro", "Flamenco", "Tucán", "Paloma", "Colibrí", "Pavo real", "Avestruz", "Murciélago", "Mariposa", "Abeja", "Hormiga", "Araña", "Mariquita", "Grillo", "Mosquito", "Caracol", "Gusano", "Libélula", "Rana", "Sapo", "Camaleón", "Iguana", "Dinosaurio", "Tiranosaurio", "Dragón", "Unicornio", "Canguro", "Koala", "Panda", "Lobo", "Zorro", "Ardilla", "Erizo", "Castor", "Mapache", "Ciervo", "Camello", "Llama", "Burro", "Cabra", "Ratón", "Hámster", "Pez payaso", "Pez globo", "Reno", "Oso polar", "Morsa", "Gorila", "Helado", "Pizza", "Hamburguesa", "Papas fritas", "Chocolate", "Caramelo", "Chupetín", "Alfajor", "Dulce de leche", "Galletitas", "Torta de cumpleaños", "Pochoclo", "Pancho", "Milanesa", "Fideos", "Arroz", "Sopa", "Ensalada", "Huevo frito", "Queso", "Pan", "Manteca", "Mermelada", "Miel", "Cereal", "Leche", "Jugo de naranja", "Limonada", "Licuado", "Chocolatada", "Manzana", "Banana", "Naranja", "Frutilla", "Sandía", "Melón", "Uva", "Durazno", "Pera", "Ananá", "Limón", "Cereza", "Kiwi", "Zanahoria", "Tomate", "Lechuga", "Papa", "Choclo", "Brócoli", "Zapallo", "Empanada", "Taco", "Sushi", "Donas", "Medialuna", "Churros", "Panqueques", "Waffles", "Gelatina", "Flan", "Budín", "Magdalena", "Malvavisco", "Algodón de azúcar", "Gomitas", "Chicle", "Turrón", "Huevos de Pascua", "Rosca de Reyes", "Sándwich", "Tostada", "Yogur", "Aceituna", "Palta", "Salchicha", "Escuela", "Mochila", "Lápiz", "Goma de borrar", "Sacapuntas", "Regla", "Tijera", "Plasticola", "Cuaderno", "Carpeta", "Cartuchera", "Marcadores", "Lápices de colores", "Crayones", "Témperas", "Pincel", "Acuarelas", "Plastilina", "Pizarrón", "Tiza", "Fibrón", "Maestra", "Profesor", "Recreo", "Patio", "Aula", "Biblioteca", "Libro", "Cuento", "Diccionario", "Mapa", "Globo terráqueo", "Compás", "Escuadra", "Calculadora", "Computadora", "Tablet", "Campana", "Timbre", "Bandera", "Acto escolar", "Excursión", "Tarea", "Examen", "Boletín", "Guardapolvo", "Uniforme", "Merienda", "Cantimplora", "Lonchera", "Microscopio", "Lupa", "Imán", "Flauta", "Tambor", "Pelota", "Muñeca", "Auto de juguete", "Tren de juguete", "Bloques", "Rompecabezas", "Yoyó", "Trompo", "Barrilete", "Patines", "Patineta", "Bicicleta", "Triciclo", "Monopatín", "Tobogán", "Hamaca", "Sube y baja", "Calesita", "Pelotero", "Castillo inflable", "Escondidas", "Mancha", "Rayuela", "Saltar la soga", "Piedra, papel o tijera", "Adivinanza", "Trabalenguas", "Chiste", "Títere", "Marioneta", "Disfraz", "Antifaz", "Varita mágica", "Espada de madera", "Escudo", "Corona", "Peluche", "Osito", "Robot", "Cohete", "Canicas", "Bolitas", "Cartas", "Dados", "Dominó", "Ajedrez", "Damas", "Lotería", "Bingo", "Videojuego", "Joystick", "Consola", "Burbuja", "Pistola de agua", "Bombucha", "Aro hula-hula", "Cama elástica", "Zancos", "Casa del árbol", "Carpa", "Linterna", "Binoculares", "Walkie-talkie", "Alcancia", "Figuritas", "Superhéroe", "Princesa", "Príncipe", "Rey", "Reina", "Caballero", "Mago", "Bruja", "Hada", "Duende", "Gigante", "Ogro", "Pirata", "Sirena", "Fantasma", "Vampiro", "Momia", "Hombre lobo", "Zombi", "Monstruo", "Extraterrestre", "Astronauta", "Ninja", "Samurái", "Vaquero", "Indio", "Detective", "Espía", "Payaso", "Acróbata", "Malabarista", "Domador", "Genio de la lámpara", "Caperucita Roja", "Pinocho", "Cenicienta", "Blancanieves", "Peter Pan", "Papá Noel", "Ratón Pérez", "Reyes Magos", "Conejo de Pascua", "Elfo", "Centauro", "Fénix", "Pegaso", "Yeti", "Cíclope", "Troll", "Gnomo", "Capitán", "Marinero", "Explorador", "Científico loco", "Inventor", "Cazador de tesoros", "Espantapájaros", "Muñeco de nieve", "Ángel", "Playa", "Mar", "Océano", "Isla", "Montaña", "Volcán", "Bosque", "Selva", "Desierto", "Río", "Lago", "Cascada", "Cueva", "Nieve", "Hielo", "Nube", "Lluvia", "Tormenta", "Arcoíris", "Sol", "Luna", "Estrella", "Planeta", "Espacio", "Galaxia", "Cometa", "Tierra", "Cielo", "Viento", "Trueno", "Relámpago", "Charco", "Barro", "Arena", "Piedra", "Árbol", "Flor", "Pasto", "Hoja", "Rama", "Semilla", "Raíz", "Jardín", "Plaza", "Parque", "Zoológico", "Acuario", "Granja", "Circo", "Cine", "Teatro", "Museo", "Castillo", "Palacio", "Faro", "Puente", "Túnel", "Piscina", "Camping", "Hospital", "Cuartel de bomberos", "Comisaría", "Supermercado", "Panadería", "Juguetería", "Casa", "Cama", "Almohada", "Frazada", "Pijama", "Pantuflas", "Cepillo de dientes", "Pasta dental", "Jabón", "Shampoo", "Toalla", "Espejo", "Peine", "Bañera", "Ducha", "Inodoro", "Sillón", "Mesa", "Silla", "Lámpara", "Reloj", "Teléfono", "Televisor", "Control remoto", "Heladera", "Horno", "Escoba", "Balde", "Llave", "Puerta", "Ventana", "Escalera", "Techo", "Chimenea", "Zapatillas", "Medias", "Pantalón", "Remera", "Buzo", "Campera", "Gorro", "Bufanda", "Guantes", "Paraguas", "Piloto de lluvia", "Gafas de sol", "Malla", "Ojotas", "Cinturón", "Bolso", "Cumpleaños", "Piñata", "Velitas", "Regalo", "Globo", "Auto", "Colectivo", "Tren", "Subte", "Avión", "Helicóptero", "Barco", "Submarino", "Cohete espacial", "Camión", "Ambulancia", "Camión de bomberos", "Patrullero", "Tractor", "Grúa", "Moto", "Globo aerostático", "Teleférico", "Fútbol", "Básquet", "Tenis", "Natación", "Karate", "Taekwondo", "Gimnasia artística", "Danza", "Atletismo", "Ciclismo", "Surf", "Esquí", "Rojo", "Azul", "Amarillo", "Verde", "Violeta", "Rosa", "Blanco", "Negro", "Dorado", "Círculo", "Cuadrado", "Triángulo", "Estrella fugaz", "Corazón", "Granjero", "Bombero"], "familia": ["Rockero", "Azul", "Asado", "Playa", "Invierno", "Verano", "Otoño", "Primavera", "Navidad", "Año Nuevo", "Cumpleaños", "Boda", "Luna de miel", "Mudanza", "Vacaciones", "Camping", "Hotel", "Aeropuerto", "Avión", "Crucero", "Tren", "Subte", "Colectivo", "Taxi", "Autopista", "Peaje", "Estación de servicio", "Taller mecánico", "Supermercado", "Feria", "Shopping", "Cine", "Teatro", "Concierto", "Estadio", "Gimnasio", "Peluquería", "Dentista", "Hospital", "Farmacia", "Banco", "Correo", "Biblioteca", "Museo", "Zoológico", "Parque de diversiones", "Circo", "Casino", "Restaurante", "Pizzería", "Cafetería", "Heladería", "Panadería", "Carnicería", "Verdulería", "Kiosco", "Ferretería", "Librería", "Juguetería", "Veterinaria", "Granja", "Campo", "Montaña", "Desierto", "Selva", "Bosque", "Isla desierta", "Volcán", "Terremoto", "Tormenta", "Inundación", "Apagón", "Incendio", "Robo", "Juicio", "Cárcel", "Detective", "Espía", "Vampiro", "Fantasma", "Extraterrestre", "Pirata", "Vaquero", "Astronauta", "Mago", "Payaso", "Científico", "Artista", "Fotógrafo", "Periodista", "Abogado", "Arquitecto", "Ingeniero", "Médico", "Enfermero", "Bombero", "Policía", "Piloto", "Capitán", "Chef", "Desayuno", "Almuerzo", "Merienda", "Cena", "Picada", "Mate", "Café", "Té", "Vino", "Cerveza", "Pizza", "Empanadas", "Milanesa", "Pasta", "Sushi", "Hamburguesa", "Ensalada", "Postre", "Helado", "Chocolate", "Domingo en familia", "Sobremesa", "Reunión familiar", "Foto familiar", "Álbum de fotos", "Herencia", "Apellido", "Árbol genealógico", "Mascota", "Pasear al perro", "Limpieza general", "Lavar los platos", "Lavar la ropa", "Planchar", "Cocinar", "Hacer las compras", "Lista del súper", "Heladera vacía", "Tupper", "Microondas", "Lavarropas", "Aspiradora", "Aire acondicionado", "Estufa", "Ventilador", "Cortina", "Alfombra", "Sillón", "Colchón", "Almohada", "Despertador", "Siesta", "Insomnio", "Pesadilla", "Sueño", "Bostezo", "Resfrío", "Fiebre", "Curita", "Termómetro", "Botiquín", "Receta médica", "Análisis de sangre", "Vacuna", "Anteojos", "Lentes de contacto", "Paraguas", "Valija", "Pasaporte", "Documento", "Billetera", "Llaves", "Llave perdida", "Celular sin batería", "Cargador", "Wi-Fi", "Contraseña", "Control remoto", "Televisor", "Serie", "Película", "Noticiero", "Publicidad", "Radio", "Podcast", "Música", "Guitarra", "Piano", "Batería", "Karaoke", "Baile", "Fiesta", "Disfraz", "Carnaval", "Halloween", "Pascuas", "Día del Padre", "Día de la Madre", "Día del Niño", "Día del Amigo", "Regalo", "Sorpresa", "Tarjeta de felicitación", "Ramo de flores", "Bombones", "Brindis", "Vela", "Fuegos artificiales", "Globos", "Piñata", "Jardín", "Parrilla", "Piscina", "Balcón", "Terraza", "Garaje", "Sótano", "Altillo", "Ascensor", "Escalera", "Fútbol", "Mundial", "Penal", "Árbitro", "Gol", "Hinchada", "Camiseta", "Tenis", "Pádel", "Básquet", "Vóley", "Rugby", "Golf", "Natación", "Ciclismo", "Maratón", "Boxeo", "Artes marciales", "Yoga", "Meditación", "Ajedrez", "Truco", "Póker", "Chinchón", "Generala", "Dominó", "Rompecabezas", "Crucigrama", "Sopa de letras", "Sudoku", "Bingo", "Lotería", "Rifa", "Bingo familiar", "Juego de mesa", "Dados", "Cartas", "Fichas", "Tablero", "Trampa", "Empate", "Victoria", "Derrota", "Trofeo", "Medalla", "Entrenamiento", "Lesión", "Calambre", "Transpiración", "Ducha fría", "Pesca", "Caza", "Senderismo", "Escalada", "Esquí", "Surf", "Buceo", "Navegar", "Velero", "Kayak", "Bicicleta", "Patineta", "Patines", "Lectura", "Novela", "Historieta", "Poesía", "Pintura", "Escultura", "Cerámica", "Carpintería", "Costura", "Tejido", "Jardinería", "Huerta", "Colección", "Antigüedad", "Subasta", "Reciclaje", "Ecología", "Egipto", "Pirámide", "Faraón", "Roma", "Gladiador", "Grecia", "Mitología", "Edad Media", "Castillo", "Caballero", "Vikingo", "Renacimiento", "Revolución", "Independencia", "Dinosaurio", "Fósil", "Evolución", "Prehistoria", "Cavernícola", "Fuego", "Rueda", "Invención", "Electricidad", "Gravedad", "Telescopio", "Microscopio", "Satélite", "Cohete", "Luna", "Marte", "Sistema Solar", "Eclipse", "Meteorito", "Agujero negro", "Ovni", "Robot", "Inteligencia Artificial", "Internet", "Redes sociales", "Correo electrónico", "Fotografía", "Selfie", "Video", "Cine mudo", "Dibujos animados", "Ciencia ficción", "Terror", "Comedia", "Drama", "Documental", "Circo Romano", "Ópera", "Ballet", "Orquesta", "Rock", "Jazz", "Tango", "Folklore", "Pop", "Reggaetón", "Arcoíris", "Amanecer", "Atardecer", "Medianoche", "Mediodía", "Calendario", "Reloj de arena", "Brújula", "Mapa", "Frontera", "Aduana", "Idioma", "Diccionario", "Acento", "Traducción", "Viaje", "Turista", "Guía turístico", "Souvenir", "Postal", "Moneda", "Billete", "Ahorro", "Alcancía", "Impuesto", "Factura", "Presupuesto", "Oferta", "Descuento", "Garantía", "Devolución", "Queja", "Propina", "Cuenta", "Reserva", "Fila", "Espera", "Turno", "Puntualidad", "Alegría", "Tristeza", "Enojo", "Miedo", "Vergüenza", "Orgullo", "Envidia", "Celos", "Nostalgia", "Paciencia", "Curiosidad", "Valentía", "Generosidad", "Honestidad", "Mentira", "Secreto", "Chisme", "Rumor", "Promesa", "Perdón", "Disculpa", "Agradecimiento", "Saludo", "Despedida", "Abrazo", "Beso", "Risa", "Carcajada", "Llanto", "Lágrima", "Suspiro", "Grito", "Susurro", "Silencio", "Ruido", "Eco", "Sombra", "Reflejo", "Espejo", "Laberinto", "Misterio", "Pista", "Sospechoso", "Coartada", "Testigo", "Tesoro", "Mapa del tesoro", "Nudo", "Cuerda", "Puente", "Muro", "Puerta cerrada", "Candado", "Llave maestra", "Caja fuerte", "Alarma", "Semáforo", "Multa", "Embotellamiento", "Choque", "Grúa", "Pinchazo", "Rueda de auxilio", "Gato hidráulico", "GPS", "Perdido", "Atajo", "Desvío", "Curva", "Túnel", "Maleta", "Equipaje de mano", "Turbulencia", "Despegue", "Aterrizaje", "Jet lag", "Bronceado", "Quemadura de sol", "Protector solar", "Repelente", "Picadura", "Mosquito", "Alergia", "Estornudo", "Tos", "Dolor de cabeza", "Dolor de muelas", "Vendas", "Yeso", "Muletas", "Silla de ruedas", "Ambulancia", "Camilla", "Carpintero", "Plomero", "Electricista", "Pintor", "Albañil", "Jardinero", "Cerrajero", "Sastre"], "adultos": ["Reunión de consorcio", "Expensas", "Alquiler", "Hipoteca", "Garantía propietaria", "Inflación", "Dólar", "Plazo fijo", "Tarjeta de crédito", "Resumen de tarjeta", "Cuotas sin interés", "Débito automático", "Transferencia", "CBU", "Clave fiscal", "AFIP / ARCA", "Contador", "Factura", "Recibo de sueldo", "Aguinaldo", "Bono anual", "Aumento de sueldo", "Entrevista laboral", "Currículum", "LinkedIn", "Renuncia", "Despido", "Indemnización", "Jubilación", "Pensión", "Obra social", "Prepaga", "Reintegro", "Copago", "Turno médico", "Chequeo anual", "Colesterol", "Presión arterial", "Estrés", "Burnout", "Terapia", "Psicólogo", "Psiquiatra", "Ansiedad", "Crisis de los 30", "Crisis de los 40", "Canas", "Calvicie", "Arrugas", "Crema antiage", "Dieta", "Gimnasio en enero", "Nutricionista", "Ayuno intermitente", "Proteína", "Suplementos", "Dolor de espalda", "Ciático", "Contractura", "Masajista", "Osteópata", "Kinesiología", "Home office", "Reunión por Zoom", "Micrófono muteado", "Compartir pantalla", "Correo corporativo", "En copia", "Para ayer", "Urgente", "Minuta", "Excel", "Presentación", "Jefe", "Subordinado", "Compañero tóxico", "Radio pasillo", "After office", "Fiesta de fin de año", "Amigo invisible", "Licencia por enfermedad", "Vacaciones pendientes", "Feriado puente", "Fin de semana largo", "Trámite bancario", "Fila en el banco", "Cajero automático sin plata", "Home banking", "Token", "Estafa virtual", "Spam", "Grupo de WhatsApp", "Audio de 5 minutos", "Visto", "Última conexión", "Bloqueado", "Silenciar grupo", "Sticker", "Meme", "Hilo de Twitter", "Algoritmo", "Suscripción", "Contraseña olvidada", "Autenticación en dos pasos", "Nube llena", "Backup", "Actualización", "Pantalla azul", "Router", "Cortes de luz", "Primera cita", "Tinder", "Match", "Ghosting", "Friendzone", "Casi algo", "Ex pareja", "Bloqueo de ex", "Stalkear", "Celos", "Infidelidad", "Amante", "Trampa", "Mentira piadosa", "Discusión de pareja", "Dormir en el sillón", "Aniversario", "Propuesta de matrimonio", "Anillo de compromiso", "Despedida de soltero", "Despedida de soltera", "Casamiento civil", "Iglesia", "Mesa de los solteros", "Ramo de novia", "Liga", "Vals", "Barra libre", "Cotillón", "Luna de miel", "Suegra", "Suegro", "Cuñado", "Concuñado", "Familia política", "Divorcio", "Separación", "División de bienes", "Cuota alimentaria", "Tenencia", "Convivencia", "Mudarse juntos", "Compartir gastos", "Reparto de tareas", "Lado de la cama", "Ronquidos", "Robar la frazada", "Baño ocupado", "Pelo en la ducha", "Tapa del inodoro", "Boda de plata", "Boda de oro", "Terapia de pareja", "Amor a primera vista", "Flechazo", "Beso", "Caricia", "Abrazo", "Chamuyo", "Levante", "Boliche", "Patovica", "Lista VIP", "Consumición", "Previas", "Trago", "Fernet", "Cerveza artesanal", "Vino tinto", "Espumante", "Brindis", "Shot", "Tequila", "Resaca", "Ibuprofeno", "Acidez", "Gastritis", "Café negro", "Bajón", "Pancho a las 5 AM", "Taxi de madrugada", "Uber", "Control de alcoholemia", "Multa de tránsito", "Acarreo", "Estacionamiento medido", "Trapito", "VTV", "Seguro del auto", "Choque", "Piquete", "Corte de calle", "Paro de transporte", "Hora pico", "Subte lleno", "Aire acondicionado roto", "Vecino ruidoso", "Fiesta arriba", "Perro que ladra", "Consorcio", "Grupo de mamis y papis", "Acto escolar", "Disfraz a último momento", "Cartulina el domingo", "Feria de ciencias", "Reunión de padres", "Cuaderno de comunicados", "Piojos", "Pediatra", "Guardia médica", "Pañales", "Mamadera", "Chupete", "Cochecito", "Sillita del auto", "Berrinche", "Cuento antes de dormir", "Vaso de agua", "Pesadilla", "Diente flojo", "Ratón Pérez", "Cumpleaños infantil", "Salón de fiestas", "Animador", "Souvenir", "Piñata", "Torta temática", "Niñera", "Abuelos al rescate", "Colonia de vacaciones", "Club", "Cuota del club", "Partido el sábado", "Torneo", "Tribuna", "Viaje de egresados", "Bariloche", "Previa adolescente", "Permiso para salir", "Horario de vuelta", "Primer auto", "Registro de conducir", "Examen práctico", "Estacionar en paralelo", "Universidad", "Carrera", "Tesis", "Recibida", "Huevos y harina", "Independizarse", "Primer departamento", "Garantía", "Flete", "Pintar antes de entregar", "Depósito", "Inmobiliaria", "Comisión", "Escritura", "Mudanza", "Cajas sin abrir", "Elecciones", "Cuarto oscuro", "Boleta", "Presidente de mesa", "Veda electoral", "Encuesta", "Debate presidencial", "Campaña", "Promesa electoral", "Corrupción", "Impuestos", "Subsidio", "Paritarias", "Sindicato", "Huelga", "Manifestación", "Noticiero", "Cadena nacional", "Fake news", "Conspiración", "Horóscopo", "Carta natal", "Mercurio retrógrado", "Tarot", "Brujería", "Cábala", "Superstición", "Martes 13", "Gato negro", "Espejo roto", "Bingo", "Quiniela", "Lotería", "Casino", "Tragamonedas", "Ruleta", "Apuesta", "Póker", "Farol", "All-in", "Serie de Netflix", "Maratón de series", "Spoiler", "Tráiler", "Crítica", "Premios Oscar", "Alfombra roja", "Paparazzi", "Famoso", "Influencer", "Canje", "Publicidad encubierta", "Cancelación", "Hater", "Troll", "Viral", "Trending topic", "Podcast", "Streaming", "Suscriptor", "Ovni", "Área 51", "Fantasmas", "Espiritismo", "Ouija", "Casa embrujada", "Cementerio", "Velorio", "Testamento", "Cremación", "Seguros de vida", "Inmortalidad", "Reencarnación", "Karma", "Destino", "Casualidad", "Deja vu", "Intuición", "Corazonada", "Nostalgia", "Infancia", "Adolescencia", "Juventud", "Vejez", "Sabiduría", "Experiencia", "Arrepentimiento", "Segundas oportunidades", "Propósitos de año nuevo", "Motel", "Albergue transitorio", "Lencería", "Juguete sexual", "Sex shop", "Kamasutra", "Fantasía", "Fetiche", "Striptease", "Despedida", "Borrachera", "Laguna mental", "Mensaje borracho", "Llamada a las 3 AM", "Vergüenza ajena", "Papelón", "Trágame tierra", "Error de grupo", "Mandar captura al interesado", "Audio equivocado", "Saludar a quien no te saluda", "Confundir nombre", "Preguntar si está embarazada", "Mal aliento", "Transpiración", "Mancha en la ropa", "Cierre abierto", "Papel en el zapato", "Flatulencia", "Eructo", "Baño sin papel", "Inodoro tapado", "Olor en el ascensor", "Invitado que no se va", "Indirecta", "Sarcasmo", "Ironía", "Doble sentido", "Albur", "Chiste verde", "Humor negro", "Tabú", "Censura", "Secreto a voces", "Chisme de oficina", "Escándalo", "Infidelidad descubierta", "Mensaje comprometedor", "Contraseña del celular", "Modo incógnito", "Historial de búsqueda", "Cámara encendida por error", "Micrófono abierto", "Filtro fallido", "Foto comprometida", "Tatuaje de ex", "Tatuaje arrepentido", "Piercing", "Cirugía estética", "Botox", "Peluca", "Implante capilar", "Viagra", "Menopausia", "Andropausia", "Sofocos", "Insomnio", "Pastilla para dormir", "Antidepresivo", "Relajante muscular", "Colonoscopia", "Proctólogo", "Urólogo", "Ginecólogo", "Mamografía", "Análisis de orina", "Dieta líquida", "Intoxicación", "Empacho", "Vómito", "Maratón de baño", "Guardia de hospital", "Sueros", "Inyección", "Miedo a las agujas", "Desmayo", "Golpe de calor", "Insolación", "Resaca moral", "Culpabilidad", "Excusa barata", "Llegar tarde", "Plantón", "Dejar plantado", "Cobrar deuda", "Prestar plata", "Amigo ratón", "Dividir la cuenta", "El que pide lo más caro", "Propina rata", "Impuesto a las ganancias", "Bienes personales", "Monotributo", "Recategorización", "Factura electrónica", "Vencimiento", "Mora", "Intereses", "Veraz", "Préstamo personal", "Plazo fijo UVA", "Criptomoneda", "Bitcoin", "Billetera virtual", "QR", "Posnet sin señal", "Efectivo", "Cambio chico", "Billete falso", "Cajero roto", "Seguro de hogar", "Siniestro", "Franquicia", "Perito", "Denuncia policial", "Testigo", "Mediación", "Carta documento", "Telegrama", "Burocracia", "Sellado", "Apostilla", "Trámite online", "Página caída", "Captcha", "Soy un robot", "Términos y condiciones", "Cookies", "Suscripción oculta", "Dar de baja", "Call center"]};
@@ -2284,7 +2798,7 @@
 
     const IMPOSTOR_DECKS = {"ninos": [{"w": "Perro", "c": "Animal"}, {"w": "Gato", "c": "Animal"}, {"w": "León", "c": "Animal"}, {"w": "Elefante", "c": "Animal"}, {"w": "Jirafa", "c": "Animal"}, {"w": "Pingüino", "c": "Animal"}, {"w": "Delfín", "c": "Animal"}, {"w": "Tiburón", "c": "Animal"}, {"w": "Mariposa", "c": "Insecto"}, {"w": "Abeja", "c": "Insecto"}, {"w": "Tortuga", "c": "Animal"}, {"w": "Conejo", "c": "Animal"}, {"w": "Dinosaurio", "c": "Animal"}, {"w": "Unicornio", "c": "Fantasía"}, {"w": "Dragón", "c": "Fantasía"}, {"w": "Mono", "c": "Animal"}, {"w": "Cocodrilo", "c": "Animal"}, {"w": "Canguro", "c": "Animal"}, {"w": "Oso Panda", "c": "Animal"}, {"w": "Pulpo", "c": "Animal"}, {"w": "Helado", "c": "Comida"}, {"w": "Pizza", "c": "Comida"}, {"w": "Hamburguesa", "c": "Comida"}, {"w": "Papas fritas", "c": "Comida"}, {"w": "Chocolate", "c": "Dulce"}, {"w": "Alfajor", "c": "Dulce"}, {"w": "Pochoclo", "c": "Comida"}, {"w": "Pancho", "c": "Comida"}, {"w": "Milanesa", "c": "Comida"}, {"w": "Fideos", "c": "Comida"}, {"w": "Torta de cumpleaños", "c": "Dulce"}, {"w": "Caramelo", "c": "Dulce"}, {"w": "Manzana", "c": "Fruta"}, {"w": "Banana", "c": "Fruta"}, {"w": "Sandía", "c": "Fruta"}, {"w": "Frutilla", "c": "Fruta"}, {"w": "Naranja", "c": "Fruta"}, {"w": "Chupetín", "c": "Dulce"}, {"w": "Galletitas", "c": "Comida"}, {"w": "Donas", "c": "Dulce"}, {"w": "Escuela", "c": "Lugar"}, {"w": "Playa", "c": "Lugar"}, {"w": "Zoológico", "c": "Lugar"}, {"w": "Circo", "c": "Lugar"}, {"w": "Plaza", "c": "Lugar"}, {"w": "Cine", "c": "Lugar"}, {"w": "Hospital", "c": "Lugar"}, {"w": "Supermercado", "c": "Lugar"}, {"w": "Castillo", "c": "Lugar"}, {"w": "Selva", "c": "Lugar"}, {"w": "Espacio", "c": "Lugar"}, {"w": "Granja", "c": "Lugar"}, {"w": "Pelota", "c": "Juguete"}, {"w": "Bicicleta", "c": "Transporte"}, {"w": "Patineta", "c": "Juguete"}, {"w": "Tobogán", "c": "Juego"}, {"w": "Hamaca", "c": "Juego"}, {"w": "Rompecabezas", "c": "Juego"}, {"w": "Barrilete", "c": "Juguete"}, {"w": "Peluche", "c": "Juguete"}, {"w": "Robot", "c": "Personaje"}, {"w": "Superhéroe", "c": "Personaje"}, {"w": "Princesa", "c": "Personaje"}, {"w": "Pirata", "c": "Personaje"}, {"w": "Astronauta", "c": "Profesión"}, {"w": "Bombero", "c": "Profesión"}, {"w": "Policía", "c": "Profesión"}, {"w": "Mago", "c": "Personaje"}, {"w": "Bruja", "c": "Personaje"}, {"w": "Payaso", "c": "Personaje"}, {"w": "Fantasma", "c": "Personaje"}, {"w": "Sirena", "c": "Fantasía"}, {"w": "Papá Noel", "c": "Personaje"}, {"w": "Ratón Pérez", "c": "Personaje"}, {"w": "Ninja", "c": "Personaje"}, {"w": "Detective", "c": "Profesión"}, {"w": "Avión", "c": "Transporte"}, {"w": "Tren", "c": "Transporte"}, {"w": "Cohete", "c": "Transporte"}, {"w": "Submarino", "c": "Transporte"}, {"w": "Barco", "c": "Transporte"}, {"w": "Auto", "c": "Transporte"}, {"w": "Helicóptero", "c": "Transporte"}, {"w": "Colectivo", "c": "Transporte"}, {"w": "Fútbol", "c": "Deporte"}, {"w": "Natación", "c": "Deporte"}, {"w": "Taekwondo", "c": "Deporte"}, {"w": "Tenis", "c": "Deporte"}, {"w": "Sol", "c": "Naturaleza"}, {"w": "Luna", "c": "Naturaleza"}, {"w": "Arcoíris", "c": "Naturaleza"}, {"w": "Nieve", "c": "Clima"}, {"w": "Lluvia", "c": "Clima"}, {"w": "Volcán", "c": "Naturaleza"}, {"w": "Árbol", "c": "Naturaleza"}, {"w": "Flor", "c": "Naturaleza"}, {"w": "Mochila", "c": "Objeto"}, {"w": "Lápiz", "c": "Útil"}, {"w": "Tijera", "c": "Útil"}, {"w": "Cepillo de dientes", "c": "Objeto"}, {"w": "Almohada", "c": "Objeto"}, {"w": "Paraguas", "c": "Objeto"}, {"w": "Linterna", "c": "Objeto"}, {"w": "Guitarra", "c": "Música"}, {"w": "Batería", "c": "Música"}, {"w": "Piano", "c": "Música"}, {"w": "Reloj", "c": "Objeto"}, {"w": "Zapatillas", "c": "Ropa"}, {"w": "Pijama", "c": "Ropa"}, {"w": "Gafas de sol", "c": "Accesorio"}, {"w": "Corona", "c": "Objeto"}, {"w": "Piñata", "c": "Fiesta"}, {"w": "Globo", "c": "Fiesta"}, {"w": "Regalo", "c": "Fiesta"}, {"w": "Cama elástica", "c": "Juego"}, {"w": "Carpita", "c": "Objeto"}, {"w": "Microscopio", "c": "Ciencia"}, {"w": "Lupa", "c": "Objeto"}, {"w": "Imán", "c": "Objeto"}, {"w": "Espejo", "c": "Objeto"}], "familia": [{"w": "Asado", "c": "Comida"}, {"w": "Mate", "c": "Bebida"}, {"w": "Empanadas", "c": "Comida"}, {"w": "Sushi", "c": "Comida"}, {"w": "Picada", "c": "Comida"}, {"w": "Café", "c": "Bebida"}, {"w": "Dulce de leche", "c": "Comida"}, {"w": "Facturas", "c": "Comida"}, {"w": "Aeropuerto", "c": "Lugar"}, {"w": "Camping", "c": "Actividad"}, {"w": "Crucero", "c": "Viaje"}, {"w": "Hotel", "c": "Lugar"}, {"w": "Supermercado", "c": "Lugar"}, {"w": "Peluquería", "c": "Lugar"}, {"w": "Dentista", "c": "Profesión"}, {"w": "Gimnasio", "c": "Lugar"}, {"w": "Biblioteca", "c": "Lugar"}, {"w": "Museo", "c": "Lugar"}, {"w": "Estadio", "c": "Lugar"}, {"w": "Casino", "c": "Lugar"}, {"w": "Ferretería", "c": "Comercio"}, {"w": "Farmacia", "c": "Comercio"}, {"w": "Kiosco", "c": "Comercio"}, {"w": "Shopping", "c": "Lugar"}, {"w": "Subte", "c": "Transporte"}, {"w": "Taxi", "c": "Transporte"}, {"w": "Peaje", "c": "Viaje"}, {"w": "Autopista", "c": "Lugar"}, {"w": "Taller mecánico", "c": "Lugar"}, {"w": "Estación de servicio", "c": "Lugar"}, {"w": "Mudanza", "c": "Situación"}, {"w": "Boda", "c": "Evento"}, {"w": "Navidad", "c": "Festividad"}, {"w": "Año Nuevo", "c": "Festividad"}, {"w": "Carnaval", "c": "Festividad"}, {"w": "Halloween", "c": "Festividad"}, {"w": "Vacaciones", "c": "Concepto"}, {"w": "Siesta", "c": "Hábito"}, {"w": "Insomnio", "c": "Salud"}, {"w": "Pesadilla", "c": "Sueño"}, {"w": "Apagón", "c": "Situación"}, {"w": "Tormenta", "c": "Clima"}, {"w": "Terremoto", "c": "Naturaleza"}, {"w": "Isla desierta", "c": "Lugar"}, {"w": "Pirámide", "c": "Historia"}, {"w": "Vikingo", "c": "Historia"}, {"w": "Gladiador", "c": "Historia"}, {"w": "Faraón", "c": "Historia"}, {"w": "Extraterrestre", "c": "Ciencia Ficción"}, {"w": "Agujero negro", "c": "Espacio"}, {"w": "Satélite", "c": "Tecnología"}, {"w": "Inteligencia Artificial", "c": "Tecnología"}, {"w": "Wi-Fi", "c": "Tecnología"}, {"w": "Contraseña", "c": "Tecnología"}, {"w": "Selfie", "c": "Fotografía"}, {"w": "Karaoke", "c": "Entretenimiento"}, {"w": "Truco", "c": "Juego"}, {"w": "Ajedrez", "c": "Juego"}, {"w": "Bingo", "c": "Juego"}, {"w": "Rompecabezas", "c": "Juego"}, {"w": "Mundial de Fútbol", "c": "Deporte"}, {"w": "Penal", "c": "Deporte"}, {"w": "Árbitro", "c": "Deporte"}, {"w": "Pádel", "c": "Deporte"}, {"w": "Maratón", "c": "Deporte"}, {"w": "Yoga", "c": "Actividad"}, {"w": "Pesca", "c": "Actividad"}, {"w": "Jardinería", "c": "Hobby"}, {"w": "Parrilla", "c": "Objeto"}, {"w": "Microondas", "c": "Electrodoméstico"}, {"w": "Lavarropas", "c": "Electrodoméstico"}, {"w": "Aire acondicionado", "c": "Electrodoméstico"}, {"w": "Aspiradora", "c": "Electrodoméstico"}, {"w": "Despertador", "c": "Objeto"}, {"w": "Pasaporte", "c": "Documento"}, {"w": "Billetera", "c": "Objeto"}, {"w": "Llave", "c": "Objeto"}, {"w": "Caja fuerte", "c": "Objeto"}, {"w": "Brújula", "c": "Objeto"}, {"w": "Telescopio", "c": "Ciencia"}, {"w": "Semáforo", "c": "Ciudad"}, {"w": "Multa", "c": "Tránsito"}, {"w": "Embotellamiento", "c": "Tránsito"}, {"w": "Rueda de auxilio", "c": "Auto"}, {"w": "Arquitecto", "c": "Profesión"}, {"w": "Abogado", "c": "Profesión"}, {"w": "Periodista", "c": "Profesión"}, {"w": "Fotógrafo", "c": "Profesión"}, {"w": "Chef", "c": "Profesión"}, {"w": "Veterinario", "c": "Profesión"}, {"w": "Carpintero", "c": "Oficio"}, {"w": "Plomero", "c": "Oficio"}, {"w": "Electricista", "c": "Oficio"}, {"w": "Cerrajero", "c": "Oficio"}, {"w": "Espía", "c": "Personaje"}, {"w": "Vampiro", "c": "Ficción"}, {"w": "Magia", "c": "Entretenimiento"}, {"w": "Ópera", "c": "Arte"}, {"w": "Rock", "c": "Música"}, {"w": "Tango", "c": "Música"}, {"w": "Historieta", "c": "Lectura"}, {"w": "Cine mudo", "c": "Cine"}, {"w": "Spoiler", "c": "Cultura Pop"}, {"w": "Subasta", "c": "Evento"}, {"w": "Alcancía", "c": "Objeto"}, {"w": "Propina", "c": "Dinero"}, {"w": "Descuento", "c": "Compras"}, {"w": "Reciclaje", "c": "Ecología"}, {"w": "Protector solar", "c": "Verano"}, {"w": "Repelente", "c": "Verano"}, {"w": "Termómetro", "c": "Salud"}, {"w": "Vacuna", "c": "Salud"}, {"w": "Yeso", "c": "Salud"}, {"w": "Ambulancia", "c": "Emergencia"}, {"w": "Extintor", "c": "Seguridad"}, {"w": "Alarma", "c": "Seguridad"}, {"w": "Laberinto", "c": "Lugar"}, {"w": "Faro", "c": "Construcción"}, {"w": "Subte", "c": "Ciudad"}, {"w": "Sobremesa", "c": "Costumbre"}], "adultos": [{"w": "Reunión de consorcio", "c": "Vida Adulta"}, {"w": "Expensas", "c": "Finanzas"}, {"w": "Hipoteca", "c": "Finanzas"}, {"w": "Inflación", "c": "Economía"}, {"w": "Tarjeta de crédito", "c": "Finanzas"}, {"w": "Aguinaldo", "c": "Trabajo"}, {"w": "Entrevista laboral", "c": "Trabajo"}, {"w": "Home office", "c": "Trabajo"}, {"w": "After office", "c": "Social"}, {"w": "Burnout", "c": "Salud"}, {"w": "Terapia", "c": "Salud"}, {"w": "Crisis de los 40", "c": "Vida"}, {"w": "Ayuno intermitente", "c": "Dieta"}, {"w": "Ciático", "c": "Salud"}, {"w": "Colesterol", "c": "Salud"}, {"w": "Colonoscopia", "c": "Medicina"}, {"w": "Tinder", "c": "Citas"}, {"w": "Ghosting", "c": "Relaciones"}, {"w": "Friendzone", "c": "Relaciones"}, {"w": "Casi algo", "c": "Relaciones"}, {"w": "Ex pareja", "c": "Relaciones"}, {"w": "Infidelidad", "c": "Relaciones"}, {"w": "Divorcio", "c": "Legal"}, {"w": "Suegra", "c": "Familia"}, {"w": "Despedida de soltero", "c": "Fiesta"}, {"w": "Luna de miel", "c": "Viaje"}, {"w": "Anillo de compromiso", "c": "Pareja"}, {"w": "Terapia de pareja", "c": "Relaciones"}, {"w": "Resaca", "c": "Fiesta"}, {"w": "Fernet", "c": "Bebida"}, {"w": "Control de alcoholemia", "c": "Tránsito"}, {"w": "Acarreo", "c": "Tránsito"}, {"w": "Trapito", "c": "Calle"}, {"w": "Piquete", "c": "Ciudad"}, {"w": "Hora pico", "c": "Tránsito"}, {"w": "VTV", "c": "Auto"}, {"w": "Grupo de mamis y papis", "c": "WhatsApp"}, {"w": "Audio de 5 minutos", "c": "WhatsApp"}, {"w": "Modo incógnito", "c": "Internet"}, {"w": "Historial de búsqueda", "c": "Internet"}, {"w": "Estafa virtual", "c": "Seguridad"}, {"w": "Home banking", "c": "Finanzas"}, {"w": "Plazo fijo", "c": "Finanzas"}, {"w": "Criptomoneda", "c": "Finanzas"}, {"w": "Monotributo", "c": "Impuestos"}, {"w": "Contador", "c": "Profesión"}, {"w": "Carta documento", "c": "Legal"}, {"w": "Veraz", "c": "Finanzas"}, {"w": "Motel", "c": "Lugar"}, {"w": "Sex shop", "c": "Comercio"}, {"w": "Lencería", "c": "Ropa"}, {"w": "Kamasutra", "c": "Libro"}, {"w": "Viagra", "c": "Farmacia"}, {"w": "Menopausia", "c": "Salud"}, {"w": "Botox", "c": "Estética"}, {"w": "Implante capilar", "c": "Estética"}, {"w": "Tatuaje de ex", "c": "Error"}, {"w": "Mensaje borracho", "c": "Error"}, {"w": "Error de grupo", "c": "WhatsApp"}, {"w": "Micrófono abierto", "c": "Videollamada"}, {"w": "Cámara encendida", "c": "Videollamada"}, {"w": "Spoiler", "c": "Series"}, {"w": "Maratón de Netflix", "c": "Ocio"}, {"w": "Canje", "c": "Redes"}, {"w": "Hater", "c": "Redes"}, {"w": "Funado / Cancelado", "c": "Redes"}, {"w": "Algoritmo", "c": "Tecnología"}, {"w": "Suscripción oculta", "c": "Gastos"}, {"w": "Cuarto oscuro", "c": "Elecciones"}, {"w": "Veda electoral", "c": "Política"}, {"w": "Cadena nacional", "c": "Política"}, {"w": "Paritarias", "c": "Trabajo"}, {"w": "Mercurio retrógrado", "c": "Astrología"}, {"w": "Carta natal", "c": "Astrología"}, {"w": "Tarot", "c": "Esoterismo"}, {"w": "Ouija", "c": "Paranormal"}, {"w": "Testamento", "c": "Legal"}, {"w": "Velorio", "c": "Evento"}, {"w": "Cremación", "c": "Servicio"}, {"w": "Seguro de vida", "c": "Finanzas"}, {"w": "All-in", "c": "Póker"}, {"w": "Tragamonedas", "c": "Casino"}, {"w": "Quiniela", "c": "Apuestas"}, {"w": "Amigo invisible", "c": "Evento"}, {"w": "Dividir la cuenta", "c": "Salida"}, {"w": "Propina rata", "c": "Salida"}, {"w": "Deuda sin pagar", "c": "Dinero"}, {"w": "Garantía propietaria", "c": "Alquiler"}, {"w": "Inmobiliaria", "c": "Rubro"}, {"w": "Flete", "c": "Mudanza"}, {"w": "Cortes de luz", "c": "Verano"}, {"w": "Vecino ruidoso", "c": "Edificio"}, {"w": "Inodoro tapado", "c": "Emergencia"}, {"w": "Baño sin papel", "c": "Emergencia"}, {"w": "Mal aliento", "c": "Incómodo"}, {"w": "Cierre abierto", "c": "Incómodo"}, {"w": "Humor negro", "c": "Comedia"}, {"w": "Doble sentido", "c": "Lenguaje"}, {"w": "Sarcasmo", "c": "Actitud"}, {"w": "Indirecta", "c": "Comunicación"}, {"w": "Coartada", "c": "Misterio"}, {"w": "Chisme de oficina", "c": "Trabajo"}, {"w": "Radio pasillo", "c": "Trabajo"}, {"w": "Amigo con derechos", "c": "Relaciones"}, {"w": "Despedida de año", "c": "Trabajo"}, {"w": "Licencia médica", "c": "Trabajo"}, {"w": "Feriado puente", "c": "Calendario"}, {"w": "Jet lag", "c": "Viaje"}, {"w": "Equipaje perdido", "c": "Viaje"}, {"w": "Aduana", "c": "Frontera"}, {"w": "Dólar blue", "c": "Economía"}, {"w": "Call center", "c": "Servicio"}]};
 
-    const MIMICA_DECKS = {"acciones": ["Planchar la ropa", "Cebar mate", "Pasear al perro", "Jugar al tenis", "Manejar un auto", "Tocar la guitarra", "Pintar una pared", "Cortar el pasto", "Hacer asado", "Bailar tango", "Bañar al gato", "Lavar los platos", "Mirar una película de terror", "Pescar", "Hacer malabares", "Saltar la soga", "Andar en bicicleta", "Nadar estilo mariposa", "Jugar al básquet", "Patear un penal", "Levantar pesas", "Hacer yoga", "Boxear", "Esquiar", "Tirar al blanco con arco y flecha", "Hacer surf", "Escalar una montaña", "Tocar el piano", "Tocar la batería", "Cantar ópera", "Dirigir una orquesta", "Serruchar madera", "Martillar un clavo", "Cambiar una lamparita", "Armar una carpa", "Sacar una foto", "Maquillarse", "Afeitarse", "Peinarse", "Lavarse los dientes", "Comer fideos", "Comer una hamburguesa gigante", "Tomar sopa muy caliente", "Comer limón", "Pelar una cebolla (y llorar)", "Bostezar", "Estornudar fuerte", "Tener hipo", "Llorar de risa", "Enojarse mucho", "Hacerse el dormido", "Despertarse asustado", "Buscar algo en la cartera", "Llegar tarde y correr", "Esperar el colectivo", "Pelear con un mosquito", "Pisar caca de perro", "Buscar señal en el celular", "Sacarse una selfie", "Mandar un audio largo", "Amasar pizza", "Revolver el guiso", "Exprimir una naranja", "Abrir una botella de champagne", "Servir vino", "Tirar los dados", "Mezclar cartas", "Jugar al truco", "Gritar un gol", "Llorar por un gol en contra", "Hacerse un tatuaje", "Caminar por la cuerda floja", "Domar un caballo", "Ordeñar una vaca", "Darle de comer a las gallinas", "Cazar mariposas", "Pasear en bote", "Volar en parapente", "Saltar en paracaídas", "Hacer buceo", "Buscar un tesoro", "Desenterrar un hueso", "Barrer el piso", "Pasar el trapo", "Limpiar los vidrios", "Lavar el auto", "Colgar la ropa", "Doblar ropa", "Hacer la cama", "Plancharse el pelo"], "peliculas": ["Titanic", "El Rey León", "Star Wars", "Jurassic Park", "Matrix", "E.T. el extraterrestre", "Tiburón", "Indiana Jones", "Harry Potter", "El Señor de los Anillos", "Rocky", "El Padrino", "Volver al Futuro", "Terminator", "Toy Story", "Buscando a Nemo", "Shrek", "Piratas del Caribe", "Avatar", "Avengers", "Spider-Man", "Batman", "Superman", "Mujer Maravilla", "El Joker", "Los Simpson: La película", "Mi Pobre Angelito", "Esperando la Carroza", "El Secreto de sus Ojos", "Nueve Reinas", "Relatos Salvajes", "Frozen", "Aladdín", "La Bella y la Bestia", "Blancanieves", "Pinocho", "El Mago de Oz", "Alicia en el País de las Maravillas", "Peter Pan", "Cenicienta", "King Kong", "Godzilla", "King Kong vs Godzilla", "Frankenstein", "Drácula", "El Resplandor", "El Exorcista", "IT (El Payaso)", "Sexto Sentido", "Actividad Paranormal", "Gladiador", "Corazón Valiente", "300", "Troya", "El Zorro", "James Bond", "Misión Imposible", "Rápido y Furioso", "Mad Max", "John Wick", "Minions", "Mi Villano Favorito", "Los Increíbles", "Monster Inc.", "Up: Una aventura de altura", "Intensa-Mente", "Coco", "El Cadáver de la Novia", "Pesadilla antes de Navidad", "Coraline", "El Náufrago", "Forrest Gump", "La Vida es Bella", "El Club de la Pelea", "Pulp Fiction", "Kill Bill", "Búsqueda Implacable", "Juego de Gemelas", "Chicas Pesadas", "El Diablo Viste a la Moda", "Mamma Mia!", "Grease", "Cantando bajo la Lluvia", "La La Land", "El Gran Showman", "Bohemian Rhapsody", "Rocketman", "Escuela de Rock", "Camp Rock", "High School Musical", "Crepúsculo", "Los Juegos del Hambre", "Divergente", "Maze Runner", "Transformers", "Titanes del Pacífico", "Duna", "Interestelar", "Gravedad", "Misión Rescate"], "personajes": ["Lionel Messi", "Diego Maradona", "Michael Jackson", "Marilyn Monroe", "Elvis Presley", "Charlie Chaplin", "Albert Einstein", "Drácula", "Frankenstein", "Homero Simpson", "Batman", "Spider-Man", "Superman", "Hulk", "Goku", "Naruto", "Pikachu", "Mickey Mouse", "Pato Donald", "Bob Esponja", "Shrek", "Harry Potter", "Jack Sparrow", "Indiana Jones", "Darth Vader", "Yoda", "El Zorro", "Tarzán", "Peter Pan", "Pinocho", "Blancanieves", "La Cenicienta", "Ariel (La Sirenita)", "Elsa (Frozen)", "Moana", "Caperucita Roja", "El Lobo Feroz", "Frank Sinatra", "Freddie Mercury", "Shakira", "Charly García", "Mirtha Legrand", "Susana Giménez", "Ricardo Fort", "El Chavo del 8", "Don Ramón", "Doña Florinda", "Kiko", "La Chilindrina", "Chapulín Colorado", "Papa Francisco", "Cleopatra", "Julio César", "Napoleón", "Cristóbal Colón", "Leonardo da Vinci", "Mona Lisa", "Vincent van Gogh", "Frida Kahlo", "Che Guevara", "Eminem", "Snoop Dogg", "Madonna", "Britney Spears", "Lady Gaga", "Taylor Swift", "Justin Bieber", "Bad Bunny", "Bizarrap", "Dibu Martínez", "Peppa Pig", "Masha y el Oso", "Patrulla Canina", "Bluey", "Dora la Exploradora", "Ben 10", "Las Chicas Superpoderosas", "Dexter", "Johnny Bravo", "Scooby-Doo", "Míster Bean", "Jim Carrey", "Jackie Chan", "Bruce Lee", "Sylvester Stallone (Rocky)", "Arnold Schwarzenegger (Terminator)", "Tom Cruise", "Keanu Reeves (John Wick)", "Will Smith", "Brad Pitt", "El Mago Merlín", "Rey Arturo", "Robin Hood", "Hércules", "Aquaman", "Pantera Negra", "Iron Man", "Capitán América", "Thor", "Loki"]};
+    const MIMICA_DECKS = {"ninos": {"acciones": ["Saltar como un perrito", "Saltar como un mono", "Saltar un helado gigante", "Saltar una pizza", "Saltar en un pie", "Saltar muy rápido", "Saltar muy lento", "Saltar con miedo", "Saltar como un robot", "Saltar como un monstruo", "Saltar con mucha alegría", "Correr como un perrito", "Correr como un mono", "Correr un helado gigante", "Correr una pizza", "Correr en un pie", "Correr muy rápido", "Correr muy lento", "Correr con miedo", "Correr como un robot", "Correr como un monstruo", "Correr con mucha alegría", "Dormir como un perrito", "Dormir como un mono", "Dormir un helado gigante", "Dormir una pizza", "Dormir en un pie", "Dormir muy rápido", "Dormir muy lento", "Dormir con miedo", "Dormir como un robot", "Dormir como un monstruo", "Dormir con mucha alegría", "Comer como un perrito", "Comer como un mono", "Comer un helado gigante", "Comer una pizza", "Comer en un pie", "Comer muy rápido", "Comer muy lento", "Comer con miedo", "Comer como un robot", "Comer como un monstruo", "Comer con mucha alegría", "Volar como un perrito", "Volar como un mono", "Volar un helado gigante", "Volar una pizza", "Volar en un pie", "Volar muy rápido", "Volar muy lento", "Volar con miedo", "Volar como un robot", "Volar como un monstruo", "Volar con mucha alegría", "Nadar como un perrito", "Nadar como un mono", "Nadar un helado gigante", "Nadar una pizza", "Nadar en un pie", "Nadar muy rápido", "Nadar muy lento", "Nadar con miedo", "Nadar como un robot", "Nadar como un monstruo", "Nadar con mucha alegría", "Pintar como un perrito", "Pintar como un mono", "Pintar un helado gigante", "Pintar una pizza", "Pintar en un pie", "Pintar muy rápido", "Pintar muy lento", "Pintar con miedo", "Pintar como un robot", "Pintar como un monstruo", "Pintar con mucha alegría", "Dibujar como un perrito", "Dibujar como un mono", "Dibujar un helado gigante", "Dibujar una pizza", "Dibujar en un pie", "Dibujar muy rápido", "Dibujar muy lento", "Dibujar con miedo", "Dibujar como un robot", "Dibujar como un monstruo", "Dibujar con mucha alegría", "Llorar como un perrito", "Llorar como un mono", "Llorar un helado gigante", "Llorar una pizza", "Llorar en un pie", "Llorar muy rápido", "Llorar muy lento", "Llorar con miedo", "Llorar como un robot", "Llorar como un monstruo", "Llorar con mucha alegría", "Reír como un perrito", "Reír como un mono", "Reír un helado gigante", "Reír una pizza", "Reír en un pie", "Reír muy rápido", "Reír muy lento", "Reír con miedo", "Reír como un robot", "Reír como un monstruo", "Reír con mucha alegría", "Bailar como un perrito", "Bailar como un mono", "Bailar un helado gigante", "Bailar una pizza", "Bailar en un pie", "Bailar muy rápido", "Bailar muy lento", "Bailar con miedo", "Bailar como un robot", "Bailar como un monstruo", "Bailar con mucha alegría", "Cantar como un perrito", "Cantar como un mono", "Cantar un helado gigante", "Cantar una pizza", "Cantar en un pie", "Cantar muy rápido", "Cantar muy lento", "Cantar con miedo", "Cantar como un robot", "Cantar como un monstruo", "Cantar con mucha alegría", "Trepar como un perrito", "Trepar como un mono", "Trepar un helado gigante", "Trepar una pizza", "Trepar en un pie", "Trepar muy rápido", "Trepar muy lento", "Trepar con miedo", "Trepar como un robot", "Trepar como un monstruo", "Trepar con mucha alegría", "Esconderse como un perrito", "Esconderse como un mono", "Esconderse un helado gigante", "Esconderse una pizza", "Esconderse en un pie", "Esconderse muy rápido", "Esconderse muy lento"], "peliculas": ["Toy Story", "Frozen", "El Rey León", "Buscando a Nemo", "Moana", "Encanto", "Cars", "Shrek", "Minions", "Intensa-Mente", "Monsters Inc.", "Coco", "Aladdín", "La Sirenita", "Mulan", "Tarzán", "Zootopia", "Los Increíbles", "Kung Fu Panda", "Madagascar", "La Era de Hielo", "Up", "Wall-E", "Ratatouille", "Peter Pan", "Blancanieves", "Cenicienta", "La Bella y la Bestia", "Valiente", "Enredados", "Bichos", "Lilo y Stitch", "El Lorax", "Sing", "La Vida Secreta de tus Mascotas", "Trolls", "Cómo entrenar a tu dragón", "Mi Villano Favorito", "Hotel Transylvania", "El Grinch", "El Gato con Botas", "Ralph el Demoledor", "Bolt", "Dumbo", "Bambi", "Pinocho", "El Libro de la Selva", "Alicia en el País de las Maravillas", "Robin Hood", "Los Pitufos", "Garfield", "Bob Esponja la Película", "Luca", "Red", "Super Mario Bros", "Sonic", "Pokémon", "Detective Pikachu", "Toy Story 2", "Frozen 2", "El Rey León 2", "Buscando a Nemo 2", "Moana 2", "Encanto 2", "Cars 2", "Shrek 2", "Minions 2", "Intensa-Mente 2", "Monsters Inc. 2", "Coco 2", "Aladdín 2", "La Sirenita 2", "Mulan 2", "Tarzán 2", "Zootopia 2", "Los Increíbles 2", "Kung Fu Panda 2", "Madagascar 2", "La Era de Hielo 2", "Up 2", "Wall-E 2", "Ratatouille 2", "Peter Pan 2", "Blancanieves 2", "Cenicienta 2", "La Bella y la Bestia 2", "Valiente 2", "Enredados 2", "Bichos 2", "Lilo y Stitch 2", "El Lorax 2", "Sing 2", "La Vida Secreta de tus Mascotas 2", "Trolls 2", "Cómo entrenar a tu dragón 2", "Mi Villano Favorito 2", "Hotel Transylvania 2", "El Grinch 2", "El Gato con Botas 2", "Ralph el Demoledor 2", "Bolt 2", "Dumbo 2", "Bambi 2", "Pinocho 2", "El Libro de la Selva 2", "Alicia en el País de las Maravillas 2", "Robin Hood 2", "Los Pitufos 2", "Garfield 2", "Bob Esponja la Película 2", "Luca 2", "Red 2", "Super Mario Bros 2", "Sonic 2", "Pokémon 2", "Detective Pikachu 2", "Toy Story 3", "Frozen 3", "El Rey León 3", "Buscando a Nemo 3", "Moana 3", "Encanto 3", "Cars 3", "Shrek 3", "Minions 3", "Intensa-Mente 3", "Monsters Inc. 3", "Coco 3", "Aladdín 3", "La Sirenita 3", "Mulan 3", "Tarzán 3", "Zootopia 3", "Los Increíbles 3", "Kung Fu Panda 3", "Madagascar 3", "La Era de Hielo 3", "Up 3", "Wall-E 3", "Ratatouille 3", "Peter Pan 3", "Blancanieves 3", "Cenicienta 3", "La Bella y la Bestia 3", "Valiente 3", "Enredados 3", "Bichos 3", "Lilo y Stitch 3", "El Lorax 3", "Sing 3"], "personajes": ["Mickey Mouse", "Pato Donald", "Spider-Man", "Batman", "Superman", "Mujer Maravilla", "Peppa Pig", "Bob Esponja", "Pikachu", "Elsa", "Olaf", "Simba", "Woody", "Buzz Lightyear", "Shrek", "Burro", "Goku", "Naruto", "Sonic", "Mario Bros", "Luigi", "Papá Noel", "Ratón Pérez", "Caperucita Roja", "El Lobo Feroz", "Pinocho", "Cenicienta", "Blancanieves", "Ariel", "Rapunzel", "Hulk", "Capitán América", "Iron Man", "Pantera Negra", "Groot", "Minnie Mouse", "Pluto", "Goofy", "Patricio Estrella", "Calamardo", "Peppa Cerdita", "George Pig", "Dora la Exploradora", "Botas", "Ben 10", "Bugs Bunny", "Pato Lucas", "Tom", "Jerry", "Silvestre", "Piolín", "Scooby-Doo", "Shaggy", "Las Chicas Superpoderosas", "Dexter", "Winnie Pooh", "Tigger", "Igor", "Piglet", "Stitch", "Lilo", "Super Mickey Mouse", "Super Pato Donald", "Super Spider-Man", "Super Batman", "Super Superman", "Super Mujer Maravilla", "Super Peppa Pig", "Super Bob Esponja", "Super Pikachu", "Super Elsa", "Super Olaf", "Super Simba", "Super Woody", "Super Buzz Lightyear", "Super Shrek", "Super Burro", "Super Goku", "Super Naruto", "Super Sonic", "Super Mario Bros", "Super Luigi", "Super Papá Noel", "Super Ratón Pérez", "Super Caperucita Roja", "Super El Lobo Feroz", "Super Pinocho", "Super Cenicienta", "Super Blancanieves", "Super Ariel", "Super Rapunzel", "Super Hulk", "Super Capitán América", "Super Iron Man", "Super Pantera Negra", "Super Groot", "Super Minnie Mouse", "Super Pluto", "Super Goofy", "Super Patricio Estrella", "Super Calamardo", "Super Peppa Cerdita", "Super George Pig", "Super Dora la Exploradora", "Super Botas", "Super Ben 10", "Super Bugs Bunny", "Super Pato Lucas", "Super Tom", "Super Jerry", "Super Silvestre", "Super Piolín", "Super Scooby-Doo", "Super Shaggy", "Super Las Chicas Superpoderosas", "Super Dexter", "Super Winnie Pooh", "Super Tigger", "Super Igor", "Super Piglet", "Super Stitch", "Super Lilo", "Super Mickey Mouse", "Super Pato Donald", "Super Spider-Man", "Super Batman", "Super Superman", "Super Mujer Maravilla", "Super Peppa Pig", "Super Bob Esponja", "Super Pikachu", "Super Elsa", "Super Olaf", "Super Simba", "Super Woody", "Super Buzz Lightyear", "Super Shrek", "Super Burro", "Super Goku", "Super Naruto", "Super Sonic", "Super Mario Bros", "Super Luigi", "Super Papá Noel", "Super Ratón Pérez", "Super Caperucita Roja", "Super El Lobo Feroz", "Super Pinocho", "Super Cenicienta", "Super Blancanieves"]}, "familia": {"acciones": ["Planchar la ropa", "Planchar el auto", "Planchar tenis", "Planchar fútbol", "Planchar el pasto", "Planchar un asado", "Planchar Netflix", "Planchar tango", "Planchar la computadora", "Planchar los platos", "Planchar la guitarra", "Planchar en la ducha", "Planchar una maratón", "Planchar pesas pesadas", "Lavar la ropa", "Lavar el auto", "Lavar tenis", "Lavar fútbol", "Lavar el pasto", "Lavar un asado", "Lavar Netflix", "Lavar tango", "Lavar la computadora", "Lavar los platos", "Lavar la guitarra", "Lavar en la ducha", "Lavar una maratón", "Lavar pesas pesadas", "Manejar la ropa", "Manejar el auto", "Manejar tenis", "Manejar fútbol", "Manejar el pasto", "Manejar un asado", "Manejar Netflix", "Manejar tango", "Manejar la computadora", "Manejar los platos", "Manejar la guitarra", "Manejar en la ducha", "Manejar una maratón", "Manejar pesas pesadas", "Jugar al la ropa", "Jugar al el auto", "Jugar al tenis", "Jugar al fútbol", "Jugar al el pasto", "Jugar al un asado", "Jugar al Netflix", "Jugar al tango", "Jugar al la computadora", "Jugar al los platos", "Jugar al la guitarra", "Jugar al en la ducha", "Jugar al una maratón", "Jugar al pesas pesadas", "Cortar la ropa", "Cortar el auto", "Cortar tenis", "Cortar fútbol", "Cortar el pasto", "Cortar un asado", "Cortar Netflix", "Cortar tango", "Cortar la computadora", "Cortar los platos", "Cortar la guitarra", "Cortar en la ducha", "Cortar una maratón", "Cortar pesas pesadas", "Cocinar la ropa", "Cocinar el auto", "Cocinar tenis", "Cocinar fútbol", "Cocinar el pasto", "Cocinar un asado", "Cocinar Netflix", "Cocinar tango", "Cocinar la computadora", "Cocinar los platos", "Cocinar la guitarra", "Cocinar en la ducha", "Cocinar una maratón", "Cocinar pesas pesadas", "Mirar la ropa", "Mirar el auto", "Mirar tenis", "Mirar fútbol", "Mirar el pasto", "Mirar un asado", "Mirar Netflix", "Mirar tango", "Mirar la computadora", "Mirar los platos", "Mirar la guitarra", "Mirar en la ducha", "Mirar una maratón", "Mirar pesas pesadas", "Bailar la ropa", "Bailar el auto", "Bailar tenis", "Bailar fútbol", "Bailar el pasto", "Bailar un asado", "Bailar Netflix", "Bailar tango", "Bailar la computadora", "Bailar los platos", "Bailar la guitarra", "Bailar en la ducha", "Bailar una maratón", "Bailar pesas pesadas", "Arreglar la ropa", "Arreglar el auto", "Arreglar tenis", "Arreglar fútbol", "Arreglar el pasto", "Arreglar un asado", "Arreglar Netflix", "Arreglar tango", "Arreglar la computadora", "Arreglar los platos", "Arreglar la guitarra", "Arreglar en la ducha", "Arreglar una maratón", "Arreglar pesas pesadas", "Limpiar la ropa", "Limpiar el auto", "Limpiar tenis", "Limpiar fútbol", "Limpiar el pasto", "Limpiar un asado", "Limpiar Netflix", "Limpiar tango", "Limpiar la computadora", "Limpiar los platos", "Limpiar la guitarra", "Limpiar en la ducha", "Limpiar una maratón", "Limpiar pesas pesadas", "Tocar la ropa", "Tocar el auto", "Tocar tenis", "Tocar fútbol", "Tocar el pasto", "Tocar un asado", "Tocar Netflix", "Tocar tango", "Tocar la computadora", "Tocar los platos"], "peliculas": ["Titanic", "Jurassic Park", "Star Wars", "El Señor de los Anillos", "Harry Potter", "Matrix", "Volver al Futuro", "Indiana Jones", "E.T.", "El Padrino", "Rocky", "Terminator", "Avatar", "Avengers", "Mi Pobre Angelito", "Esperando la Carroza", "El Secreto de sus Ojos", "Nueve Reinas", "Relatos Salvajes", "Gladiador", "Corazón Valiente", "Piratas del Caribe", "Misión Imposible", "Rápido y Furioso", "James Bond", "El Zorro", "Mujer Bonita", "Grease", "Mamma Mia!", "Forrest Gump", "La Vida es Bella", "El Club de la Pelea", "Sexto Sentido", "El Resplandor", "IT", "El Exorcista", "Juego de Gemelas", "Chicas Pesadas", "El Diablo Viste a la Moda", "El Gran Showman", "Bohemian Rhapsody", "Rocketman", "Escuela de Rock", "Crepúsculo", "Los Juegos del Hambre", "Dune", "Interestelar", "Gravedad", "El Regreso de Titanic", "El Regreso de Jurassic Park", "El Regreso de Star Wars", "El Regreso de El Señor de los Anillos", "El Regreso de Harry Potter", "El Regreso de Matrix", "El Regreso de Volver al Futuro", "El Regreso de Indiana Jones", "El Regreso de E.T.", "El Regreso de El Padrino", "El Regreso de Rocky", "El Regreso de Terminator", "El Regreso de Avatar", "El Regreso de Avengers", "El Regreso de Mi Pobre Angelito", "El Regreso de Esperando la Carroza", "El Regreso de El Secreto de sus Ojos", "El Regreso de Nueve Reinas", "El Regreso de Relatos Salvajes", "El Regreso de Gladiador", "El Regreso de Corazón Valiente", "El Regreso de Piratas del Caribe", "El Regreso de Misión Imposible", "El Regreso de Rápido y Furioso", "El Regreso de James Bond", "El Regreso de El Zorro", "El Regreso de Mujer Bonita", "El Regreso de Grease", "El Regreso de Mamma Mia!", "El Regreso de Forrest Gump", "El Regreso de La Vida es Bella", "El Regreso de El Club de la Pelea", "El Regreso de Sexto Sentido", "El Regreso de El Resplandor", "El Regreso de IT", "El Regreso de El Exorcista", "El Regreso de Juego de Gemelas", "El Regreso de Chicas Pesadas", "El Regreso de El Diablo Viste a la Moda", "El Regreso de El Gran Showman", "El Regreso de Bohemian Rhapsody", "El Regreso de Rocketman", "El Regreso de Escuela de Rock", "El Regreso de Crepúsculo", "El Regreso de Los Juegos del Hambre", "El Regreso de Dune", "El Regreso de Interestelar", "El Regreso de Gravedad", "El Regreso de Titanic", "El Regreso de Jurassic Park", "El Regreso de Star Wars", "El Regreso de El Señor de los Anillos", "El Regreso de Harry Potter", "El Regreso de Matrix", "El Regreso de Volver al Futuro", "El Regreso de Indiana Jones", "El Regreso de E.T.", "El Regreso de El Padrino", "El Regreso de Rocky", "El Regreso de Terminator", "El Regreso de Avatar", "El Regreso de Avengers", "El Regreso de Mi Pobre Angelito", "El Regreso de Esperando la Carroza", "El Regreso de El Secreto de sus Ojos", "El Regreso de Nueve Reinas", "El Regreso de Relatos Salvajes", "El Regreso de Gladiador", "El Regreso de Corazón Valiente", "El Regreso de Piratas del Caribe", "El Regreso de Misión Imposible", "El Regreso de Rápido y Furioso", "El Regreso de James Bond", "El Regreso de El Zorro", "El Regreso de Mujer Bonita", "El Regreso de Grease", "El Regreso de Mamma Mia!", "El Regreso de Forrest Gump", "El Regreso de La Vida es Bella", "El Regreso de El Club de la Pelea", "El Regreso de Sexto Sentido", "El Regreso de El Resplandor", "El Regreso de IT", "El Regreso de El Exorcista", "El Regreso de Juego de Gemelas", "El Regreso de Chicas Pesadas", "El Regreso de El Diablo Viste a la Moda", "El Regreso de El Gran Showman", "El Regreso de Bohemian Rhapsody", "El Regreso de Rocketman", "El Regreso de Escuela de Rock", "El Regreso de Crepúsculo", "El Regreso de Los Juegos del Hambre", "El Regreso de Dune", "El Regreso de Interestelar", "El Regreso de Gravedad", "El Regreso de Titanic", "El Regreso de Jurassic Park", "El Regreso de Star Wars", "El Regreso de El Señor de los Anillos", "El Regreso de Harry Potter", "El Regreso de Matrix"], "personajes": ["Lionel Messi", "Diego Maradona", "Michael Jackson", "Marilyn Monroe", "Elvis Presley", "Charlie Chaplin", "Albert Einstein", "Drácula", "Frankenstein", "Homero Simpson", "Mirtha Legrand", "Susana Giménez", "Ricardo Fort", "El Chavo del 8", "Don Ramón", "Charly García", "Shakira", "Bizarrap", "Dibu Martínez", "Che Guevara", "Cleopatra", "Julio César", "Leonardo da Vinci", "Mona Lisa", "Frida Kahlo", "Eminem", "Madonna", "Lady Gaga", "Taylor Swift", "Bad Bunny", "Míster Bean", "Jim Carrey", "Jackie Chan", "Bruce Lee", "Sylvester Stallone", "Arnold Schwarzenegger", "Tom Cruise", "Keanu Reeves", "Will Smith", "Brad Pitt", "Rey Arturo", "Robin Hood", "Hércules", "El doble de Lionel Messi", "El doble de Diego Maradona", "El doble de Michael Jackson", "El doble de Marilyn Monroe", "El doble de Elvis Presley", "El doble de Charlie Chaplin", "El doble de Albert Einstein", "El doble de Drácula", "El doble de Frankenstein", "El doble de Homero Simpson", "El doble de Mirtha Legrand", "El doble de Susana Giménez", "El doble de Ricardo Fort", "El doble de El Chavo del 8", "El doble de Don Ramón", "El doble de Charly García", "El doble de Shakira", "El doble de Bizarrap", "El doble de Dibu Martínez", "El doble de Che Guevara", "El doble de Cleopatra", "El doble de Julio César", "El doble de Leonardo da Vinci", "El doble de Mona Lisa", "El doble de Frida Kahlo", "El doble de Eminem", "El doble de Madonna", "El doble de Lady Gaga", "El doble de Taylor Swift", "El doble de Bad Bunny", "El doble de Míster Bean", "El doble de Jim Carrey", "El doble de Jackie Chan", "El doble de Bruce Lee", "El doble de Sylvester Stallone", "El doble de Arnold Schwarzenegger", "El doble de Tom Cruise", "El doble de Keanu Reeves", "El doble de Will Smith", "El doble de Brad Pitt", "El doble de Rey Arturo", "El doble de Robin Hood", "El doble de Hércules", "El doble de Lionel Messi", "El doble de Diego Maradona", "El doble de Michael Jackson", "El doble de Marilyn Monroe", "El doble de Elvis Presley", "El doble de Charlie Chaplin", "El doble de Albert Einstein", "El doble de Drácula", "El doble de Frankenstein", "El doble de Homero Simpson", "El doble de Mirtha Legrand", "El doble de Susana Giménez", "El doble de Ricardo Fort", "El doble de El Chavo del 8", "El doble de Don Ramón", "El doble de Charly García", "El doble de Shakira", "El doble de Bizarrap", "El doble de Dibu Martínez", "El doble de Che Guevara", "El doble de Cleopatra", "El doble de Julio César", "El doble de Leonardo da Vinci", "El doble de Mona Lisa", "El doble de Frida Kahlo", "El doble de Eminem", "El doble de Madonna", "El doble de Lady Gaga", "El doble de Taylor Swift", "El doble de Bad Bunny", "El doble de Míster Bean", "El doble de Jim Carrey", "El doble de Jackie Chan", "El doble de Bruce Lee", "El doble de Sylvester Stallone", "El doble de Arnold Schwarzenegger", "El doble de Tom Cruise", "El doble de Keanu Reeves", "El doble de Will Smith", "El doble de Brad Pitt", "El doble de Rey Arturo", "El doble de Robin Hood", "El doble de Hércules", "El doble de Lionel Messi", "El doble de Diego Maradona", "El doble de Michael Jackson", "El doble de Marilyn Monroe", "El doble de Elvis Presley", "El doble de Charlie Chaplin", "El doble de Albert Einstein", "El doble de Drácula", "El doble de Frankenstein", "El doble de Homero Simpson", "El doble de Mirtha Legrand", "El doble de Susana Giménez", "El doble de Ricardo Fort", "El doble de El Chavo del 8", "El doble de Don Ramón", "El doble de Charly García", "El doble de Shakira", "El doble de Bizarrap", "El doble de Dibu Martínez", "El doble de Che Guevara", "El doble de Cleopatra"]}, "adultos": {"acciones": ["Pagar las expensas", "Pagar el jefe", "Pagar una entrevista", "Pagar home office desnudo", "Pagar un ex", "Pagar las 4 AM", "Pagar el transporte público", "Pagar el currículum", "Pagar un impuesto", "Pagar la primera cita", "Pagar la contraseña del banco", "Discutir con las expensas", "Discutir con el jefe", "Discutir con una entrevista", "Discutir con home office desnudo", "Discutir con un ex", "Discutir con las 4 AM", "Discutir con el transporte público", "Discutir con el currículum", "Discutir con un impuesto", "Discutir con la primera cita", "Discutir con la contraseña del banco", "Llegar borracho a las expensas", "Llegar borracho a el jefe", "Llegar borracho a una entrevista", "Llegar borracho a home office desnudo", "Llegar borracho a un ex", "Llegar borracho a las 4 AM", "Llegar borracho a el transporte público", "Llegar borracho a el currículum", "Llegar borracho a un impuesto", "Llegar borracho a la primera cita", "Llegar borracho a la contraseña del banco", "Hacer las expensas", "Hacer el jefe", "Hacer una entrevista", "Hacer home office desnudo", "Hacer un ex", "Hacer las 4 AM", "Hacer el transporte público", "Hacer el currículum", "Hacer un impuesto", "Hacer la primera cita", "Hacer la contraseña del banco", "Stalkear a las expensas", "Stalkear a el jefe", "Stalkear a una entrevista", "Stalkear a home office desnudo", "Stalkear a un ex", "Stalkear a las 4 AM", "Stalkear a el transporte público", "Stalkear a el currículum", "Stalkear a un impuesto", "Stalkear a la primera cita", "Stalkear a la contraseña del banco", "Mandar mensaje a las expensas", "Mandar mensaje a el jefe", "Mandar mensaje a una entrevista", "Mandar mensaje a home office desnudo", "Mandar mensaje a un ex", "Mandar mensaje a las 4 AM", "Mandar mensaje a el transporte público", "Mandar mensaje a el currículum", "Mandar mensaje a un impuesto", "Mandar mensaje a la primera cita", "Mandar mensaje a la contraseña del banco", "Dormirse en las expensas", "Dormirse en el jefe", "Dormirse en una entrevista", "Dormirse en home office desnudo", "Dormirse en un ex", "Dormirse en las 4 AM", "Dormirse en el transporte público", "Dormirse en el currículum", "Dormirse en un impuesto", "Dormirse en la primera cita", "Dormirse en la contraseña del banco", "Mentir en las expensas", "Mentir en el jefe", "Mentir en una entrevista", "Mentir en home office desnudo", "Mentir en un ex", "Mentir en las 4 AM", "Mentir en el transporte público", "Mentir en el currículum", "Mentir en un impuesto", "Mentir en la primera cita", "Mentir en la contraseña del banco", "Llorar por las expensas", "Llorar por el jefe", "Llorar por una entrevista", "Llorar por home office desnudo", "Llorar por un ex", "Llorar por las 4 AM", "Llorar por el transporte público", "Llorar por el currículum", "Llorar por un impuesto", "Llorar por la primera cita", "Llorar por la contraseña del banco", "Eructar en las expensas", "Eructar en el jefe", "Eructar en una entrevista", "Eructar en home office desnudo", "Eructar en un ex", "Eructar en las 4 AM", "Eructar en el transporte público", "Eructar en el currículum", "Eructar en un impuesto", "Eructar en la primera cita", "Eructar en la contraseña del banco", "Olvidar las expensas", "Olvidar el jefe", "Olvidar una entrevista", "Olvidar home office desnudo", "Olvidar un ex", "Olvidar las 4 AM", "Olvidar el transporte público", "Olvidar el currículum", "Olvidar un impuesto", "Olvidar la primera cita", "Olvidar la contraseña del banco"], "peliculas": ["Pulp Fiction", "El Club de la Pelea", "El Padrino", "El Lobo de Wall Street", "Cincuenta Sombras de Grey", "Psicosis", "El Resplandor", "Alien", "Terminator 2", "Kill Bill", "Bastardos sin Gloria", "Django Sin Cadenas", "Scarface", "Taxi Driver", "La Naranja Mecánica", "El Silencio de los Inocentes", "Se7en", "El Cisne Negro", "Parasite", "Mad Max: Fury Road", "Joker", "Deadpool", "Hangover (¿Qué pasó ayer?)", "American Pie", "Supercool", "El Exorcista", "El Conjuro", "Actividad Paranormal", "Saw (El Juego del Miedo)", "Hostel", "Nueve Reinas", "El Secreto de sus Ojos", "Relatos Salvajes", "El Marginal", "Okupas", "Los Simuladores", "Breaking Bad", "Game of Thrones", "Peaky Blinders", "Black Mirror", "Secuela de Pulp Fiction", "Secuela de El Club de la Pelea", "Secuela de El Padrino", "Secuela de El Lobo de Wall Street", "Secuela de Cincuenta Sombras de Grey", "Secuela de Psicosis", "Secuela de El Resplandor", "Secuela de Alien", "Secuela de Terminator 2", "Secuela de Kill Bill", "Secuela de Bastardos sin Gloria", "Secuela de Django Sin Cadenas", "Secuela de Scarface", "Secuela de Taxi Driver", "Secuela de La Naranja Mecánica", "Secuela de El Silencio de los Inocentes", "Secuela de Se7en", "Secuela de El Cisne Negro", "Secuela de Parasite", "Secuela de Mad Max: Fury Road", "Secuela de Joker", "Secuela de Deadpool", "Secuela de Hangover (¿Qué pasó ayer?)", "Secuela de American Pie", "Secuela de Supercool", "Secuela de El Exorcista", "Secuela de El Conjuro", "Secuela de Actividad Paranormal", "Secuela de Saw (El Juego del Miedo)", "Secuela de Hostel", "Secuela de Nueve Reinas", "Secuela de El Secreto de sus Ojos", "Secuela de Relatos Salvajes", "Secuela de El Marginal", "Secuela de Okupas", "Secuela de Los Simuladores", "Secuela de Breaking Bad", "Secuela de Game of Thrones", "Secuela de Peaky Blinders", "Secuela de Black Mirror", "Secuela de Pulp Fiction", "Secuela de El Club de la Pelea", "Secuela de El Padrino", "Secuela de El Lobo de Wall Street", "Secuela de Cincuenta Sombras de Grey", "Secuela de Psicosis", "Secuela de El Resplandor", "Secuela de Alien", "Secuela de Terminator 2", "Secuela de Kill Bill", "Secuela de Bastardos sin Gloria", "Secuela de Django Sin Cadenas", "Secuela de Scarface", "Secuela de Taxi Driver", "Secuela de La Naranja Mecánica", "Secuela de El Silencio de los Inocentes", "Secuela de Se7en", "Secuela de El Cisne Negro", "Secuela de Parasite", "Secuela de Mad Max: Fury Road", "Secuela de Joker", "Secuela de Deadpool", "Secuela de Hangover (¿Qué pasó ayer?)", "Secuela de American Pie", "Secuela de Supercool", "Secuela de El Exorcista", "Secuela de El Conjuro", "Secuela de Actividad Paranormal", "Secuela de Saw (El Juego del Miedo)", "Secuela de Hostel", "Secuela de Nueve Reinas", "Secuela de El Secreto de sus Ojos", "Secuela de Relatos Salvajes", "Secuela de El Marginal", "Secuela de Okupas", "Secuela de Los Simuladores", "Secuela de Breaking Bad", "Secuela de Game of Thrones", "Secuela de Peaky Blinders", "Secuela de Black Mirror", "Secuela de Pulp Fiction", "Secuela de El Club de la Pelea", "Secuela de El Padrino", "Secuela de El Lobo de Wall Street", "Secuela de Cincuenta Sombras de Grey", "Secuela de Psicosis", "Secuela de El Resplandor", "Secuela de Alien", "Secuela de Terminator 2", "Secuela de Kill Bill", "Secuela de Bastardos sin Gloria", "Secuela de Django Sin Cadenas", "Secuela de Scarface", "Secuela de Taxi Driver", "Secuela de La Naranja Mecánica", "Secuela de El Silencio de los Inocentes", "Secuela de Se7en", "Secuela de El Cisne Negro", "Secuela de Parasite", "Secuela de Mad Max: Fury Road", "Secuela de Joker", "Secuela de Deadpool", "Secuela de Hangover (¿Qué pasó ayer?)", "Secuela de American Pie", "Secuela de Supercool", "Secuela de El Exorcista", "Secuela de El Conjuro", "Secuela de Actividad Paranormal", "Secuela de Saw (El Juego del Miedo)", "Secuela de Hostel"], "personajes": ["Walter White", "Tony Soprano", "Michael Scott", "Hannibal Lecter", "Moria Casán", "Diego Capusotto", "Luca Prodan", "Indio Solari", "Ricardo Iorio", "Pappo", "Luis Alberto Spinetta", "Astor Piazzolla", "Jorge Luis Borges", "Julio Cortázar", "Quentin Tarantino", "Stanley Kubrick", "Elon Musk", "Steve Jobs", "Sigmund Freud", "Friedrich Nietzsche", "Che Guevara", "Evita Perón", "Winston Churchill", "Kurt Cobain", "Amy Winehouse", "David Bowie", "Donald Trump", "Javier Milei", "Cristina Kirchner", "Mauricio Macri", "El Bananero", "Ibai Llanos", "Coscu", "Hasbulla", "Mia Khalifa", "Sasha Grey", "Pablo Escobar", "El Chapo Guzmán", "Al Capone", "Charles Manson", "Ted Bundy", "Jack el Destripador", "El fantasma de Walter White", "El fantasma de Tony Soprano", "El fantasma de Michael Scott", "El fantasma de Hannibal Lecter", "El fantasma de Moria Casán", "El fantasma de Diego Capusotto", "El fantasma de Luca Prodan", "El fantasma de Indio Solari", "El fantasma de Ricardo Iorio", "El fantasma de Pappo", "El fantasma de Luis Alberto Spinetta", "El fantasma de Astor Piazzolla", "El fantasma de Jorge Luis Borges", "El fantasma de Julio Cortázar", "El fantasma de Quentin Tarantino", "El fantasma de Stanley Kubrick", "El fantasma de Elon Musk", "El fantasma de Steve Jobs", "El fantasma de Sigmund Freud", "El fantasma de Friedrich Nietzsche", "El fantasma de Che Guevara", "El fantasma de Evita Perón", "El fantasma de Winston Churchill", "El fantasma de Kurt Cobain", "El fantasma de Amy Winehouse", "El fantasma de David Bowie", "El fantasma de Donald Trump", "El fantasma de Javier Milei", "El fantasma de Cristina Kirchner", "El fantasma de Mauricio Macri", "El fantasma de El Bananero", "El fantasma de Ibai Llanos", "El fantasma de Coscu", "El fantasma de Hasbulla", "El fantasma de Mia Khalifa", "El fantasma de Sasha Grey", "El fantasma de Pablo Escobar", "El fantasma de El Chapo Guzmán", "El fantasma de Al Capone", "El fantasma de Charles Manson", "El fantasma de Ted Bundy", "El fantasma de Jack el Destripador", "El fantasma de Walter White", "El fantasma de Tony Soprano", "El fantasma de Michael Scott", "El fantasma de Hannibal Lecter", "El fantasma de Moria Casán", "El fantasma de Diego Capusotto", "El fantasma de Luca Prodan", "El fantasma de Indio Solari", "El fantasma de Ricardo Iorio", "El fantasma de Pappo", "El fantasma de Luis Alberto Spinetta", "El fantasma de Astor Piazzolla", "El fantasma de Jorge Luis Borges", "El fantasma de Julio Cortázar", "El fantasma de Quentin Tarantino", "El fantasma de Stanley Kubrick", "El fantasma de Elon Musk", "El fantasma de Steve Jobs", "El fantasma de Sigmund Freud", "El fantasma de Friedrich Nietzsche", "El fantasma de Che Guevara", "El fantasma de Evita Perón", "El fantasma de Winston Churchill", "El fantasma de Kurt Cobain", "El fantasma de Amy Winehouse", "El fantasma de David Bowie", "El fantasma de Donald Trump", "El fantasma de Javier Milei", "El fantasma de Cristina Kirchner", "El fantasma de Mauricio Macri", "El fantasma de El Bananero", "El fantasma de Ibai Llanos", "El fantasma de Coscu", "El fantasma de Hasbulla", "El fantasma de Mia Khalifa", "El fantasma de Sasha Grey", "El fantasma de Pablo Escobar", "El fantasma de El Chapo Guzmán", "El fantasma de Al Capone", "El fantasma de Charles Manson", "El fantasma de Ted Bundy", "El fantasma de Jack el Destripador", "El fantasma de Walter White", "El fantasma de Tony Soprano", "El fantasma de Michael Scott", "El fantasma de Hannibal Lecter", "El fantasma de Moria Casán", "El fantasma de Diego Capusotto", "El fantasma de Luca Prodan", "El fantasma de Indio Solari", "El fantasma de Ricardo Iorio", "El fantasma de Pappo", "El fantasma de Luis Alberto Spinetta", "El fantasma de Astor Piazzolla", "El fantasma de Jorge Luis Borges", "El fantasma de Julio Cortázar", "El fantasma de Quentin Tarantino", "El fantasma de Stanley Kubrick", "El fantasma de Elon Musk", "El fantasma de Steve Jobs", "El fantasma de Sigmund Freud", "El fantasma de Friedrich Nietzsche", "El fantasma de Che Guevara", "El fantasma de Evita Perón", "El fantasma de Winston Churchill", "El fantasma de Kurt Cobain"]}};
 
     const FAKE_DECKS = {"ninos": [{"w": "Sol", "c": "Naturaleza"}, {"w": "Casa", "c": "Construcción"}, {"w": "Perro", "c": "Animal"}, {"w": "Gato", "c": "Animal"}, {"w": "Árbol", "c": "Naturaleza"}, {"w": "Auto", "c": "Transporte"}, {"w": "Barco", "c": "Transporte"}, {"w": "Avión", "c": "Transporte"}, {"w": "Helado", "c": "Comida"}, {"w": "Pizza", "c": "Comida"}, {"w": "Manzana", "c": "Fruta"}, {"w": "Banana", "c": "Fruta"}, {"w": "Pez", "c": "Animal"}, {"w": "Tortuga", "c": "Animal"}, {"w": "Mariposa", "c": "Insecto"}, {"w": "Elefante", "c": "Animal"}, {"w": "Jirafa", "c": "Animal"}, {"w": "Dinosaurio", "c": "Animal"}, {"w": "Robot", "c": "Personaje"}, {"w": "Cohete", "c": "Espacio"}, {"w": "Estrella", "c": "Espacio"}, {"w": "Luna", "c": "Espacio"}, {"w": "Arcoíris", "c": "Clima"}, {"w": "Paraguas", "c": "Objeto"}, {"w": "Bicicleta", "c": "Transporte"}, {"w": "Pelota", "c": "Deporte"}, {"w": "Guitarra", "c": "Música"}, {"w": "Corona", "c": "Objeto"}, {"w": "Castillo", "c": "Lugar"}, {"w": "Fantasma", "c": "Personaje"}, {"w": "Pirata", "c": "Personaje"}, {"w": "Sirena", "c": "Fantasía"}, {"w": "Pulpo", "c": "Animal"}, {"w": "Pingüino", "c": "Animal"}, {"w": "Abeja", "c": "Insecto"}, {"w": "Flor", "c": "Naturaleza"}, {"w": "Torta", "c": "Comida"}, {"w": "Reloj", "c": "Objeto"}, {"w": "Anteojos", "c": "Objeto"}, {"w": "Barrilete", "c": "Juguete"}], "familia": [{"w": "Parrilla", "c": "Asado"}, {"w": "Mate", "c": "Bebida"}, {"w": "Faro", "c": "Construcción"}, {"w": "Submarino", "c": "Transporte"}, {"w": "Volcán", "c": "Naturaleza"}, {"w": "Pirámide", "c": "Historia"}, {"w": "Cactus", "c": "Planta"}, {"w": "Molino de viento", "c": "Construcción"}, {"w": "Globo aerostático", "c": "Transporte"}, {"w": "Teleférico", "c": "Transporte"}, {"w": "Semáforo", "c": "Ciudad"}, {"w": "Hidrante", "c": "Ciudad"}, {"w": "Espantapájaros", "c": "Campo"}, {"w": "Iglesia", "c": "Construcción"}, {"w": "Puente colgante", "c": "Construcción"}, {"w": "Iglú", "c": "Construcción"}, {"w": "Cámara de fotos", "c": "Objeto"}, {"w": "Microscopio", "c": "Ciencia"}, {"w": "Telescopio", "c": "Ciencia"}, {"w": "Brújula", "c": "Objeto"}, {"w": "Ancla", "c": "Náutica"}, {"w": "Velero", "c": "Náutica"}, {"w": "Pingüino", "c": "Animal"}, {"w": "Camello", "c": "Animal"}, {"w": "Canguro", "c": "Animal"}, {"w": "Flamenco", "c": "Ave"}, {"w": "Búho", "c": "Ave"}, {"w": "Murciélago", "c": "Animal"}, {"w": "Sushi", "c": "Comida"}, {"w": "Empanada", "c": "Comida"}, {"w": "Hamburguesa", "c": "Comida"}, {"w": "Taco", "c": "Comida"}, {"w": "Batería", "c": "Música"}, {"w": "Saxofón", "c": "Música"}, {"w": "Violín", "c": "Música"}, {"w": "Acordeón", "c": "Música"}, {"w": "Momia", "c": "Terror"}, {"w": "Vampiro", "c": "Terror"}, {"w": "Ovni", "c": "Ciencia Ficción"}, {"w": "Astronauta", "c": "Espacio"}], "adultos": [{"w": "Tinder", "c": "Aplicación"}, {"w": "Resaca", "c": "Estado"}, {"w": "Home office", "c": "Trabajo"}, {"w": "Inflación", "c": "Economía"}, {"w": "Divorcio", "c": "Legal"}, {"w": "Testamento", "c": "Legal"}, {"w": "Motel", "c": "Lugar"}, {"w": "Casino", "c": "Lugar"}, {"w": "Control de alcoholemia", "c": "Tránsito"}, {"w": "Grúa de acarreo", "c": "Tránsito"}, {"w": "Trapito", "c": "Calle"}, {"w": "Piquete", "c": "Ciudad"}, {"w": "Inodoro tapado", "c": "Hogar"}, {"w": "Gotera", "c": "Hogar"}, {"w": "Corte de luz", "c": "Servicio"}, {"w": "Router sin señal", "c": "Tecnología"}, {"w": "Modo incógnito", "c": "Internet"}, {"w": "Spam", "c": "Internet"}, {"w": "Fake news", "c": "Medios"}, {"w": "Influencer", "c": "Redes"}, {"w": "Tatuaje arrepentido", "c": "Estética"}, {"w": "Botox", "c": "Estética"}, {"w": "Peluca", "c": "Accesorio"}, {"w": "Viagra", "c": "Farmacia"}, {"w": "Colonoscopia", "c": "Medicina"}, {"w": "Suero", "c": "Medicina"}, {"w": "Yeso en la pierna", "c": "Lesión"}, {"w": "Ciático", "c": "Salud"}, {"w": "Despedida de soltero", "c": "Fiesta"}, {"w": "Barra libre", "c": "Fiesta"}, {"w": "Fernet con coca", "c": "Bebida"}, {"w": "Sacacorchos", "c": "Objeto"}, {"w": "Cuarto oscuro", "c": "Elecciones"}, {"w": "Urna", "c": "Elecciones"}, {"w": "Carta natal", "c": "Astrología"}, {"w": "Ouija", "c": "Paranormal"}, {"w": "Cementerio", "c": "Lugar"}, {"w": "Velorio", "c": "Evento"}, {"w": "Esposas policiales", "c": "Objeto"}, {"w": "Detector de mentiras", "c": "Objeto"}]};
 
@@ -2295,6 +2809,12 @@
     const TABU_DECKS = {"ninos": [{"w": "PERRO", "f": ["Ladrar", "Mascota", "Gato", "Hueso", "Cola"]}, {"w": "HELADO", "f": ["Frío", "Cremoso", "Cucurucho", "Verano", "Postre"]}, {"w": "ESCUELA", "f": ["Maestra", "Estudiar", "Aula", "Recreo", "Mochila"]}, {"w": "FÚTBOL", "f": ["Pelota", "Gol", "Arco", "Cancha", "Messi"]}, {"w": "PLAYA", "f": ["Arena", "Mar", "Sol", "Verano", "Olas"]}, {"w": "DINOSAURIO", "f": ["Extinto", "T-Rex", "Gigante", "Reptil", "Parque"]}, {"w": "PIZZA", "f": ["Queso", "Horno", "Porción", "Tomate", "Muzzarella"]}, {"w": "BICICLETA", "f": ["Ruedas", "Pedal", "Manubrio", "Andar", "Casco"]}, {"w": "SUPERHÉROE", "f": ["Poderes", "Capa", "Volar", "Villano", "Salvar"]}, {"w": "CUMPLEAÑOS", "f": ["Torta", "Velas", "Regalos", "Fiesta", "Años"]}, {"w": "ELEFANTE", "f": ["Trompa", "Grande", "Gris", "Orejas", "África"]}, {"w": "AVIÓN", "f": ["Volar", "Alas", "Piloto", "Cielo", "Aeropuerto"]}, {"w": "CHOCOLATE", "f": ["Dulce", "Cacao", "Marrón", "Bombón", "Tableta"]}, {"w": "SIRENA", "f": ["Mar", "Cola", "Pez", "Cantar", "Princesa"]}, {"w": "PIRATA", "f": ["Barco", "Tesoro", "Parche", "Loro", "Garfio"]}, {"w": "ZOOLÓGICO", "f": ["Animales", "Jaula", "Visitar", "León", "Mono"]}, {"w": "NIEVE", "f": ["Frío", "Blanco", "Invierno", "Muñeco", "Esquiar"]}, {"w": "DENTISTA", "f": ["Dientes", "Muelas", "Boca", "Cepillo", "Doctor"]}, {"w": "ARCOÍRIS", "f": ["Colores", "Lluvia", "Sol", "Cielo", "Nubes"]}, {"w": "ROBOT", "f": ["Metal", "Máquina", "Futuro", "Cables", "Programar"]}, {"w": "HAMBURGUESA", "f": ["Carne", "Pan", "Papas", "Queso", "McDonald's"]}, {"w": "PINGÜINO", "f": ["Frío", "Hielo", "Blanco", "Negro", "Pájaro"]}, {"w": "FANTASMA", "f": ["Miedo", "Sábana", "Blanco", "Asustar", "Espíritu"]}, {"w": "GUITARRA", "f": ["Cuerdas", "Música", "Tocar", "Canción", "Instrumento"]}, {"w": "COHETE", "f": ["Espacio", "Luna", "Astronauta", "Volar", "Fuego"]}, {"w": "TORTUGA", "f": ["Lenta", "Caparazón", "Verde", "Animal", "Caminar"]}, {"w": "CIRCO", "f": ["Payaso", "Carpa", "Malabares", "Magia", "Acróbata"]}, {"w": "BOMBERO", "f": ["Fuego", "Agua", "Camión", "Manguera", "Apagar"]}, {"w": "UNICORNIO", "f": ["Caballo", "Cuerno", "Mágico", "Arcoíris", "Fantasía"]}, {"w": "ABEJA", "f": ["Miel", "Picar", "Amarillo", "Insecto", "Colmena"]}, {"w": "LÁPIZ", "f": ["Escribir", "Dibujar", "Goma", "Madera", "Punta"]}, {"w": "TREN", "f": ["Vías", "Vagones", "Estación", "Locomotora", "Viajar"]}, {"w": "BRUJA", "f": ["Escoba", "Sombrero", "Magia", "Hechizo", "Caldero"]}, {"w": "SANDÍA", "f": ["Fruta", "Roja", "Verde", "Semillas", "Verano"]}, {"w": "HOSPITAL", "f": ["Médico", "Enfermo", "Ambulancia", "Curar", "Camilla"]}, {"w": "CASTILLO", "f": ["Rey", "Princesa", "Torre", "Dragón", "Medieval"]}, {"w": "TIBURÓN", "f": ["Mar", "Dientes", "Aleta", "Peligro", "Pez"]}, {"w": "PIJAMA", "f": ["Dormir", "Cama", "Noche", "Ropa", "Pantuflas"]}, {"w": "POCHOCLO", "f": ["Cine", "Maíz", "Película", "Salado", "Dulce"]}, {"w": "PARAGUAS", "f": ["Lluvia", "Agua", "Mojarse", "Abrir", "Tormenta"]}, {"w": "COCODRILO", "f": ["Verde", "Dientes", "Río", "Reptil", "Cola"]}, {"w": "GLOBO", "f": ["Aire", "Inflar", "Fiesta", "Explotar", "Flotar"]}, {"w": "CEPILLO DE DIENTES", "f": ["Pasta", "Boca", "Lavar", "Mañana", "Baño"]}, {"w": "JIRAFA", "f": ["Cuello", "Alta", "Manchas", "África", "Animal"]}, {"w": "MONOPATÍN", "f": ["Ruedas", "Patinar", "Manubrio", "Equilibrio", "Plaza"]}, {"w": "ALFAJOR", "f": ["Dulce de leche", "Chocolate", "Galletita", "Merienda", "Kiosco"]}, {"w": "SOL", "f": ["Calor", "Día", "Estrella", "Amarillo", "Cielo"]}, {"w": "LUNA", "f": ["Noche", "Cielo", "Estrellas", "Redonda", "Espacio"]}, {"w": "PELUCHE", "f": ["Osito", "Suave", "Juguete", "Abrazar", "Cama"]}, {"w": "SUBMARINO", "f": ["Agua", "Fondo", "Mar", "Barco", "Bucear"]}], "familia": [{"w": "ASADO", "f": ["Carne", "Parrilla", "Carbón", "Domingo", "Chorizo"]}, {"w": "MATE", "f": ["Yerba", "Bombilla", "Agua", "Caliente", "Termo"]}, {"w": "AEROPUERTO", "f": ["Avión", "Valija", "Viajar", "Pasaporte", "Vuelo"]}, {"w": "SUPERMERCADO", "f": ["Compras", "Changuito", "Cajero", "Comida", "Góndola"]}, {"w": "MUDANZA", "f": ["Cajas", "Casa", "Camión", "Cambiar", "Muebles"]}, {"w": "CAMPING", "f": ["Carpa", "Naturaleza", "Fogata", "Bosque", "Dormir"]}, {"w": "PELUQUERÍA", "f": ["Pelo", "Cortar", "Tijera", "Peinar", "Tintura"]}, {"w": "SEMÁFORO", "f": ["Rojo", "Verde", "Amarillo", "Calle", "Tránsito"]}, {"w": "MICROONDAS", "f": ["Calentar", "Comida", "Cocina", "Rápido", "Plato"]}, {"w": "CONTRASEÑA", "f": ["Clave", "Secreta", "Wi-Fi", "Celular", "Olvidar"]}, {"w": "BODA", "f": ["Casamiento", "Novia", "Anillo", "Fiesta", "Iglesia"]}, {"w": "AJEDREZ", "f": ["Tablero", "Rey", "Reina", "Jaque", "Piezas"]}, {"w": "KARAOKE", "f": ["Cantar", "Micrófono", "Música", "Letra", "Canción"]}, {"w": "INSOMNIO", "f": ["Dormir", "Noche", "Despierto", "Cama", "Sueño"]}, {"w": "SUBTE", "f": ["Tren", "Túnel", "Debajo", "Estación", "Ciudad"]}, {"w": "FOTOGRAFÍA", "f": ["Cámara", "Imagen", "Selfie", "Recuerdo", "Sonreír"]}, {"w": "FARMACIA", "f": ["Remedios", "Medicamentos", "Receta", "Enfermo", "Turno"]}, {"w": "TERREMOTO", "f": ["Tierra", "Temblor", "Sacudir", "Desastre", "Edificio"]}, {"w": "BIBLIOTECA", "f": ["Libros", "Leer", "Silencio", "Estantería", "Estudiar"]}, {"w": "ASCENSOR", "f": ["Subir", "Bajar", "Edificio", "Pisos", "Escalera"]}, {"w": "TRUCO", "f": ["Cartas", "Envido", "Quiero", "Mazo", "Mentirosos"]}, {"w": "DESPERTADOR", "f": ["Reloj", "Mañana", "Sonar", "Alarma", "Levantarse"]}, {"w": "CRUCERO", "f": ["Barco", "Mar", "Vacaciones", "Viaje", "Islas"]}, {"w": "FERRETERÍA", "f": ["Herramientas", "Tornillos", "Martillo", "Clavos", "Arreglar"]}, {"w": "APAGÓN", "f": ["Luz", "Oscuridad", "Electricidad", "Velas", "Corte"]}, {"w": "PIRÁMIDE", "f": ["Egipto", "Faraón", "Triángulo", "Momia", "Desierto"]}, {"w": "SELFIE", "f": ["Foto", "Celular", "Cara", "Cámara", "Brazo"]}, {"w": "ESTACIÓN DE SERVICIO", "f": ["Nafta", "Auto", "Cargar", "Combustible", "Ruta"]}, {"w": "PESADILLA", "f": ["Sueño", "Miedo", "Dormir", "Malo", "Despertar"]}, {"w": "LAVARROPAS", "f": ["Ropa", "Jabón", "Limpia", "Centrifugar", "Agua"]}, {"w": "PASAPORTE", "f": ["Viajar", "Documento", "País", "Avión", "Sello"]}, {"w": "VAMPIRO", "f": ["Sangre", "Drácula", "Ajo", "Murciélago", "Colmillos"]}, {"w": "PROPINA", "f": ["Mozo", "Restaurante", "Dinero", "Cuenta", "Dejar"]}, {"w": "SPOILER", "f": ["Película", "Serie", "Final", "Contar", "Arruinar"]}, {"w": "RECICLAJE", "f": ["Basura", "Plástico", "Separar", "Planeta", "Verde"]}, {"w": "BRÚJULA", "f": ["Norte", "Sur", "Orientarse", "Mapa", "Perdido"]}, {"w": "PARRILLA", "f": ["Asado", "Fuego", "Carne", "Brasas", "Humo"]}, {"w": "LABERINTO", "f": ["Perdido", "Salida", "Caminos", "Paredes", "Entrar"]}, {"w": "EMPANADA", "f": ["Masa", "Relleno", "Horno", "Frita", "Repulgue"]}, {"w": "TELESCOPIO", "f": ["Estrellas", "Planetas", "Mirar", "Espacio", "Lejos"]}, {"w": "PEAJE", "f": ["Ruta", "Autopista", "Pagar", "Barrera", "Auto"]}, {"w": "SOBREMESA", "f": ["Comer", "Charlar", "Después", "Mesa", "Café"]}, {"w": "CÁMARA DE FOTOS", "f": ["Sacar", "Lente", "Flash", "Imagen", "Recuerdo"]}, {"w": "EXTRATERRESTRE", "f": ["Ovni", "Espacio", "Planeta", "Marciano", "Nave"]}, {"w": "TURBULENCIA", "f": ["Avión", "Moverse", "Vuelo", "Miedo", "Cinturón"]}, {"w": "SIESTA", "f": ["Dormir", "Tarde", "Descansar", "Cama", "Almorzar"]}, {"w": "CAJA FUERTE", "f": ["Dinero", "Guardar", "Clave", "Banco", "Seguridad"]}, {"w": "PROTECTORSOLAR", "f": ["Sol", "Playa", "Crema", "Quemarse", "Verano"]}, {"w": "ESPEJO", "f": ["Reflejo", "Mirarse", "Vidrio", "Cara", "Baño"]}, {"w": "VELERO", "f": ["Barco", "Viento", "Navegar", "Agua", "Mar"]}], "adultos": [{"w": "INFLACIÓN", "f": ["Precios", "Subir", "Dinero", "Economía", "Dólar"]}, {"w": "GHOSTING", "f": ["Desaparecer", "Mensajes", "Cita", "Ignorar", "Clavar visto"]}, {"w": "EXPENSAS", "f": ["Edificio", "Consorcio", "Pagar", "Departamento", "Alquiler"]}, {"w": "RESACA", "f": ["Alcohol", "Tomar", "Dolor", "Cabeza", "Fiesta"]}, {"w": "HOME OFFICE", "f": ["Trabajar", "Casa", "Computadora", "Remoto", "Oficina"]}, {"w": "TINDER", "f": ["Citas", "Match", "Aplicación", "Conocer", "Deslizar"]}, {"w": "HIPOTECA", "f": ["Banco", "Casa", "Préstamo", "Cuotas", "Propiedad"]}, {"w": "FRIENDZONE", "f": ["Amigos", "Amor", "Gustar", "Rechazo", "Pareja"]}, {"w": "TERAPIA", "f": ["Psicólogo", "Hablar", "Diván", "Problemas", "Sesión"]}, {"w": "AGUINALDO", "f": ["Sueldo", "Junio", "Diciembre", "Cobrar", "Extra"]}, {"w": "INFIDELIDAD", "f": ["Engañar", "Pareja", "Amante", "Cuernos", "Mentira"]}, {"w": "MONOTRIBUTO", "f": ["Impuestos", "AFIP", "Facturar", "Categoría", "Pagar"]}, {"w": "CRISIS DE LOS 40", "f": ["Edad", "Años", "Viejo", "Cambiar", "Moto"]}, {"w": "AFTER OFFICE", "f": ["Trabajo", "Salir", "Tragos", "Compañeros", "Bar"]}, {"w": "MODO INCÓGNITO", "f": ["Navegador", "Historial", "Secreto", "Buscar", "Chrome"]}, {"w": "SUEGRA", "f": ["Madre", "Pareja", "Familia", "Esposa", "Marido"]}, {"w": "BURNOUT", "f": ["Estrés", "Trabajo", "Cansancio", "Quemado", "Agotado"]}, {"w": "DESPEDIDA DE SOLTERO", "f": ["Casamiento", "Fiesta", "Amigos", "Noche", "Boda"]}, {"w": "ESTACIONAMIENTO MEDIDO", "f": ["Auto", "Multa", "Pagar", "Calle", "Parquímetro"]}, {"w": "TARJETA DE CRÉDITO", "f": ["Cuotas", "Resumen", "Pagar", "Banco", "Plástico"]}, {"w": "REUNIÓN DE CONSORCIO", "f": ["Vecinos", "Edificio", "Discutir", "Expensas", "Administrador"]}, {"w": "CIÁTICO", "f": ["Dolor", "Espalda", "Nervio", "Pierna", "Cintura"]}, {"w": "ALCOHOLEMIA", "f": ["Control", "Soplar", "Manejar", "Tomar", "Multa"]}, {"w": "CASI ALGO", "f": ["Relación", "Pareja", "Salir", "Sin título", "Vínculo"]}, {"w": "PLAZO FIJO", "f": ["Banco", "Interés", "Dinero", "Invertir", "Pesos"]}, {"w": "COLONOSCOPIA", "f": ["Médico", "Estudio", "Estómago", "Anestesia", "Cámara"]}, {"w": "GRUPO DE MAMIS Y PAPIS", "f": ["WhatsApp", "Escuela", "Hijos", "Mensajes", "Padres"]}, {"w": "AYUNO INTERMITENTE", "f": ["Comer", "Horas", "Dieta", "Hambre", "Salud"]}, {"w": "MOTEL", "f": ["Albergue", "Pareja", "Habitaciones", "Turno", "Sexo"]}, {"w": "CARTA DOCUMENTO", "f": ["Correo", "Abogado", "Legal", "Juicio", "Notificación"]}, {"w": "TRAPITO", "f": ["Auto", "Cuidar", "Calle", "Plata", "Estacionar"]}, {"w": "STALKEAR", "f": ["Redes", "Instagram", "Mirar", "Fotos", "Espiar"]}, {"w": "DIVORCIO", "f": ["Separarse", "Casamiento", "Abogado", "Bienes", "Matrimonio"]}, {"w": "MERCURIO RETRÓGRADO", "f": ["Planeta", "Astrología", "Signos", "Mala suerte", "Horóscopo"]}, {"w": "VERAZ", "f": ["Deuda", "Banco", "Crédito", "Pagar", "Moroso"]}, {"w": "LENCERIA", "f": ["Ropa interior", "Sexy", "Encaje", "Mujer", "Conjunto"]}, {"w": "PREVIA", "f": ["Tomar", "Antes", "Boliche", "Amigos", "Alcohol"]}, {"w": "GARANTÍA PROPIETARIA", "f": ["Alquilar", "Departamento", "Inmobiliaria", "Dueño", "Contrato"]}, {"w": "TATUAJE DE EX", "f": ["Nombre", "Piel", "Arrepentido", "Pareja", "Borrar"]}, {"w": "ALL-IN", "f": ["Póker", "Apostar", "Todo", "Fichas", "Cartas"]}, {"w": "CURRÍCULUM", "f": ["Trabajo", "Entrevista", "Experiencia", "Buscar", "Hoja"]}, {"w": "BOTOX", "f": ["Arrugas", "Cara", "Inyección", "Estética", "Joven"]}, {"w": "CADENA NACIONAL", "f": ["Presidente", "Televisión", "Discurso", "Hablar", "Gobierno"]}, {"w": "CUARTO OSCURO", "f": ["Votar", "Elecciones", "Boleta", "Sobre", "Urna"]}, {"w": "ACARREO", "f": ["Grúa", "Auto", "Mal estacionado", "Multa", "Llevar"]}, {"w": "CONCUÑADO", "f": ["Familia", "Hermano", "Pareja", "Esposo", "Parentesco"]}, {"w": "FUNADO", "f": ["Cancelado", "Redes", "Escrache", "Twitter", "Polémica"]}, {"w": "LUNA DE MIEL", "f": ["Viaje", "Casamiento", "Novios", "Vacaciones", "Pareja"]}, {"w": "CRIPTOMONEDA", "f": ["Bitcoin", "Digital", "Invertir", "Dinero", "Blockchain"]}, {"w": "VTV", "f": ["Auto", "Verificación", "Trámite", "Oblea", "Turno"]}]};
 
     const ESPIA_DECKS = {"ninos": ["Escuela", "Zoológico", "Pelotero", "Circo", "Castillo Mágico", "Barco Pirata", "Nave Espacial", "Juguetería", "Parque de Diversiones", "Playa", "Granja", "Acuario", "Bosque Encantado", "Pizzería", "Cancha de Fútbol", "Hospital", "Fábrica de Chocolate", "Campamento", "Cine", "Isla Desierta", "Estación de Bomberos", "Comisaría", "Laboratorio", "Estación Espacial", "Tren", "Supermercado", "Peluquería", "Veterinaria", "Heladería", "Castillo de Arena", "Nube Mágica", "Cueva de Dinosaurios", "Submarino", "Avión", "Museo de Dinosaurios", "Estadio", "Kiosco", "Calesita", "Auto de Carreras", "Biblioteca"], "familia": ["Aeropuerto", "Supermercado", "Restaurante", "Cine", "Hotel", "Banco", "Comisaría", "Hospital", "Estación de Tren", "Museo", "Biblioteca", "Teatro", "Submarino", "Crucero", "Estadio", "Gimnasio", "Peluquería", "Taller Mecánico", "Ferretería", "Heladería", "Parque Nacional", "Playa Pública", "Montaña Rusa", "Circo", "Zoológico", "Granja", "Base Militar", "Estación Espacial", "Casino", "Universidad", "Oficina", "Pizzería", "Shopping / Centro Comercial", "Carnicería", "Subte", "Embajada", "Casa de Brujas", "Cancha de Tenis", "Parque Acuático", "Estudio de Televisión"], "adultos": ["Boliche / Discoteca", "Oficina", "Despedida de Soltero/a", "Casino", "Cárcel", "Bar", "Motel", "Reunión de Consorcio", "Casamiento", "Juzgado", "Spa", "Manifestación / Piquete", "Avión en Turbulencia", "Guardia del Hospital", "Club Nocturno", "Consultorio Psicológico", "Cervecería Artesanal", "Transporte Público en Hora Pico", "Cena de Fin de Año", "Entrevista de Trabajo", "Set de Cine para Adultos", "Comisaría de Madrugada", "Fiesta Clandestina", "Congreso / Parlamento", "Secta Secreta", "Clínica Estética", "Baño Público", "Vuelo Comercial", "Búnker Subterráneo", "Campamento Nudista", "Reunión de Tupper Sex", "Velorio", "Asado con la Familia Política", "Tinder Date", "Torneo de Póker Ilegal", "Taller Clandestino", "Yate Privado", "Peaje en la Ruta", "Subte sin Aire Acondicionado", "Banda de Rock en Gira"]};
+
+    const BOMBA_DECKS = {"ninos": ["Colores", "Animales que vuelan", "Sabores de helado", "Dibujitos animados", "Partes del cuerpo", "Superhéroes", "Juguetes", "Nombres de nena", "Cosas redondas", "Deportes", "Cosas que hay en la escuela", "Frutas", "Verduras", "Animales de la granja", "Insectos", "Cosas que son rojas", "Cosas frías", "Cosas dulces", "Instrumentos musicales", "Vehículos", "Ropa de invierno", "Cosas que hay en la playa", "Nombres de varón", "Cosas que hacen ruido", "Cosas que se pueden romper"], "familia": ["Marcas de autos", "Países de Europa", "Deportes con pelota", "Cosas que hay en el baño", "Electrodomésticos", "Profesiones", "Películas de Disney", "Marcas de ropa", "Cosas que se guardan en la heladera", "Herramientas", "Provincias de Argentina", "Bandas de rock", "Tipos de pasta", "Cosas que llevas a un viaje", "Cosas que se pierden fácil", "Juegos de mesa", "Muebles", "Cosas que se enchufan", "Sabores de empanadas", "Cortes de carne", "Cosas que te dan alergia", "Excusas para no ir a un lugar", "Cosas que hacés antes de dormir", "Aplicaciones del celular", "Redes sociales"], "adultos": ["Insultos creativos", "Marcas de cerveza", "Tragos o cócteles", "Excusas para llegar tarde al trabajo", "Lugares para esconder un cadáver", "Cosas que te dan resaca", "Posiciones del kamasutra", "Partes íntimas en otros idiomas o jergas", "Cosas que hacés borracho", "Mentiras que decís en la primera cita", "Fetiches", "Cosas ilegales", "Razones para divorciarse", "Cosas que borrás del historial de internet", "Peores regalos de aniversario", "Lugares incómodos para tener sexo", "Efectos secundarios de medicamentos raros", "Apodos para un ex tóxico", "Cosas que no deberías decirle a un policía", "Enfermedades de transmisión", "Palabras censuradas", "Cosas que comprás a las 4 AM", "Cosas que hacés cuando nadie te ve", "Formas de arruinar una boda", "Mensajes que no deberías mandar de madrugada"]};
+    const STORY_DECKS = {"ninos": ["🐶", "🐱", "🐭", "🐹", "🐰", "🦊", "🐻", "🐼", "🐨", "🐯", "🦁", "🐮", "🐷", "🐸", "🐵", "🦄", "🐞", "🦋", "🍎", "🍕", "🍦", "🍭", "🚗", "✈️", "🚀", "🛸", "🎈", "🧸", "👑", "👻", "👽", "🤖", "🎃", "🎁", "⚽️", "🎨", "🌈", "🏰", "🌋", "🚲", "🌞", "🌙", "⭐", "🔥", "💧", "🌲", "🍄", "🌻", "🦖"], "familia": ["☕", "📱", "🏠", "🚲", "🏕️", "🏖️", "🏔️", "⛴️", "🕰️", "💡", "💰", "🔑", "🛒", "🍔", "🌮", "🥗", "🎸", "🎭", "🧩", "🎲", "🏆", "✈️", "🏥", "🏫", "🏭", "🌲", "🌵", "🐾", "📸", "🔍", "✂️", "🔨", "☂️", "💼", "👟", "🎩", "💍", "👓", "🌂", "🧶", "🧵", "🎨", "🎬", "🎤", "🎧", "🛹", "🛵", "🚒", "🚑"], "adultos": ["🍷", "🍺", "🥂", "🚬", "💊", "💸", "👙", "👠", "💍", "💋", "👅", "🍑", "🍆", "🌶️", "😈", "💀", "💩", "🤡", "🚔", "🚑", "🎰", "📉", "📈", "💣", "🔪", "⛓️", "🩸", "🔞", "🗑️", "🚽", "🛏️", "🌃", "🍻", "🍾", "🍸", "🦇", "🕷️", "🕸️", "🥀", "🔥", "🌪️", "🌊", "🌚", "🧊", "🧯", "🪓", "💉", "🦠", "🧬"]};
+    const SOLO_DECKS = {"ninos": ["Perro", "Gato", "Escuela", "Sol", "Luna", "Arcoíris", "Dinosaurio", "Princesa", "Superhéroe", "Helado", "Pizza", "Bicicleta", "Pelota", "Robot", "Cohete", "Fantasma", "Pirata", "Sirena", "Elefante", "Jirafa", "Tiburón", "Manzana", "Banana", "Mariposa", "Abeja", "Castillo", "Rey", "Bruja", "Pijama", "Paraguas"], "familia": ["Mate", "Asado", "Vacaciones", "Playa", "Aeropuerto", "Pasaporte", "Televisor", "Película", "Computadora", "Celular", "Internet", "Wi-Fi", "Contraseña", "Microondas", "Lavarropas", "Despertador", "Llave", "Billetera", "Semáforo", "Supermercado", "Hospital", "Farmacia", "Restaurante", "Cine", "Zoológico", "Camping", "Fotografía", "Boda", "Cumpleaños", "Navidad"], "adultos": ["Resaca", "Suegra", "Aguinaldo", "Expensas", "Impuestos", "Tinder", "Divorcio", "Motel", "Cárcel", "Casino", "Boliche", "Cerveza", "Fernet", "Alcoholemia", "Multa", "Trapito", "Piquete", "Home office", "Entrevista", "Despido", "Inflación", "Dólar", "Criptomoneda", "Botox", "Viagra", "Colonoscopia", "Ex pareja", "Infidelidad", "Ghosting", "Mensaje borracho"]};
+    const TRIVIA_DECKS = {"ninos": [{"q": "¿Cuántos colores tiene el arcoíris?", "a": 7}, {"q": "¿Cuántas patas tiene una araña?", "a": 8}, {"q": "¿Cuántos meses tiene un año?", "a": 12}, {"q": "¿Cuántos días tiene una semana?", "a": 7}, {"q": "¿Cuántas letras tiene el abecedario (sin la ch ni ll)?", "a": 27}, {"q": "¿Cuántas ruedas tiene un triciclo?", "a": 3}, {"q": "¿Cuántas horas tiene un día?", "a": 24}, {"q": "¿Cuántas vocales hay?", "a": 5}, {"q": "¿Cuántos enanos acompañan a Blancanieves?", "a": 7}, {"q": "¿Cuántos dedos tenemos en total (manos y pies)?", "a": 20}, {"q": "¿Cuántos dálmatas son en la famosa película?", "a": 101}, {"q": "¿Cuántos lados tiene un triángulo?", "a": 3}, {"q": "¿Cuántos lados tiene un cuadrado?", "a": 4}, {"q": "¿A qué edad Harry Potter descubre que es un mago?", "a": 11}, {"q": "¿Cuántos cerditos escapan del lobo feroz?", "a": 3}], "familia": [{"q": "¿En qué año se estrenó la película Titanic?", "a": 1997}, {"q": "¿Cuántos huesos tiene el cuerpo humano adulto?", "a": 206}, {"q": "¿Cuántas teclas tiene un piano clásico?", "a": 88}, {"q": "¿En qué año llegó el hombre a la Luna?", "a": 1969}, {"q": "¿Cuántos días tiene un año bisiesto?", "a": 366}, {"q": "¿Cuántas provincias tiene la República Argentina?", "a": 23}, {"q": "¿En qué año fue la Revolución de Mayo en Argentina?", "a": 1810}, {"q": "¿Cuántos centímetros hay en un metro?", "a": 100}, {"q": "¿Cuántos planetas hay en nuestro sistema solar (sin Plutón)?", "a": 8}, {"q": "¿Cuántas cartas tiene un mazo de truco (español de 40)?", "a": 40}, {"q": "¿Cuántos minutos dura un partido de fútbol reglamentario (sin alargue)?", "a": 90}, {"q": "¿Cuántas casillas tiene un tablero de ajedrez?", "a": 64}, {"q": "¿En qué año terminó la Segunda Guerra Mundial?", "a": 1945}, {"q": "¿Cuántos dientes tiene un adulto normal?", "a": 32}, {"q": "¿A qué temperatura hierve el agua (en grados Celsius)?", "a": 100}], "adultos": [{"q": "¿En qué año se lanzó el primer iPhone?", "a": 2007}, {"q": "¿Cuántos litros de cerveza consume un checo promedio por año? (Aprox)", "a": 140}, {"q": "¿Cuántos años duró la Guerra de los Cien Años?", "a": 116}, {"q": "¿Cuál es la velocidad máxima permitida en la mayoría de las autopistas argentinas (km/h)?", "a": 130}, {"q": "¿Cuántos episodios tiene en total la serie Breaking Bad?", "a": 62}, {"q": "¿En qué año se disolvió la Unión Soviética?", "a": 1991}, {"q": "¿Cuántos premios Oscar ganó la película 'El Señor de los Anillos: El Retorno del Rey'?", "a": 11}, {"q": "¿En qué año ocurrió el atentado a las Torres Gemelas?", "a": 2001}, {"q": "¿A qué edad murió Kurt Cobain, Jimi Hendrix y Amy Winehouse (El club de los...)?", "a": 27}, {"q": "¿Cuántos músculos tiene el cuerpo humano (aprox)?", "a": 600}, {"q": "¿En qué año se legalizó el divorcio vincular en Argentina (ley 23.515)?", "a": 1987}, {"q": "¿Cuál es el número de la Bestia según el Apocalipsis?", "a": 666}, {"q": "¿En qué año nació Diego Armando Maradona?", "a": 1960}, {"q": "¿Cuántos diputados tiene la Cámara de Diputados de la Nación Argentina?", "a": 257}, {"q": "¿En qué año se lanzó Netflix (como servicio de alquiler de DVD)?", "a": 1997}]};
+
     const PREFERIS_DECKS = {"ninos": [["Tener dedos de salchicha", "Tener orejas de elefante"], ["Poder volar pero muy lento", "Correr súper rápido pero saltando en un pie"], ["Comer solo helado para siempre", "Comer solo pizza para siempre"], ["Tener un dinosaurio de mascota", "Tener un dragón de mascota"], ["Ser del tamaño de una hormiga", "Ser del tamaño de un edificio"], ["Hablar con los perros", "Entender a los gatos"], ["Poder ser invisible", "Poder teletransportarte"], ["Tener brazos de fideo", "Tener piernas de gelatina"], ["Dormir en una cama de malvaviscos", "Bañarte en una pileta de chocolate"], ["Que llueva jugo de naranja", "Que nieve azúcar"], ["Ser un superhéroe sin capa", "Ser un mago sin varita"], ["Ir a la escuela en nave espacial", "Ir a la escuela montado en un león"], ["Poder respirar bajo el agua", "Poder caminar por las paredes como Spider-Man"], ["Comer todos los días tu comida favorita pero fría", "Comer comidas que no te gustan tanto pero siempre calientes"], ["No tener que lavarte los dientes nunca más", "No tener que peinarte nunca más"], ["Tener un robot que te haga la tarea", "Tener un robot que te ordene la pieza"], ["Hablar todos los idiomas del mundo", "Saber tocar todos los instrumentos musicales"], ["Vivir en una casa del árbol gigante", "Vivir en un castillo bajo el mar"], ["Tener el pelo azul", "Tener el pelo verde brillante"], ["Que todos tus dibujos cobren vida", "Que todos tus juguetes cobren vida de noche"]], "familia": [["Llegar siempre 1 hora tarde a todos lados", "Llegar siempre 1 hora temprano"], ["Saber todos los idiomas del mundo", "Saber tocar todos los instrumentos"], ["Viajar gratis al futuro", "Viajar gratis al pasado"], ["Quedarte sin internet por un mes", "Quedarte sin agua caliente por un mes"], ["Saber cuándo vas a morir", "Saber CÓMO vas a morir"], ["Tener que decir siempre todo lo que pensás", "No poder hablar nunca más"], ["Tener Wi-Fi gratis donde sea pero re lento", "Tener el mejor Wi-Fi del mundo pero pagar una fortuna"], ["Viajar gratis por el mundo pero siempre solo", "Pagar tus viajes pero ir con quien quieras"], ["Vivir sin música", "Vivir sin películas ni series"], ["Ser la persona más graciosa del mundo", "Ser la persona más inteligente del mundo"], ["Ganar la lotería hoy", "Vivir el doble de años con salud perfecta"], ["Estar siempre un poco resfriado", "Tener siempre una piedra chiquita en la zapatilla"], ["Perder todos los recuerdos de tu infancia", "No poder crear ningún recuerdo nuevo"], ["Que siempre sea invierno", "Que siempre sea verano"], ["Tener que cantar en lugar de hablar", "Tener que bailar cada vez que caminás"], ["Saber lo que la gente piensa de vos", "Saber qué van a hacer los demás en 5 minutos"], ["Vivir 10 años más pero envejecer el doble de rápido", "Vivir 10 años menos pero quedarte como estás hoy para siempre"], ["Controlar el clima", "Poder controlar a los animales"], ["Ser famoso pero que todos te odien", "Ser un desconocido pero que todos te amen"], ["Estar siempre despeinado", "Andar siempre con la ropa manchada"]], "adultos": [["Que tus padres lean todos tus chats de WhatsApp", "Que tu jefe vea todo tu historial de búsqueda"], ["Ganar 10 millones de dólares pero no poder contárselo a nadie", "Ganar 100 mil dólares y salir en todas las noticias"], ["Tener siempre 1% de batería en el celular", "Tener siempre la nariz tapada"], ["Volver con tu peor ex", "No tener pareja por los próximos 10 años"], ["Tener un sueldo millonario pero trabajar 16 horas por día", "Cobrar el sueldo mínimo pero no trabajar nada"], ["Que descubran la peor mentira que dijiste", "Que se publique tu última foto borrada"], ["Eructar cada vez que das un beso", "Tirarte un pedo cada vez que te reís"], ["Estar un mes sin bañarte", "Estar un mes sin usar el celular"], ["Llegar borracho a una entrevista de trabajo importante", "Llegar borracho a conocer a tus suegros por primera vez"], ["Saber que tu pareja te engaña y no poder decir nada", "Engañar a tu pareja y que todo el mundo lo sepa menos él/ella"], ["Tener que usar la misma ropa todos los días por un año", "Tener que cambiar de trabajo cada mes por un año"], ["Ser el mejor en un trabajo que odiás", "Ser el peor en el trabajo de tus sueños"], ["Que todos tus pensamientos aparezcan subtitulados arriba de tu cabeza", "Que todo lo que soñás a la noche se transmita por TV"], ["Encontrar el amor de tu vida pero que viva en otro continente", "Casarte con alguien que no amás pero que vive a dos cuadras"], ["No poder mentir nunca más", "Que nadie te crea cuando decís la verdad"], ["Perder todos tus ahorros", "Perder todas las fotos de tu vida"], ["Dormir siempre en una cama de clavos", "Caminar siempre descalzo sobre legos"], ["Tener una voz insoportable", "Tener una risa aterradora"], ["Pasar 5 años en la cárcel", "Pasar 10 años en coma"], ["Descubrir que vivimos en una simulación", "Descubrir que los aliens ya están entre nosotros"]]};
 
     const CHARLA_DECKS = {"ninos": ["Si pudieras tener cualquier animal del mundo como mascota (incluso un dragón o dinosaurio), ¿cuál elegirías y qué nombre le pondrías?", "¿Cuál fue el día más divertido de tu vida hasta ahora?", "Si tuvieras un superpoder por un día, ¿cuál elegirías y qué harías primero?", "¿Qué es lo que más te gusta hacer cuando estás en familia?", "Si pudieras inventar un gusto de helado nuevo, ¿de qué sería?", "¿Cuál es tu cuento, película o dibujito favorito y qué personaje te gustaría ser?", "¿Qué cosa aprendiste a hacer hace poco que te puso muy contento/a?", "Si pudieras viajar en un cohete a cualquier planeta o lugar mágico, ¿a dónde irías?", "¿Qué es lo que más te hace reír a carcajadas?", "¿Cuál es tu juego favorito en el recreo o en casa?", "Si los juguetes hablaran cuando no los miramos, ¿qué creés que dirían los tuyos?", "¿Qué comida te gustaría comer todos los días si pudieras?", "¿Cuál fue el sueño más loco o divertido que recordás haber tenido?", "Si pudieras construir una casa del árbol gigante, ¿qué cosas tendría adentro?", "¿Qué es lo más lindo que un amigo o amiga hizo por vos?", "¿De qué color sería el mundo si vos pudieras pintarlo?", "¿Qué te gustaría ser o hacer cuando seas grande?", "¿Cuál es tu canción favorita para bailar o cantar fuerte?", "Si encontraras una lámpara mágica con tres deseos, ¿qué pedirías?", "¿Qué cosa te daba miedo antes y ya no te da miedo?", "¿Cuál es tu animal favorito y qué sabés hacer igual que él?", "Si pudieras hablar con un animal por 5 minutos, ¿con cuál hablarías y qué le preguntarías?", "¿Cuál fue el mejor regalo de cumpleaños que recibiste?", "¿Qué actividad te gustaría que hagamos juntos el próximo fin de semana?", "Si pudieras crear un robot que te ayude en casa, ¿qué tarea le darías?", "¿Cuál es tu lugar favorito para ir de paseo?", "¿Qué es lo que más te gusta de vos mismo/a?", "Si tuvieras que dibujar tu día perfecto, ¿qué habría en el dibujo?", "¿Cuál es tu chiste o adivinanza favorita?", "¿Qué cosa nueva te gustaría aprender a cocinar o fabricar?", "Si pudieras cambiar de lugar por un día con mamá, papá o un hermano, ¿qué harías?", "¿Cuál fue una aventura divertida que viviste en vacaciones?", "¿Qué te hace sentir muy valiente?", "¿Cuál es tu estación del año favorita: verano, otoño, invierno o primavera? ¿Por qué?", "Si pudieras inventar un deporte nuevo, ¿cómo se jugaría?", "¿Qué es lo más amable que hiciste por alguien esta semana?", "¿Cuál es tu disfraz favorito de todos los tiempos?", "Si tuvieras una máquina del tiempo para ir a ver dinosaurios o el futuro, ¿a dónde irías?", "¿Qué canción te pone de buen humor al instante?", "¿Qué le agradecerías hoy a alguien de esta mesa?"], "familia": ["¿Cuál fue el mejor viaje o paseo que hicimos o hiciste y qué lo hizo inolvidable?", "¿Qué costumbre o tradición familiar te gustaría mantener para siempre?", "¿Cuál es tu comida casera favorita, esa que te hace sentir inmediatamente en casa?", "¿Qué juego de mesa, deporte o actividad disfrutás más compartir en grupo?", "Si pudieras cenar con cualquier personaje de la historia o de ficción, ¿a quién elegirías?", "¿Cuál fue la anécdota más graciosa que recordás de una reunión o vacaciones?", "¿Qué habilidad o talento que hoy no tenés te gustaría despertar mañana sabiendo hacer?", "¿Cuál es el mejor consejo que te dieron en tu familia?", "¿Qué cosa pequeña te mejora al instante un día complicado?", "Si ganáramos un viaje todos juntos sin límite de presupuesto, ¿a qué destino iríamos?", "¿Cuál fue tu materia favorita en la escuela y cuál te costaba más?", "¿Qué película o serie podés volver a ver mil veces sin cansarte?", "¿Qué olor o canción te transporta automáticamente a tu infancia?", "¿Cuál fue el primer recital, espectáculo o partido en vivo que recordás haber disfrutado mucho?", "¿Qué objeto de tu casa salvarías primero en una mudanza exprés?", "¿Cuál fue el susto más grande que te pegaste y que hoy te da risa recordar?", "¿Qué cosa aprendiste a hacer recién de grande que te dio mucho orgullo?", "¿Cuál es tu plan perfecto para un domingo de lluvia en casa?", "¿Qué virtud admirás especialmente en la persona que tenés sentada a tu izquierda?", "¿Cuál fue el mejor regalo que recibiste en tu vida (sin importar su valor)?", "¿Qué deporte o hobby probaste alguna vez y qué recordás de esa experiencia?", "Si tu vida tuviera una canción de presentación cada vez que entrás a un lugar, ¿cuál sería?", "¿Cuál fue el trabajo o tarea más curioso que te tocó hacer?", "¿Sos más de planificar cada detalle de una salida o de improvisar sobre la marcha?", "¿Qué comida que a todo el mundo le encanta a vos no te gusta nada?", "¿Cuál es tu lugar favorito en el mundo para desconectar de todo?", "¿Qué aventura o actividad que nunca hicimos juntos te gustaría que probemos?", "¿Cómo describirías la energía de esta mesa en tres palabras?", "¿Qué momento del último año volverías a vivir exactamente igual?", "¿Qué te gustaría que hagamos más seguido cuando nos juntamos?", "¿Cuál fue tu primera impresión de alguien de esta mesa cuando lo conociste?", "¿Qué cosa simple hoy agradecés tener en tu vida?", "¿Quién fue una persona clave en tu infancia o adolescencia y por qué?", "Si tuvieras que dar una charla de 10 minutos sin prepararte, ¿de qué tema hablarías?", "¿Qué palabra o muletilla usás todo el tiempo sin darte cuenta?", "¿Cuál es la mejor sobremesa que recordás haber tenido?", "¿Qué te emociona fácilmente hoy en día?", "Si pudieras teletransportarte a algún lugar por 2 horas ahora mismo, ¿a dónde irías?", "¿Qué proyecto o idea tenés ganas de encarar este año?", "Antes de cambiar de tarjeta, decí en una frase qué te llevás de este encuentro."], "adultos": ["¿Qué creencia o certeza que tenías a los 20 años cambió por completo hoy?", "¿Cuál fue el momento más desafiante de tu vida adulta y qué descubriste de vos al atravesarlo?", "¿De qué logro personal te sentís más orgulloso, aunque no figure en ningún currículum?", "¿Qué significa hoy para vos tener 'éxito' o una buena vida?", "¿Cuál fue el límite personal que más te costó aprender a poner y que te cambió para bien?", "Si pudieras mandarle un mensaje de tres palabras a tu yo de hace 10 años, ¿qué le dirías?", "¿En qué aspectos sentís que te parecés más a tus viejos y en cuáles elegiste ser distinto?", "¿Qué hábito, mandato o forma de pensar sentís que ya es hora de soltar?", "¿Cuándo fue la última vez que hiciste algo por primera vez y qué te generó?", "¿Sentís que hoy le dedicás tiempo real a las cosas que decís que son prioridad?", "¿Qué error del pasado hoy agradecés haber cometido por adónde te llevó?", "¿Qué te cuesta más: pedir ayuda o aceptar que te ayuden cuando estás desbordado?", "¿Cuál fue la decisión más difícil que tuviste que tomar en tu trabajo, pareja o familia?", "Si supieras que no podés fallar ni perder estabilidad, ¿qué cambio o proyecto encararías mañana?", "¿Qué parte de tu personalidad creés que la gente suele malinterpretar al principio?", "¿Cómo te das cuenta de que realmente confiás en alguien?", "¿Qué aprendiste sobre el amor, la pareja o la amistad después de algún golpe?", "¿Hay alguna conversación pendiente que sabés que tarde o temprano vas a tener que dar?", "¿Qué te da verdadera paz mental cuando sentís que todo va demasiado rápido?", "¿Sentís que sos más exigente con los demás o con vos mismo?", "¿Qué miedo lograste superar en los últimos años y cómo lo hiciste?", "¿En qué momento de tu vida sentiste mayor libertad?", "¿Qué te gustaría que la gente que más querés recuerde de vos?", "¿Cuál fue el acto de generosidad más inesperado que alguien tuvo con vos?", "¿Qué te hace sentir verdaderamente escuchado y comprendido?", "¿Qué te gustaría perdonarte a vos mismo de etapas anteriores?", "¿En qué situaciones sentís que sos más auténtico, sin necesidad de cumplir un rol?", "¿A quién de esta mesa llamarías primero si tenés un quilombo grave a las 3 de la mañana?", "¿Qué virtud admirás en alguien de esta ronda que te gustaría desarrollar más en vos?", "¿Cuál fue la charla más profunda o reveladora que tuviste con alguien de este grupo?", "¿Qué cosa que antes te preocupaba muchísimo hoy te parece completamente secundaria?", "¿Cómo cambió tu forma de elegir amigos con el paso de los años?", "¿Qué legado o enseñanza te gustaría dejarles a tus hijos o a las generaciones que vienen?", "¿Qué significa para vos sentirse verdaderamente 'en casa'?", "Si nuestro grupo armara una empresa o proyecto juntos, ¿qué rol tendría cada uno y por qué?", "¿Qué momento difícil atravesamos o acompañamos juntos que nos unió más?", "¿Qué sueño o proyecto de alguien de esta mesa te encantaría ver cumplido?", "Si dentro de 20 años nos volvemos a sentar en esta misma mesa, ¿de qué creés que estaríamos hablando?", "Si hoy cerraras un capítulo de tu vida, ¿qué título le pondrías?", "Brindemos o cerremos la ronda diciendo qué valorás más de compartir este momento."]};
@@ -2305,10 +2825,11 @@
       adultos: "Mazo Adultos (+18 años)"
     };
 
-    const STORAGE_KEY = "boardgame_hub_v8";
+    const STORAGE_KEY = "boardgame_hub_v17";
 
     let state = {
       activeGameIdx: 0,
+      theme: 'dark',
       currentCat: 'familia',
       defaultTime: 60,
       pools: {
@@ -2325,7 +2846,8 @@
       admRound: 0,
       lobosConfig: {
         total: 8,
-        wolves: 2
+        wolves: 2,
+        names: ["Jugador 1", "Jugador 2", "Jugador 3", "Jugador 4", "Jugador 5", "Jugador 6", "Jugador 7", "Jugador 8"]
       },
       impConfig: {
         cat: 'familia',
@@ -2375,12 +2897,25 @@
         familia: [...FAKE_DECKS.familia],
         adultos: [...FAKE_DECKS.adultos]
       },
-      mimicaCat: 'acciones',
+      mimicaLevel: 'familia',
+      mimicaCats: ['acciones', 'peliculas', 'personajes'],
       mimicaPools: {
-        acciones: [...MIMICA_DECKS.acciones],
-        peliculas: [...MIMICA_DECKS.peliculas],
-        personajes: [...MIMICA_DECKS.personajes]
+        ninos: { acciones: [...MIMICA_DECKS.ninos.acciones], peliculas: [...MIMICA_DECKS.ninos.peliculas], personajes: [...MIMICA_DECKS.ninos.personajes] },
+        familia: { acciones: [...MIMICA_DECKS.familia.acciones], peliculas: [...MIMICA_DECKS.familia.peliculas], personajes: [...MIMICA_DECKS.familia.personajes] },
+        adultos: { acciones: [...MIMICA_DECKS.adultos.acciones], peliculas: [...MIMICA_DECKS.adultos.peliculas], personajes: [...MIMICA_DECKS.adultos.personajes] }
       },
+      teamNames: { A: 'Equipo A 🔴', B: 'Equipo B 🔵' },
+      tuttiRemaining: [],
+      
+      bombaCat: 'familia',
+      bombaPools: { ninos: [...BOMBA_DECKS.ninos], familia: [...BOMBA_DECKS.familia], adultos: [...BOMBA_DECKS.adultos] },
+      storyCat: 'familia',
+      soloCat: 'familia',
+      soloPools: { ninos: [...SOLO_DECKS.ninos], familia: [...SOLO_DECKS.familia], adultos: [...SOLO_DECKS.adultos] },
+      triviaCat: 'familia',
+      triviaPools: { ninos: [...TRIVIA_DECKS.ninos], familia: [...TRIVIA_DECKS.familia], adultos: [...TRIVIA_DECKS.adultos] },
+      diceCount: 2,
+
       espiaConfig: {
         cat: 'familia',
         total: 5,
@@ -2403,6 +2938,10 @@
         familia: 0,
         adultos: 0
       },
+                  anoMode: 'truco',
+      anoScores: { eq1: 0, eq2: 0 },
+      anoNames: { eq1: 'Nosotros', eq2: 'Ellos' },
+      generalaScores: {},
       teamScores: { A: 0, B: 0 },
       players: []
     };
@@ -2416,6 +2955,9 @@
             state = { ...state, ...parsed };
             if (!state.admPool) state.admPool = [...ADM_DECK];
             if (typeof state.admRound !== 'number') state.admRound = 0;
+                        if (!state.lobosConfig.names) {
+              state.lobosConfig.names = ["Jugador 1", "Jugador 2", "Jugador 3", "Jugador 4", "Jugador 5", "Jugador 6", "Jugador 7", "Jugador 8"];
+            }
             if (!state.impConfig) {
               state.impConfig = {
                 cat: 'familia',
@@ -2489,17 +3031,47 @@
                 adultos: [...FAKE_DECKS.adultos]
               };
             }
-            if (!state.mimicaPools || !state.mimicaPools.acciones) {
+            if (!state.mimicaCats) state.mimicaCats = ['acciones', 'peliculas', 'personajes'];
+            if (!state.mimicaLevel) state.mimicaLevel = 'familia';
+            if (!state.mimicaPools || !state.mimicaPools.ninos || !state.mimicaPools.ninos.acciones) {
               state.mimicaPools = {
-                acciones: [...MIMICA_DECKS.acciones],
-                peliculas: [...MIMICA_DECKS.peliculas],
-                personajes: [...MIMICA_DECKS.personajes]
+                ninos: {
+                  acciones: [...MIMICA_DECKS.ninos.acciones],
+                  peliculas: [...MIMICA_DECKS.ninos.peliculas],
+                  personajes: [...MIMICA_DECKS.ninos.personajes]
+                },
+                familia: {
+                  acciones: [...MIMICA_DECKS.familia.acciones],
+                  peliculas: [...MIMICA_DECKS.familia.peliculas],
+                  personajes: [...MIMICA_DECKS.familia.personajes]
+                },
+                adultos: {
+                  acciones: [...MIMICA_DECKS.adultos.acciones],
+                  peliculas: [...MIMICA_DECKS.adultos.peliculas],
+                  personajes: [...MIMICA_DECKS.adultos.personajes]
+                }
               };
             }
-            if (!['acciones', 'peliculas', 'personajes'].includes(state.mimicaCat)) {
-              state.mimicaCat = 'acciones';
-            }
+            if (!state.teamNames) state.teamNames = { A: 'Equipo A 🔴', B: 'Equipo B 🔵' };
+                                                if (!state.theme) state.theme = 'dark';
+            if (!state.anoMode) state.anoMode = 'truco';
+            if (!state.anoScores) state.anoScores = { eq1: 0, eq2: 0 };
+            if (!state.anoNames) state.anoNames = { eq1: 'Nosotros', eq2: 'Ellos' };
+            if (!state.generalaScores) state.generalaScores = {};
             if (!state.teamScores) state.teamScores = { A: 0, B: 0 };
+            if (!state.tuttiRemaining || state.tuttiRemaining.length === 0) {
+              state.tuttiRemaining = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+            }
+            
+            if (!state.bombaPools || !state.bombaPools.ninos) state.bombaPools = { ninos: [...BOMBA_DECKS.ninos], familia: [...BOMBA_DECKS.familia], adultos: [...BOMBA_DECKS.adultos] };
+            if (!state.soloPools || !state.soloPools.ninos) state.soloPools = { ninos: [...SOLO_DECKS.ninos], familia: [...SOLO_DECKS.familia], adultos: [...SOLO_DECKS.adultos] };
+            if (!state.triviaPools || !state.triviaPools.ninos) state.triviaPools = { ninos: [...TRIVIA_DECKS.ninos], familia: [...TRIVIA_DECKS.familia], adultos: [...TRIVIA_DECKS.adultos] };
+            if (!state.bombaCat) state.bombaCat = 'familia';
+            if (!state.storyCat) state.storyCat = 'familia';
+            if (!state.soloCat) state.soloCat = 'familia';
+            if (!state.triviaCat) state.triviaCat = 'familia';
+            if (!state.diceCount) state.diceCount = 2;
+
             if (!state.espiaConfig) {
               state.espiaConfig = { cat: 'familia', total: 5, spies: 1, names: ["Jugador 1", "Jugador 2", "Jugador 3", "Jugador 4", "Jugador 5"] };
             }
@@ -2575,6 +3147,71 @@
           "<strong>3. Debate:</strong> Los que quedaron en minoría tienen que justificar por qué eligieron esa opción nefasta."
         ],
         tip: "No hay puntaje ni ganadores, el objetivo es ver cómo piensan y qué valores (o falta de ellos) tienen tus amigos/familia."
+      },
+      bomba: {
+        goal: "No tener el celular en la mano cuando explote la bomba.",
+        steps: [
+          "<strong>1. Consigna:</strong> La pantalla muestra un tema. Alguien toca 'Iniciar Bomba' y arranca el reloj (el tiempo es sorpresa).",
+          "<strong>2. Tic Tac:</strong> El jugador dice una palabra del tema, toca 'Pasar Bomba' (para registrar su turno) y le da el celular al siguiente.",
+          "<strong>3. Explosión:</strong> Quien tenga el celular o a quien le toque el turno cuando suene la explosión, pierde la ronda."
+        ],
+        tip: "No se pueden repetir palabras. Si te trabás, la bomba explota."
+      },
+      story: {
+        goal: "Inventar una historia improvisada conectando todos los íconos.",
+        steps: [
+          "<strong>1. Lanzar:</strong> Toca el botón para tirar los 9 dados virtuales.",
+          "<strong>2. Narrar:</strong> Comienza con 'Había una vez...' e inventa una historia que incluya obligatoriamente los 9 elementos en cualquier orden.",
+          "<strong>3. Modo cooperativo:</strong> También pueden jugar pasando el celular y que cada uno agregue una oración con un dibujo distinto."
+        ],
+        tip: "Ideal para fomentar la imaginación en los niños o para reírse de las locuras que inventan los adultos."
+      },
+      solouna: {
+        goal: "Lograr que el adivinador descubra la palabra viendo solo pistas únicas.",
+        steps: [
+          "<strong>1. Ciego:</strong> Un jugador se tapa los ojos. Los demás tocan 'Ver Palabra'.",
+          "<strong>2. Escribir:</strong> Todos anotan en un papel <strong>UNA SOLA PALABRA</strong> como pista.",
+          "<strong>3. Choque:</strong> Antes de mostrarle las pistas al adivinador, los demás comparan sus papeles. ¡Las pistas repetidas se anulan y se borran!",
+          "<strong>4. Adivinar:</strong> El adivinador abre los ojos y trata de deducir la palabra secreta con las pistas que sobrevivieron."
+        ],
+        tip: "No seas ni muy obvio (para no chocar con otro) ni muy rebuscado (para que el adivinador entienda)."
+      },
+      trivia: {
+        goal: "Apostar quién se acercó más a la respuesta exacta sin pasarse.",
+        steps: [
+          "<strong>1. Pregunta:</strong> La app muestra una trivia cuya respuesta es siempre un número.",
+          "<strong>2. Anotar:</strong> Todos escriben en secreto su número y luego lo revelan.",
+          "<strong>3. Apostar:</strong> Si juegan con puntos/fichas, voten quién creen que tiene la razón.",
+          "<strong>4. Revelar:</strong> Toca el botón para ver la respuesta. Gana el que más se acercó sin pasarse."
+        ],
+        tip: "Si no tenés ni idea de la respuesta, podés apostar a favor de la respuesta del más inteligente de la mesa."
+      },
+      anotador: {
+        goal: "Llevar la cuenta de los puntos en el truco o cualquier otro juego de cartas.",
+        steps: [
+          "<strong>1. Modo:</strong> Elegí si querés usar los clásicos cuadrados del truco o números normales.",
+          "<strong>2. Equipos:</strong> Tocá 'Nosotros' o 'Ellos' para escribir los nombres de tu mesa.",
+          "<strong>3. Anotar:</strong> Usá los botones para sumar de a 1, de a 3 (ideal para el envido) o restar si hubo error."
+        ],
+        tip: "En modo truco, el diseño separa automáticamente las 'Malas' (hasta 15) de las 'Buenas' con una línea, replicando el anotador de papel."
+      },
+      generala: {
+        goal: "Sumar la mayor cantidad de puntos completando todas las categorías de la tabla.",
+        steps: [
+          "<strong>1. Tirar:</strong> Tocá 'Tirar Dados'. Tenés hasta 3 tiradas por turno.",
+          "<strong>2. Apartar:</strong> Tocá los dados que quieras conservar para que no vuelvan a girar en la próxima tirada.",
+          "<strong>3. Anotar:</strong> En la tabla, ingresá el puntaje de la categoría. Si no lograste armar nada, escribí una 'X' para tacharla."
+        ],
+        tip: "La Doble Generala solo es válida si ya anotaste la Generala. Acordate de cargar los nombres de los jugadores en el anotador de abajo."
+      },
+      dados: {
+        goal: "Tirar dados virtuales para cualquier juego de mesa.",
+        steps: [
+          "<strong>1. Elegir cantidad:</strong> Seleccioná de 1 a 6 dados según el juego (ej: 5 para Generala).",
+          "<strong>2. Tirar:</strong> Tocá el botón para lanzarlos.",
+          "<strong>3. Resultados:</strong> Usalos como dados físicos normales."
+        ],
+        tip: "Perfecto si se te perdieron los dados del TEG, Catan, o querés jugar al 10.000 de viaje."
       },
       impostor: {
         goal: "Descubrir quién de la mesa está fingiendo conocer la palabra secreta.",
@@ -2710,13 +3347,23 @@
         case 'mimica':
           resetMimicaDeck();
           state.teamScores = { A: 0, B: 0 };
+          state.teamNames = { A: 'Equipo A 🔴', B: 'Equipo B 🔵' };
+          document.getElementById('teamNameA').value = 'Equipo A 🔴';
+          document.getElementById('teamNameB').value = 'Equipo B 🔵';
           document.getElementById('scoreTeamA').innerText = 0;
           document.getElementById('scoreTeamB').innerText = 0;
           saveState();
           break;
         case 'tuttifruti':
-          stopTuttiRoulette();
+          
+      resetBomba(); // always clear tick tock
+      if(window.diceInterval) { clearInterval(window.diceInterval); window.diceInterval=null; }
+
+      stopTuttiRoulette();
+          state.tuttiRemaining = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
           document.getElementById('tuttiLetterDisplay').innerText = 'A';
+          updateTuttiCounter();
+          saveState();
           break;
         case 'fake':
           fakeSession = { assignments: [], secretItem: null, currentIdx: 0, phase: 'hidden' };
@@ -2728,6 +3375,9 @@
           document.getElementById('espiaRevealAllBox').classList.remove('show');
           backToEspiaSetup();
           break;
+                case 'bomba': resetBomba(); break;
+        case 'solouna': resetSoloDeck(); break;
+        case 'trivia': resetTriviaDeck(); break;
         case 'preferis':
           resetPreferisDeck();
           break;
@@ -2759,6 +3409,10 @@
         releaseWakeLock();
         document.getElementById('mimicaTimerBtn').innerText = '⏳ Reanudar';
       }
+      
+      resetBomba(); // always clear tick tock
+      if(window.diceInterval) { clearInterval(window.diceInterval); window.diceInterval=null; }
+
       stopTuttiRoulette();
 
       // Ocultar automáticamente tarjetas secretas si quedaron reveladas al cambiar de juego
@@ -2800,7 +3454,7 @@
       if (activeView) activeView.classList.add('active');
 
       const scoreboard = document.querySelector('.scoreboard');
-      if (['impostor', 'fake', 'lobizones', 'mimica', 'tuttifruti'].includes(current.id) || current.id === 'espia') {
+      if (['impostor', 'fake', 'lobizones', 'mimica', 'tuttifruti'].includes(current.id) || ['espia', 'story', 'dados', 'anotador'].includes(current.id)) {
         scoreboard.style.display = 'none';
       } else {
         scoreboard.style.display = 'flex';
@@ -2863,6 +3517,28 @@
         osc.start();
         osc.stop(ctx.currentTime + 0.75);
       } catch (e) {}
+    }
+
+    
+    // ==========================================
+    // TEMA CLARO / OSCURO
+    // ==========================================
+    function applyTheme() {
+      if (state.theme === 'light') {
+        document.documentElement.setAttribute('data-theme', 'light');
+        document.getElementById('themeToggleBtn').innerText = '🌙';
+      } else {
+        document.documentElement.removeAttribute('data-theme');
+        document.getElementById('themeToggleBtn').innerText = '☀️';
+      }
+    }
+
+    function toggleTheme() {
+      if (navigator.vibrate) navigator.vibrate(20);
+      state.theme = state.theme === 'light' ? 'dark' : 'light';
+      applyTheme();
+      renderAnotador(); // Redibujar anotador por cambio de variables CSS
+      saveState();
     }
 
     // ==========================================
@@ -3026,6 +3702,45 @@
       document.getElementById('lobosWolvesVal').innerText = wolves;
       document.getElementById('summaryWolves').innerText = wolves;
       document.getElementById('summaryVillagers').innerText = villagers;
+      
+      while (state.lobosConfig.names.length < total) {
+        state.lobosConfig.names.push(`Jugador ${state.lobosConfig.names.length + 1}`);
+      }
+
+      const grid = document.getElementById('lobosNamesGrid');
+      let html = '';
+      for (let i = 0; i < total; i++) {
+        const val = escapeHtml(state.lobosConfig.names[i] || `Jugador ${i + 1}`);
+        html += `
+          <div class="name-slot">
+            <span class="slot-num">${i + 1}.</span>
+            <input type="text" class="slot-input" value="${val}" maxlength="15"
+              oninput="updateLobosPlayerName(${i}, this.value)"
+              onfocus="this.select()"
+              placeholder="Jugador ${i + 1}">
+          </div>
+        `;
+      }
+      if(grid) grid.innerHTML = html;
+
+      const copyBtn = document.getElementById('lobosCopyFromScoreBtn');
+      if(copyBtn) copyBtn.style.display = state.players.length >= 4 ? 'inline-block' : 'none';
+    }
+    
+    function updateLobosPlayerName(index, val) {
+      state.lobosConfig.names[index] = val;
+      saveState();
+    }
+
+    function importLobosNamesFromScoreboard() {
+      if (state.players.length < 4) return;
+      const count = Math.min(20, state.players.length);
+      state.lobosConfig.total = count;
+      const maxWolves = Math.max(1, count - 2);
+      if (state.lobosConfig.wolves > maxWolves) state.lobosConfig.wolves = maxWolves;
+      state.lobosConfig.names = state.players.slice(0, count).map(p => p.name);
+      saveState();
+      renderLobosConfig();
     }
 
     function adjustLobosConfig(field, delta) {
@@ -3052,18 +3767,28 @@
       const wolves = state.lobosConfig.wolves;
       const villagers = total - wolves;
 
-      const deck = [
+      const roles = [
         ...Array(wolves).fill('lobo'),
         ...Array(villagers).fill('aldeano')
       ];
 
-      for (let i = deck.length - 1; i > 0; i--) {
+      for (let i = roles.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
-        [deck[i], deck[j]] = [deck[j], deck[i]];
+        [roles[i], roles[j]] = [roles[j], roles[i]];
+      }
+      
+      const assignments = [];
+      for (let i = 0; i < total; i++) {
+        const cleanName = (state.lobosConfig.names[i] || '').trim() || `Jugador ${i + 1}`;
+        assignments.push({
+          name: cleanName,
+          role: roles[i],
+          alive: true
+        });
       }
 
       lobosSession = {
-        deck: deck,
+        assignments: assignments,
         currentIdx: 0,
         phase: 'hidden'
       };
@@ -3085,7 +3810,7 @@
         renderSecretCard();
       } else if (lobosSession.phase === 'revealed') {
         lobosSession.currentIdx++;
-        if (lobosSession.currentIdx < lobosSession.deck.length) {
+        if (lobosSession.currentIdx < lobosSession.assignments.length) {
           lobosSession.phase = 'hidden';
         } else {
           lobosSession.phase = 'done';
@@ -3094,34 +3819,44 @@
       }
     }
 
+    window.toggleLoboLife = function(e, index) {
+      e.stopPropagation();
+      lobosSession.assignments[index].alive = !lobosSession.assignments[index].alive;
+      if (navigator.vibrate) navigator.vibrate(15);
+      renderSecretCard(); // Refresh dashboard
+    };
+
     function renderSecretCard() {
       const card = document.getElementById('secretCard');
       const header = document.getElementById('lobosStatusHeader');
-      const total = lobosSession.deck.length;
+      if(!lobosSession.assignments) return;
+      const total = lobosSession.assignments.length;
       const idx = lobosSession.currentIdx;
 
       if (lobosSession.phase === 'hidden') {
-        header.innerText = `Jugador ${idx + 1} de ${total}`;
+        const person = lobosSession.assignments[idx];
+        header.innerText = `Turno ${idx + 1} de ${total}`;
         card.className = 'secret-card hidden-state';
         card.innerHTML = `
-          <div class="player-turn-badge">Jugador ${idx + 1}</div>
+          <div class="player-turn-badge">${escapeHtml(person.name)}</div>
           <div class="secret-icon">🎴</div>
-          <div class="secret-title">Tarjeta Oculta</div>
+          <div class="secret-title">Pasale el celu a ${escapeHtml(person.name)}</div>
           <div class="secret-hint">Asegurate de que nadie más esté mirando la pantalla</div>
           <div class="tap-cta">Tocá para ver tu rol</div>
         `;
       } else if (lobosSession.phase === 'revealed') {
-        const role = lobosSession.deck[idx];
-        const isWolf = role === 'lobo';
-        header.innerText = `Jugador ${idx + 1} de ${total}`;
+        const person = lobosSession.assignments[idx];
+        const isWolf = person.role === 'lobo';
+        header.innerText = `Turno ${idx + 1} de ${total}`;
         card.className = `secret-card ${isWolf ? 'revealed-lobo' : 'revealed-aldeano'}`;
 
-        const nextLabel = (idx + 1 < total)
-          ? `Tocá para ocultar y pasar al Jugador ${idx + 2}`
+        const nextPerson = (idx + 1 < total) ? lobosSession.assignments[idx + 1].name : null;
+        const nextLabel = nextPerson
+          ? `Tocá para ocultar y pasar a ${escapeHtml(nextPerson)}`
           : `Tocá para ocultar y finalizar reparto`;
 
         card.innerHTML = `
-          <div class="player-turn-badge">Jugador ${idx + 1}</div>
+          <div class="player-turn-badge">${escapeHtml(person.name)}</div>
           <div class="secret-icon">${isWolf ? '🐺' : '🏡'}</div>
           <div class="secret-title">${isWolf ? 'SOS LOBIZÓN' : 'SOS ALDEANO'}</div>
           <div class="secret-hint">
@@ -3132,38 +3867,37 @@
           <div class="tap-cta">${nextLabel}</div>
         `;
       } else if (lobosSession.phase === 'done') {
-        header.innerText = 'Reparto completo';
+        header.innerText = 'Panel del Narrador';
         card.className = 'secret-card finished-state';
+        card.style.padding = '1.25rem 0.75rem';
+        
+        const lines = lobosSession.assignments.map((p, i) => `
+          <div style="display:flex; justify-content:space-between; align-items:center; width:100%; padding:0.5rem; border-bottom:1px solid rgba(255,255,255,0.08); ${p.alive ? '' : 'opacity:0.35; filter:grayscale(1);'}">
+            <span style="flex:1; text-align:left; font-size:0.95rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
+              <strong style="${p.alive ? '' : 'text-decoration:line-through;'}">${escapeHtml(p.name)}</strong>
+            </span>
+            <span style="color: ${p.role === 'lobo' ? '#ef4444' : '#10b981'}; font-weight: 800; font-size:0.85rem; margin: 0 0.5rem; text-transform:uppercase;">
+              ${p.role === 'lobo' ? '🐺 Lobo' : '🏡 Aldeano'}
+            </span>
+            <button onclick="toggleLoboLife(event, ${i})" style="background:var(--card-light); border:1px solid rgba(255,255,255,0.2); border-radius:8px; color:var(--text); padding:0.35rem 0.6rem; font-size:0.75rem; cursor:pointer; min-width:75px; font-weight:700;">
+              ${p.alive ? '💀 Matar' : '❤️ Revivir'}
+            </button>
+          </div>
+        `).join('');
+        
         card.innerHTML = `
-          <div class="player-turn-badge">¡Todos tienen su rol!</div>
-          <div class="secret-icon">🌕</div>
-          <div class="secret-title">¡A Jugar!</div>
-          <div class="secret-hint">
-            Cae la noche en Entre Ríos... El narrador puede comenzar la partida.
+          <div class="player-turn-badge" style="margin-bottom:0.4rem; color:var(--accent); background:rgba(56, 189, 248, 0.15);">Cae la noche en Entre Ríos...</div>
+          <div style="width:100%; display:flex; flex-direction:column;">
+            ${lines}
           </div>
         `;
-        document.getElementById('toggleAllBtn').style.display = 'inline-block';
+        document.getElementById('toggleAllBtn').style.display = 'none';
+        document.getElementById('revealAllBox').classList.remove('show');
       }
     }
 
     function toggleRevealAll() {
-      const box = document.getElementById('revealAllBox');
-      const btn = document.getElementById('toggleAllBtn');
-      if (box.classList.contains('show')) {
-        box.classList.remove('show');
-        btn.innerText = 'Ver todos los roles';
-      } else {
-        box.innerHTML = lobosSession.deck.map((role, i) => `
-          <div class="reveal-line">
-            <span><strong>Jugador ${i + 1}</strong></span>
-            <span style="color: ${role === 'lobo' ? '#f87171' : '#34d399'}; font-weight: 800;">
-              ${role === 'lobo' ? '🐺 Lobizón' : '🏡 Aldeano'}
-            </span>
-          </div>
-        `).join('');
-        box.classList.add('show');
-        btn.innerText = 'Ocultar resumen';
-      }
+       // Deprecated functionality, now integrated in done phase dashboard
     }
 
     function backToLobosSetup() {
@@ -4707,7 +5441,9 @@
       input.value = '';
       saveState();
       renderPlayers();
+      renderLobosConfig();
       renderImpConfig();
+      renderGeneralaTable();
       renderFakeConfig();
       renderEspiaConfig();
     }
@@ -4718,13 +5454,16 @@
       player.score = Math.max(0, player.score + delta);
       saveState();
       renderPlayers();
+      renderGeneralaTable();
     }
 
     function removePlayer(id) {
       state.players = state.players.filter(p => p.id !== id);
       saveState();
       renderPlayers();
+      renderLobosConfig();
       renderImpConfig();
+      renderGeneralaTable();
       renderFakeConfig();
       renderEspiaConfig();
     }
@@ -4734,6 +5473,7 @@
       state.players.forEach(p => p.score = 0);
       saveState();
       renderPlayers();
+      renderGeneralaTable();
     }
 
     function renderPlayers() {
@@ -4758,16 +5498,17 @@
         let badge = isLeader ? '👑 ' : (isLoser ? '💩 ' : '');
         let rowClass = isLeader ? 'leader' : (isLoser ? 'loser' : '');
 
+        const hideControls = (current && current.id === 'generala') ? 'style="display:none;"' : '';
         return `
           <div class="player-row ${rowClass}">
             <div class="player-info">
               <span class="player-name">${badge}${escapeHtml(p.name)}</span>
             </div>
             <div class="score-controls">
-              <button class="step-btn" onclick="changeScore(${p.id}, -1)">-1</button>
-              <span class="player-pts">${p.score}</span>
-              <button class="step-btn plus" onclick="changeScore(${p.id}, 1)">+1</button>
-              <button class="step-btn plus" onclick="changeScore(${p.id}, 5)">+5</button>
+              <button class="step-btn" onclick="changeScore(${p.id}, -1)" ${hideControls}>-1</button>
+              <span class="player-pts" ${hideControls}>${p.score}</span>
+              <button class="step-btn plus" onclick="changeScore(${p.id}, 1)" ${hideControls}>+1</button>
+              <button class="step-btn plus" onclick="changeScore(${p.id}, 5)" ${hideControls}>+5</button>
               <button class="del-player" onclick="removePlayer(${p.id})" title="Quitar">✕</button>
             </div>
           </div>
@@ -4794,49 +5535,82 @@
     let mimicaInterval = null;
     let mimicaTimeLeft = 60;
 
-    function setMimicaCategory(cat, btnElement) {
-      state.mimicaCat = cat;
-      document.querySelectorAll('#mimicaCatSelector .cat-pill').forEach(b => b.classList.remove('active'));
+    function setMimicaLevel(lvl, btnElement) {
+      state.mimicaLevel = lvl;
+      document.querySelectorAll('#mimicaLevelSelector .cat-pill').forEach(b => b.classList.remove('active'));
       if (btnElement) {
         btnElement.classList.add('active');
       } else {
-        const target = document.querySelector(`#mimicaCatSelector .cat-pill[data-cat="${cat}"]`);
+        const target = document.querySelector(`#mimicaLevelSelector .cat-pill[data-lvl="${lvl}"]`);
         if (target) target.classList.add('active');
       }
+      updateMimicaCounter();
+      saveState();
+    }
 
-      const cardBox = document.getElementById('mimicaCardBox');
-      cardBox.className = 'mimica-card ' + cat;
-      document.getElementById('mimicaBadge').innerText = MIMICA_LABELS[cat];
-      document.getElementById('mimicaWordDisplay').innerText = '¡LISTOS!';
-
+    function toggleMimicaCat(cat, btnElement) {
+      if (state.mimicaCats.includes(cat)) {
+        if (state.mimicaCats.length === 1) return; // Prevent deselecting last category
+        state.mimicaCats = state.mimicaCats.filter(c => c !== cat);
+      } else {
+        state.mimicaCats.push(cat);
+      }
+      
+      document.querySelectorAll('#mimicaCatSelector .cat-pill').forEach(b => {
+        b.classList.toggle('active', state.mimicaCats.includes(b.dataset.cat));
+      });
+      
       updateMimicaCounter();
       saveState();
     }
 
     function updateMimicaCounter() {
-      const cat = state.mimicaCat;
-      document.getElementById('mimicaCounter').innerText = `${state.mimicaPools[cat].length} tarjetas rest.`;
+      let total = 0;
+      state.mimicaCats.forEach(c => {
+        if (state.mimicaPools[state.mimicaLevel] && state.mimicaPools[state.mimicaLevel][c]) {
+          total += state.mimicaPools[state.mimicaLevel][c].length;
+        }
+      });
+      document.getElementById('mimicaCounter').innerText = `${total} tarjetas rest.`;
     }
 
     function nextMimicaCard() {
-      const cat = state.mimicaCat;
-      if (!state.mimicaPools[cat] || state.mimicaPools[cat].length === 0) {
-        state.mimicaPools[cat] = [...MIMICA_DECKS[cat]];
+      let activeCats = state.mimicaCats;
+      let availableCats = activeCats.filter(c => state.mimicaPools[state.mimicaLevel][c].length > 0);
+      
+      if (availableCats.length === 0) {
+        // Refill all active cats for this level
+        activeCats.forEach(c => {
+          state.mimicaPools[state.mimicaLevel][c] = [...MIMICA_DECKS[state.mimicaLevel][c]];
+        });
+        availableCats = activeCats;
       }
-      const pool = state.mimicaPools[cat];
+      
+      const chosenCat = availableCats[Math.floor(Math.random() * availableCats.length)];
+      const pool = state.mimicaPools[state.mimicaLevel][chosenCat];
       const idx = Math.floor(Math.random() * pool.length);
       const chosen = pool.splice(idx, 1)[0];
 
+      const cardBox = document.getElementById('mimicaCardBox');
+      cardBox.className = 'mimica-card ' + chosenCat;
+      document.getElementById('mimicaBadge').innerText = MIMICA_LABELS[chosenCat];
       document.getElementById('mimicaWordDisplay').innerText = chosen;
+      
       updateMimicaCounter();
       saveState();
     }
 
     function resetMimicaDeck() {
-      const cat = state.mimicaCat;
-      state.mimicaPools[cat] = [...MIMICA_DECKS[cat]];
+      state.mimicaCats.forEach(c => {
+        state.mimicaPools[state.mimicaLevel][c] = [...MIMICA_DECKS[state.mimicaLevel][c]];
+      });
       document.getElementById('mimicaWordDisplay').innerText = '¡LISTOS!';
       updateMimicaCounter();
+      saveState();
+    }
+    
+    function updateTeamName(team, name) {
+      state.teamNames[team] = name;
       saveState();
     }
 
@@ -4877,13 +5651,28 @@
     }
 
     // ==========================================
-    // LÓGICA TUTTI FRUTTI (RULETA)
+    // LÓGICA TUTTI FRUTTI (RULETA SIN REPETIR)
     // ==========================================
-    const ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVXYZ";
+    const ALPHABET_FULL = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
     let tuttiInterval = null;
 
+    function updateTuttiCounter() {
+      const counterEl = document.getElementById('tuttiCounter');
+      if (counterEl) {
+        counterEl.innerText = `${state.tuttiRemaining.length} letras rest.`;
+      }
+    }
+
     function startTuttiRoulette() {
-      if (tuttiInterval) return; // Ya está girando
+      if (tuttiInterval) return;
+      
+      // Reiniciar alfabeto si se usaron todas las letras
+      if (state.tuttiRemaining.length === 0) {
+        state.tuttiRemaining = [...ALPHABET_FULL];
+        updateTuttiCounter();
+        saveState();
+      }
+      
       const display = document.getElementById('tuttiLetterDisplay');
       const startBtn = document.getElementById('tuttiStartBtn');
       const stopBtn = document.getElementById('tuttiStopBtn');
@@ -4894,8 +5683,9 @@
       
       if (navigator.vibrate) navigator.vibrate(20);
 
+      // Girar visualmente con las letras que quedan
       tuttiInterval = setInterval(() => {
-        const randomChar = ALPHABET[Math.floor(Math.random() * ALPHABET.length)];
+        const randomChar = state.tuttiRemaining[Math.floor(Math.random() * state.tuttiRemaining.length)];
         display.innerText = randomChar;
       }, 50);
     }
@@ -4913,17 +5703,612 @@
       startBtn.style.display = 'inline-block';
       stopBtn.style.display = 'none';
       
-      // Sorteo final para que no sea predecible
-      const randomChar = ALPHABET[Math.floor(Math.random() * ALPHABET.length)];
-      display.innerText = randomChar;
+      // Sorteo final y eliminación del pool
+      const idx = Math.floor(Math.random() * state.tuttiRemaining.length);
+      const chosenChar = state.tuttiRemaining.splice(idx, 1)[0];
+      display.innerText = chosenChar;
+      
+      updateTuttiCounter();
+      saveState();
       
       if (navigator.vibrate) navigator.vibrate([80, 50, 80]);
+    }
+
+
+    // ==========================================
+    // AUDIO SYNTHESIS FOR BOMB
+    // ==========================================
+    let actx = null;
+    function getACtx() {
+      if (!actx) actx = new (window.AudioContext || window.webkitAudioContext)();
+      if (actx.state === 'suspended') actx.resume();
+      return actx;
+    }
+    function playTickSound(pitchMultiplier = 1) {
+      try {
+        const ctx = getACtx();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.frequency.setValueAtTime(800 * pitchMultiplier, ctx.currentTime);
+        osc.type = 'triangle';
+        gain.gain.setValueAtTime(0.3, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.05);
+        osc.connect(gain); gain.connect(ctx.destination);
+        osc.start(); osc.stop(ctx.currentTime + 0.05);
+      } catch(e){}
+    }
+    function playExplosionSound() {
+      try {
+        const ctx = getACtx();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.frequency.setValueAtTime(100, ctx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.6);
+        osc.type = 'sawtooth';
+        gain.gain.setValueAtTime(1, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.6);
+        osc.connect(gain); gain.connect(ctx.destination);
+        osc.start(); osc.stop(ctx.currentTime + 0.6);
+      } catch(e){}
+    }
+
+    // ==========================================
+    // LÓGICA BOMBA DE TIEMPO
+    // ==========================================
+    let bombaTimer = null;
+    let bombaVisualTimer = null;
+    let bombaActive = false;
+    let bombaTimeLeft = 0;
+    let bombaTotalTime = 0;
+
+    function setBombaCategory(cat, btnElement) {
+      state.bombaCat = cat;
+      document.querySelectorAll('#bombaCatSelector .cat-pill').forEach(b => b.classList.remove('active'));
+      if (btnElement) btnElement.classList.add('active');
+      else document.querySelector(`#bombaCatSelector .cat-pill[data-cat="${cat}"]`).classList.add('active');
+      resetBomba();
+      saveState();
+    }
+
+    function resetBomba() {
+      bombaActive = false;
+      clearTimeout(bombaTimer);
+      clearInterval(bombaVisualTimer);
+      document.getElementById('bombaWordDisplay').innerText = "Toca INICIAR BOMBA";
+      document.getElementById('bombaActionBtn').innerText = "💣 Iniciar Bomba";
+      document.getElementById('bombaActionBtn').style.background = "linear-gradient(135deg, #ef4444, #b91c1c)";
+      document.getElementById('bombaTickVisual').style.opacity = 0;
+      document.getElementById('bombaCounter').innerText = "Listo";
+      releaseWakeLock();
+    }
+
+    function handleBombaAction() {
+      const btn = document.getElementById('bombaActionBtn');
+      if (!bombaActive) {
+        // INICIAR
+        bombaActive = true;
+        const cat = state.bombaCat;
+        if (!state.bombaPools[cat] || state.bombaPools[cat].length === 0) state.bombaPools[cat] = [...BOMBA_DECKS[cat]];
+        const pool = state.bombaPools[cat];
+        const word = pool.splice(Math.floor(Math.random()*pool.length), 1)[0];
+        document.getElementById('bombaWordDisplay').innerText = word;
+        
+        btn.innerText = "👉 ¡Pasar Bomba!";
+        btn.style.background = "linear-gradient(135deg, #f59e0b, #d97706)";
+        
+        bombaTotalTime = Math.floor(Math.random() * 45) + 15; // 15 to 60 seconds
+        bombaTimeLeft = bombaTotalTime;
+        
+        requestWakeLock();
+        getACtx(); // initialize audio context on user gesture
+        
+        bombaVisualTimer = setInterval(() => {
+          bombaTimeLeft -= 0.5;
+          const urgency = 1 - (bombaTimeLeft / bombaTotalTime); // 0 to 1
+          
+          if(bombaTimeLeft <= 0) {
+             explodeBomba();
+             return;
+          }
+          
+          // Tick sound and visual pulse logic
+          // Pulse faster as urgency increases
+          if (bombaTimeLeft % (urgency > 0.7 ? 0.5 : 1) === 0) {
+             playTickSound(1 + (urgency*0.5));
+             const visual = document.getElementById('bombaTickVisual');
+             visual.style.opacity = 0.5 + (urgency*0.5);
+             setTimeout(()=> visual.style.opacity = 0, 150);
+             if (navigator.vibrate) navigator.vibrate(20);
+          }
+        }, 500);
+
+      } else {
+        // PASAR BOMBA (just registers the tap, gives haptic feedback)
+        if (navigator.vibrate) navigator.vibrate(30);
+      }
+      saveState();
+    }
+
+    function explodeBomba() {
+      bombaActive = false;
+      clearInterval(bombaVisualTimer);
+      playExplosionSound();
+      if (navigator.vibrate) navigator.vibrate([200, 100, 200, 100, 400]);
+      
+      document.getElementById('bombaTickVisual').style.opacity = 1;
+      document.getElementById('bombaWordDisplay').innerText = "💥 ¡BOOM! 💥\nPerdiste";
+      const btn = document.getElementById('bombaActionBtn');
+      btn.innerText = "↻ Jugar de nuevo";
+      btn.style.background = "linear-gradient(135deg, #ef4444, #b91c1c)";
+      releaseWakeLock();
+    }
+
+
+    // ==========================================
+    // LÓGICA DADOS DE HISTORIAS
+    // ==========================================
+    function setStoryCategory(cat, btnElement) {
+      state.storyCat = cat;
+      document.querySelectorAll('#storyCatSelector .cat-pill').forEach(b => b.classList.remove('active'));
+      if (btnElement) btnElement.classList.add('active');
+      else document.querySelector(`#storyCatSelector .cat-pill[data-cat="${cat}"]`).classList.add('active');
+      saveState();
+    }
+
+    function rollStoryDice() {
+      const pool = [...STORY_DECKS[state.storyCat]];
+      // Shuffle
+      for (let i = pool.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [pool[i], pool[j]] = [pool[j], pool[i]];
+      }
+      const selected = pool.slice(0, 9);
+      const grid = document.getElementById('storyDiceGrid');
+      
+      // Animate roll
+      grid.style.opacity = 0.5;
+      grid.style.transform = 'scale(0.95)';
+      if (navigator.vibrate) navigator.vibrate([30, 30, 30]);
+      
+      setTimeout(() => {
+        const divs = grid.querySelectorAll('div');
+        for(let i=0; i<9; i++) {
+          divs[i].innerText = selected[i];
+        }
+        grid.style.opacity = 1;
+        grid.style.transform = 'scale(1)';
+      }, 150);
+    }
+
+    // ==========================================
+    // LÓGICA SOLO UNA
+    // ==========================================
+    let soloRevealed = false;
+    function setSoloCategory(cat, btnElement) {
+      state.soloCat = cat;
+      document.querySelectorAll('#soloCatSelector .cat-pill').forEach(b => b.classList.remove('active'));
+      if (btnElement) btnElement.classList.add('active');
+      else document.querySelector(`#soloCatSelector .cat-pill[data-cat="${cat}"]`).classList.add('active');
+      nextSoloCard();
+    }
+
+    function updateSoloCounter() {
+      document.getElementById('soloCounter').innerText = `${state.soloPools[state.soloCat].length} rest.`;
+    }
+
+    function nextSoloCard() {
+      const cat = state.soloCat;
+      if (!state.soloPools[cat] || state.soloPools[cat].length === 0) state.soloPools[cat] = [...SOLO_DECKS[cat]];
+      const pool = state.soloPools[cat];
+      const word = pool.splice(Math.floor(Math.random()*pool.length), 1)[0];
+      
+      document.getElementById('soloWordDisplay').innerText = word;
+      soloRevealed = false;
+      document.getElementById('soloWordDisplay').style.filter = 'blur(8px)';
+      document.getElementById('soloToggleBtn').innerText = '👁️ Revelar (Tapate los ojos)';
+      
+      updateSoloCounter();
+      saveState();
+    }
+
+    function toggleSoloWord() {
+      soloRevealed = !soloRevealed;
+      const display = document.getElementById('soloWordDisplay');
+      const btn = document.getElementById('soloToggleBtn');
+      if(soloRevealed) {
+        display.style.filter = 'blur(0px)';
+        btn.innerText = '🙈 Ocultar palabra';
+      } else {
+        display.style.filter = 'blur(8px)';
+        btn.innerText = '👁️ Revelar';
+      }
+    }
+
+    function resetSoloDeck() {
+      state.soloPools[state.soloCat] = [...SOLO_DECKS[state.soloCat]];
+      nextSoloCard();
+    }
+
+    // ==========================================
+    // LÓGICA TRIVIA DE APUESTAS
+    // ==========================================
+    let triviaCurrent = null;
+    function setTriviaCategory(cat, btnElement) {
+      state.triviaCat = cat;
+      document.querySelectorAll('#triviaCatSelector .cat-pill').forEach(b => b.classList.remove('active'));
+      if (btnElement) btnElement.classList.add('active');
+      else document.querySelector(`#triviaCatSelector .cat-pill[data-cat="${cat}"]`).classList.add('active');
+      nextTriviaCard();
+    }
+
+    function updateTriviaCounter() {
+      document.getElementById('triviaCounter').innerText = `${state.triviaPools[state.triviaCat].length} rest.`;
+    }
+
+    function nextTriviaCard() {
+      const cat = state.triviaCat;
+      if (!state.triviaPools[cat] || state.triviaPools[cat].length === 0) state.triviaPools[cat] = [...TRIVIA_DECKS[cat]];
+      const pool = state.triviaPools[cat];
+      triviaCurrent = pool.splice(Math.floor(Math.random()*pool.length), 1)[0];
+      
+      document.getElementById('triviaQuestionDisplay').innerText = triviaCurrent.q;
+      document.getElementById('triviaAnswerBox').style.display = 'none';
+      document.getElementById('triviaRevealBtn').disabled = false;
+      
+      updateTriviaCounter();
+      saveState();
+    }
+
+    function revealTrivia() {
+      if(!triviaCurrent) return;
+      document.getElementById('triviaAnswerDisplay').innerText = triviaCurrent.a;
+      document.getElementById('triviaAnswerBox').style.display = 'block';
+      document.getElementById('triviaRevealBtn').disabled = true;
+      if (navigator.vibrate) navigator.vibrate(50);
+    }
+    
+    function resetTriviaDeck() {
+      state.triviaPools[state.triviaCat] = [...TRIVIA_DECKS[state.triviaCat]];
+      nextTriviaCard();
+    }
+
+    // ==========================================
+    // LÓGICA TIRADA DE DADOS
+    // ==========================================
+    function getSecureRandomDie() {
+      const array = new Uint32Array(1);
+      window.crypto.getRandomValues(array);
+      return (array[0] % 6) + 1; // Verdadero azar entre 1 y 6
+    }
+
+    function adjustDiceCount(delta) {
+      state.diceCount = Math.min(6, Math.max(1, state.diceCount + delta));
+      document.getElementById('diceCountVal').innerText = state.diceCount;
+      renderDiceGrid(Array(state.diceCount).fill(1));
+    renderGeneralaDice();
+    renderGeneralaTable();
+ // Mostrar unos por defecto
+      saveState();
+    }
+
+    function renderDiceGrid(valuesArray, animClass = '') {
+      const area = document.getElementById('diceDisplayArea');
+      area.innerHTML = valuesArray.map(val => {
+        const dots = Array(val).fill('<div class="die-dot"></div>').join('');
+        // Agregamos un delay aleatorio para desfasar levemente la animación de cada dado
+        const delay = (Math.random() * 0.1).toFixed(2);
+        return `<div class="die face-${val} ${animClass}" style="animation-delay: ${delay}s">${dots}</div>`;
+      }).join('');
+    }
+
+    function rollGenericDice() {
+      if (window.diceRolling) return;
+      window.diceRolling = true;
+      if (navigator.vibrate) navigator.vibrate([40, 50, 40]);
+      
+      // Efecto de giro rápido (caras aleatorias)
+      let ticks = 0;
+      const shuffleInterval = setInterval(() => {
+        ticks++;
+        const tempRolls = [];
+        for(let i=0; i<state.diceCount; i++){
+          tempRolls.push(Math.floor(Math.random() * 6) + 1);
+        }
+        renderDiceGrid(tempRolls, 'rolling-fast');
+      }, 60);
+
+      // A los 600ms clavamos el resultado criptográfico final
+      setTimeout(() => {
+        clearInterval(shuffleInterval);
+        const finalRolls = [];
+        for (let i = 0; i < state.diceCount; i++) {
+          finalRolls.push(getSecureRandomDie());
+        }
+        renderDiceGrid(finalRolls, 'final-bump');
+        
+        if (navigator.vibrate) navigator.vibrate(80);
+        setTimeout(() => { window.diceRolling = false; }, 400); // Liberar bloqueo
+      }, 600);
+    }
+
+
+    
+    // ==========================================
+    // LÓGICA GENERALA
+    // ==========================================
+    let genRolls = 0;
+    let genDice = [1, 2, 3, 4, 5];
+    let genKept = [false, false, false, false, false];
+    let genRolling = false;
+
+    const GEN_CATEGORIES = [
+      { id: '1', label: '1' },
+      { id: '2', label: '2' },
+      { id: '3', label: '3' },
+      { id: '4', label: '4' },
+      { id: '5', label: '5' },
+      { id: '6', label: '6' },
+      { id: 'E', label: 'Escalera (20)' },
+      { id: 'F', label: 'Full (30)' },
+      { id: 'P', label: 'Póker (40)' },
+      { id: 'G', label: 'Generala (50)' },
+      { id: 'DG', label: 'Doble Gen.' },
+      { id: 'TOT', label: 'TOTAL' }
+    ];
+
+    function initGeneralaState() {
+                              if (!state.theme) state.theme = 'dark';
+            if (!state.anoMode) state.anoMode = 'truco';
+            if (!state.anoScores) state.anoScores = { eq1: 0, eq2: 0 };
+            if (!state.anoNames) state.anoNames = { eq1: 'Nosotros', eq2: 'Ellos' };
+            if (!state.generalaScores) state.generalaScores = {};
+      state.players.forEach(p => {
+        if (!state.generalaScores[p.id]) {
+          state.generalaScores[p.id] = { '1':'', '2':'', '3':'', '4':'', '5':'', '6':'', 'E':'', 'F':'', 'P':'', 'G':'', 'DG':'' };
+        }
+      });
+    }
+
+    function renderGeneralaDice(animClass = '') {
+      const area = document.getElementById('generalaDiceArea');
+      area.innerHTML = genDice.map((val, i) => {
+        const dots = Array(val).fill('<div class="die-dot"></div>').join('');
+        const keptClass = genKept[i] ? 'kept' : '';
+        const anim = (!genKept[i] && animClass) ? animClass : '';
+        const delay = (!genKept[i]) ? (Math.random() * 0.1).toFixed(2) : 0;
+        return `<div class="die face-${val} ${keptClass} ${anim}" style="animation-delay: ${delay}s" onclick="toggleGenKeep(${i})">${dots}</div>`;
+      }).join('');
+    }
+
+    function toggleGenKeep(index) {
+      if (genRolls === 0 || genRolls >= 3 || genRolling) return;
+      genKept[index] = !genKept[index];
+      if (navigator.vibrate) navigator.vibrate(15);
+      renderGeneralaDice();
+    }
+
+    function rollGenerala() {
+      if (genRolling || genRolls >= 3) return;
+      genRolling = true;
+      genRolls++;
+      document.getElementById('genRollCounter').innerText = `Tirada ${genRolls}/3`;
+      
+      if (genRolls >= 3) {
+        document.getElementById('genRollBtn').style.opacity = '0.5';
+      }
+      
+      if (navigator.vibrate) navigator.vibrate([40, 50, 40]);
+      
+      let ticks = 0;
+      const shuffleInterval = setInterval(() => {
+        ticks++;
+        const tempRolls = [...genDice];
+        for(let i=0; i<5; i++){
+          if (!genKept[i]) tempRolls[i] = Math.floor(Math.random() * 6) + 1;
+        }
+        genDice = tempRolls;
+        renderGeneralaDice('rolling-fast');
+      }, 60);
+
+      setTimeout(() => {
+        clearInterval(shuffleInterval);
+        for (let i = 0; i < 5; i++) {
+          if (!genKept[i]) genDice[i] = getSecureRandomDie(); // Reutiliza el random seguro de dados
+        }
+        renderGeneralaDice('final-bump');
+        
+        if (navigator.vibrate) navigator.vibrate(80);
+        setTimeout(() => { genRolling = false; }, 400);
+      }, 600);
+    }
+
+    function nextGeneralaTurn() {
+      if (genRolling) return;
+      genRolls = 0;
+      genKept = [false, false, false, false, false];
+      genDice = [1, 2, 3, 4, 5]; 
+      document.getElementById('genRollCounter').innerText = `Tirada 0/3`;
+      document.getElementById('genRollBtn').style.opacity = '1';
+      renderGeneralaDice();
+      if (navigator.vibrate) navigator.vibrate(20);
+    }
+
+
+    function getGenOptions(catId) {
+      const opts = {
+        '1': ['', 'X', '1', '2', '3', '4', '5'],
+        '2': ['', 'X', '2', '4', '6', '8', '10'],
+        '3': ['', 'X', '3', '6', '9', '12', '15'],
+        '4': ['', 'X', '4', '8', '12', '16', '20'],
+        '5': ['', 'X', '5', '10', '15', '20', '25'],
+        '6': ['', 'X', '6', '12', '18', '24', '30'],
+        'E': ['', 'X', '20', '25'],
+        'F': ['', 'X', '30', '35'],
+        'P': ['', 'X', '40', '45'],
+        'G': ['', 'X', '50'],
+        'DG': ['', 'X', '60', '100']
+      };
+      return opts[catId] || [];
+    }
+
+    function renderGeneralaTable() {
+      const table = document.getElementById('generalaTable');
+      if (!table) return;
+      
+      if (state.players.length === 0) {
+        table.innerHTML = '<tr><td style="padding:1.5rem; text-align:center; color:var(--muted);">Agregá los nombres de los jugadores en el anotador de abajo para ver la tabla.</td></tr>';
+        return;
+      }
+
+      initGeneralaState();
+      
+      let thead = '<tr><th>Cat.</th>' + state.players.map(p => `<th>${escapeHtml(p.name.substring(0,8))}</th>`).join('') + '</tr>';
+      
+      let tbody = '';
+      GEN_CATEGORIES.forEach(cat => {
+        if (cat.id === 'TOT') {
+          tbody += `<tr style="background:rgba(255,255,255,0.05); border-top:2px solid var(--accent);"><td><strong>${cat.label}</strong></td>`;
+          state.players.forEach(p => {
+             let total = 0;
+             if(state.generalaScores[p.id]) {
+                 Object.values(state.generalaScores[p.id]).forEach(v => {
+                    const parsed = parseInt(v);
+                    if (!isNaN(parsed)) total += parsed;
+                 });
+             }
+             tbody += `<td><strong>${total}</strong></td>`;
+          });
+          tbody += `</tr>`;
+        } else {
+          tbody += `<tr><td>${cat.label}</td>`;
+          state.players.forEach(p => {
+            const val = (state.generalaScores[p.id] && state.generalaScores[p.id][cat.id]) ? state.generalaScores[p.id][cat.id] : '';
+            const isCrossed = (val === 'X') ? 'crossed' : '';
+            
+            const opts = getGenOptions(cat.id);
+            const optsHtml = opts.map(o => `<option value="${o}" ${val === o ? 'selected' : ''}>${o === '' ? '-' : o}</option>`).join('');
+            tbody += `<td>
+              <select class="gen-input ${isCrossed}" onchange="updateGenScore(${p.id}, '${cat.id}', this.value)">
+                ${optsHtml}
+              </select>
+            </td>`;
+          });
+          tbody += `</tr>`;
+        }
+      });
+      
+      table.innerHTML = thead + tbody;
+    }
+
+    function updateGenScore(playerId, catId, value) {
+      const cleanVal = value.trim().toUpperCase();
+      if (!state.generalaScores[playerId]) {
+          state.generalaScores[playerId] = { '1':'', '2':'', '3':'', '4':'', '5':'', '6':'', 'E':'', 'F':'', 'P':'', 'G':'', 'DG':'' };
+      }
+      
+      if (cleanVal === 'X' || cleanVal === '-') {
+        state.generalaScores[playerId][catId] = 'X';
+      } else {
+        const num = parseInt(cleanVal);
+        state.generalaScores[playerId][catId] = isNaN(num) ? '' : num.toString();
+      }
+      saveState();
+      renderGeneralaTable();
+    }
+
+    
+    // ==========================================
+    // LÓGICA ANOTADOR DE TRUCO / PUNTOS
+    // ==========================================
+    function setAnotadorMode(mode, btnElement) {
+      state.anoMode = mode;
+      document.querySelectorAll('#anotadorModeSelector .cat-pill').forEach(b => b.classList.remove('active'));
+      if(btnElement) btnElement.classList.add('active');
+      else document.querySelector(`#anotadorModeSelector .cat-pill[data-mode="${mode}"]`).classList.add('active');
+      renderAnotador();
+      saveState();
+    }
+
+    function updateAnoName(eq, val) {
+      state.anoNames[eq] = val;
+      saveState();
+    }
+
+    function changeAnoScore(eq, delta) {
+      if (navigator.vibrate) navigator.vibrate(15);
+      state.anoScores[eq] = Math.max(0, state.anoScores[eq] + delta);
+      renderAnotador();
+      saveState();
+    }
+
+    function resetAnotador() {
+      if (navigator.vibrate) navigator.vibrate(40);
+      state.anoScores = { eq1: 0, eq2: 0 };
+      renderAnotador();
+      saveState();
+    }
+
+    function getTrucoBox(points, color) {
+      // 1: vertical izq | 2: horizontal abajo | 3: vertical der | 4: horizontal arriba | 5: diagonal
+      let svg = `<svg width="45" height="45" viewBox="0 0 100 100" style="stroke:${color}; stroke-width:8; fill:none; stroke-linecap:round; stroke-linejoin:round; filter: drop-shadow(0 2px 3px rgba(0,0,0,0.3));">`;
+      if (points >= 1) svg += `<line x1="20" y1="20" x2="20" y2="80" />`; // Izquierda
+      if (points >= 2) svg += `<line x1="20" y1="80" x2="80" y2="80" />`; // Abajo
+      if (points >= 3) svg += `<line x1="80" y1="80" x2="80" y2="20" />`; // Derecha
+      if (points >= 4) svg += `<line x1="80" y1="20" x2="20" y2="20" />`; // Arriba
+      if (points >= 5) svg += `<line x1="20" y1="20" x2="80" y2="80" />`; // Diagonal
+      svg += `</svg>`;
+      return svg;
+    }
+
+    function renderAnotador() {
+      // Tomamos los colores del theme actual a través del root style o los devolvemos por defecto si falla
+      const style = getComputedStyle(document.documentElement);
+      const color1 = style.getPropertyValue('--truco-eq1').trim() || '#fca5a5';
+      const color2 = style.getPropertyValue('--truco-eq2').trim() || '#7dd3fc';
+
+      ['eq1', 'eq2'].forEach(eq => {
+        const container = document.getElementById(eq === 'eq1' ? 'anoVisual1' : 'anoVisual2');
+        const score = state.anoScores[eq];
+        const color = eq === 'eq1' ? color1 : color2;
+        
+        if (state.anoMode === 'numeros') {
+          container.innerHTML = `<div style="font-size: 6rem; font-weight: 900; color: ${color}; line-height:1; display:flex; align-items:center; height:100%; text-shadow: 0 4px 10px rgba(0,0,0,0.5);">${score}</div>`;
+        } else {
+          // Modo Cuadrados de Truco
+          let html = '';
+          let remaining = score;
+          let boxes = [];
+          
+          while(remaining > 0) {
+            if (remaining >= 5) {
+              boxes.push(getTrucoBox(5, color));
+              remaining -= 5;
+            } else {
+              boxes.push(getTrucoBox(remaining, color));
+              remaining = 0;
+            }
+          }
+          
+          if (boxes.length === 0) {
+            container.innerHTML = `<div style="opacity:0.3; margin-top:2rem; font-size:0.9rem; color:var(--text); text-transform:uppercase; letter-spacing:1px; font-weight:700;">Sin puntos</div>`;
+            return;
+          }
+          
+          for (let i = 0; i < boxes.length; i++) {
+             // Separador de Malas y Buenas (después del cuadrado 3, es decir a los 15 pts)
+             if (i === 3) html += `<div style="width: 80%; height:2px; background: rgba(255,255,255,0.15); margin: 0.1rem 0; border-radius:2px;"></div>`;
+             html += `<div>${boxes[i]}</div>`;
+          }
+          container.innerHTML = html;
+        }
+      });
     }
 
     // ==========================================
     // INICIALIZAR
     // ==========================================
     loadState();
+    applyTheme();
     renderCarousel();
     setCategory(state.currentCat);
     setDuration(state.defaultTime);
@@ -4950,10 +6335,41 @@
     renderEspiaConfig();
     
     setPreferisCategory(state.preferisCat);
+    setBombaCategory(state.bombaCat);
+    setStoryCategory(state.storyCat);
+    setSoloCategory(state.soloCat);
+    setTriviaCategory(state.triviaCat);
+    document.getElementById('diceCountVal').innerText = state.diceCount;
+    renderDiceGrid(Array(state.diceCount).fill(1));
+    renderGeneralaDice();
+    renderGeneralaTable();
+
+    document.getElementById('anoName1').value = state.anoNames.eq1;
+    document.getElementById('anoName2').value = state.anoNames.eq2;
+    document.querySelectorAll('#anotadorModeSelector .cat-pill').forEach(b => {
+      b.classList.toggle('active', b.dataset.mode === state.anoMode);
+    });
+    renderAnotador();
+
+
     
-    setMimicaCategory(state.mimicaCat);
+    setMimicaLevel(state.mimicaLevel);
+    document.querySelectorAll('#mimicaCatSelector .cat-pill').forEach(b => {
+      b.classList.toggle('active', state.mimicaCats.includes(b.dataset.cat));
+    });
+    updateMimicaCounter();
+    
     document.getElementById('scoreTeamA').innerText = state.teamScores.A;
     document.getElementById('scoreTeamB').innerText = state.teamScores.B;
+    if (state.teamNames) {
+      document.getElementById('teamNameA').value = state.teamNames.A;
+      document.getElementById('teamNameB').value = state.teamNames.B;
+    }
+    
+    if (!state.tuttiRemaining || state.tuttiRemaining.length === 0) {
+      state.tuttiRemaining = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+    }
+    updateTuttiCounter();
 
     renderPlayers();
   </script>
