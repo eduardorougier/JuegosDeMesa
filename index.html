@@ -262,8 +262,9 @@
       flex-direction: column;
       gap: 0.65rem;
       font-size: 0.92rem;
-      color: #e2e8f0;
+      color: var(--text);
       line-height: 1.45;
+      opacity: 0.9;
     }
     .rules-list {
       padding-left: 1.15rem;
@@ -385,17 +386,33 @@
       font-weight: 600;
       opacity: 0.8;
     }
-    .cat-pill.active[data-cat="ninos"] {
+    .cat-pill.active[data-cat="ninos"], .cat-pill.active[data-lvl="ninos"] {
       background: rgba(74, 222, 128, 0.18);
       color: var(--ninos);
     }
-    .cat-pill.active[data-cat="familia"] {
+    .cat-pill.active[data-cat="familia"], .cat-pill.active[data-lvl="familia"] {
       background: rgba(56, 189, 248, 0.18);
       color: var(--familia);
     }
-    .cat-pill.active[data-cat="adultos"] {
+    .cat-pill.active[data-cat="adultos"], .cat-pill.active[data-lvl="adultos"] {
       background: rgba(244, 114, 182, 0.18);
       color: var(--adultos);
+    }
+    .cat-pill.active[data-cat="acciones"] {
+      background: rgba(56, 189, 248, 0.15);
+      color: var(--familia);
+    }
+    .cat-pill.active[data-cat="peliculas"] {
+      background: rgba(244, 114, 182, 0.15);
+      color: var(--adultos);
+    }
+    .cat-pill.active[data-cat="personajes"] {
+      background: rgba(250, 204, 21, 0.15);
+      color: #facc15;
+    }
+    [data-theme="light"] .cat-pill.active[data-cat="personajes"] {
+      color: #d97706;
+      background: rgba(245, 158, 11, 0.15);
     }
 
     /* ESTILOS UNÁNIMO */
@@ -3112,7 +3129,7 @@
       adultos: "Mazo Adultos (+18 años)"
     };
 
-    const STORAGE_KEY = "boardgame_hub_v24";
+    const STORAGE_KEY = "boardgame_hub_v25";
 
     let state = {
       activeView: 'menu',
