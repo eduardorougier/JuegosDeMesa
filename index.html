@@ -1872,6 +1872,16 @@
       background: rgba(245, 158, 11, 0.15);
       color: #d97706;
     }
+
+    [data-theme="light"] .tabu-forbidden-item {
+      color: #be123c;
+      font-weight: 800;
+      background: rgba(244, 63, 94, 0.08);
+      border-color: rgba(244, 63, 94, 0.35);
+    }
+    [data-theme="light"] .tabu-forbidden-label {
+      color: #e11d48;
+    }
     [data-theme="light"] .tu-rule-banner {
       background: rgba(245, 158, 11, 0.12);
       color: #d97706;
@@ -1927,6 +1937,11 @@
     [data-theme="light"] .charla-card.familia { background: radial-gradient(circle at top, #e0f2fe, #ffffff); }
     [data-theme="light"] .charla-card.adultos { background: radial-gradient(circle at top, #fce7f3, #ffffff); }
     [data-theme="light"] .adm-card { background: radial-gradient(circle at top, #fef3c7, #ffffff); }
+    [data-theme="light"] .adm-tag {
+        color: #d97706; /* Darker amber for contrast */
+        border-color: rgba(217, 119, 6, 0.45);
+        background: rgba(245, 158, 11, 0.15);
+    }
     
     [data-theme="light"] .player-turn-badge, [data-theme="light"] .tap-cta { background: rgba(0, 0, 0, 0.06); }
     
@@ -2078,7 +2093,22 @@
         <div class="counter" id="admCounter">Ronda 0 | 120 rest.</div>
       </div>
 
-      <div class="adm-card">
+      <div class="cat-selector" id="admCatSelector">
+        <button class="cat-pill" data-cat="ninos" onclick="setAdmCategory('ninos', this)">
+          <span class="cat-title">Niños</span>
+          <span class="cat-age">+6 años</span>
+        </button>
+        <button class="cat-pill active" data-cat="familia" onclick="setAdmCategory('familia', this)">
+          <span class="cat-title">Familia</span>
+          <span class="cat-age">+10 años</span>
+        </button>
+        <button class="cat-pill" data-cat="adultos" onclick="setAdmCategory('adultos', this)">
+          <span class="cat-title">Adultos</span>
+          <span class="cat-age">+18 años</span>
+        </button>
+      </div>
+
+      <div class="adm-card" id="admCardBox">
         <span class="adm-tag">💩 Pregunta de la ronda</span>
         <div class="adm-question" id="admQuestionDisplay">Tocá "Siguiente tarjeta" para arrancar el bardo</div>
         <div class="adm-rule-tip">Quien recibe más dedos señalándolo suma 1 punto abajo</div>
@@ -2148,7 +2178,7 @@
       </div>
 
       <div id="impPlayPanel" style="display: none; flex-direction: column; gap: 0.9rem;">
-        <div id="impSecretCard" class="secret-card hidden-imp" onclick="handleImpCardTap()"></div>
+        <div id="impSecretCard" class="secret-card hidden-imp" style="min-height: 295px; justify-content: center;" onclick="handleImpCardTap()"></div>
         <div id="impRevealAllBox" class="reveal-all-box"></div>
         <div class="lobos-actions">
           <button class="secondary-btn" id="impToggleAllBtn" onclick="toggleImpRevealAll()" style="display:none;">Revelar palabra e impostor</button>
@@ -2414,7 +2444,7 @@
       </div>
 
       <div id="fakePlayPanel" style="display: none; flex-direction: column; gap: 0.9rem;">
-        <div id="fakeSecretCard" class="secret-card hidden-imp" onclick="handleInfiltradoCardTap()"></div>
+        <div id="fakeSecretCard" class="secret-card hidden-imp" style="min-height: 295px; justify-content: center;" onclick="handleInfiltradoCardTap()"></div>
         <div id="fakeRevealAllBox" class="reveal-all-box"></div>
         <div class="lobos-actions">
           <button class="secondary-btn" id="fakeToggleAllBtn" onclick="toggleInfiltradoRevealAll()" style="display:none;">Revelar dibujo e impostor</button>
@@ -2566,7 +2596,7 @@
       </div>
 
       <div id="espiaPlayPanel" style="display: none; flex-direction: column; gap: 0.9rem;">
-        <div id="espiaSecretCard" class="secret-card hidden-imp" onclick="handleEspiaCardTap()"></div>
+        <div id="espiaSecretCard" class="secret-card hidden-imp" style="min-height: 295px; justify-content: center;" onclick="handleEspiaCardTap()"></div>
         <div id="espiaRevealAllBox" class="reveal-all-box"></div>
         <div class="lobos-actions">
           <button class="secondary-btn" id="espiaToggleAllBtn" onclick="toggleEspiaRevealAll()" style="display:none;">Revelar lugar y espía</button>
@@ -2957,7 +2987,101 @@
 
     const DECKS = {"ninos": ["Perro", "Gato", "León", "Elefante", "Jirafa", "Mono", "Tigre", "Oso", "Cebra", "Hipopótamo", "Cocodrilo", "Serpiente", "Tortuga", "Conejo", "Caballo", "Vaca", "Cerdo", "Oveja", "Gallina", "Pato", "Pingüino", "Delfín", "Ballena", "Tiburón", "Pulpo", "Cangrejo", "Estrella de mar", "Medusa", "Foca", "Caballito de mar", "Águila", "Búho", "Loro", "Flamenco", "Tucán", "Paloma", "Colibrí", "Pavo real", "Avestruz", "Murciélago", "Mariposa", "Abeja", "Hormiga", "Araña", "Mariquita", "Grillo", "Mosquito", "Caracol", "Gusano", "Libélula", "Rana", "Sapo", "Camaleón", "Iguana", "Dinosaurio", "Tiranosaurio", "Dragón", "Unicornio", "Canguro", "Koala", "Panda", "Lobo", "Zorro", "Ardilla", "Erizo", "Castor", "Mapache", "Ciervo", "Camello", "Llama", "Burro", "Cabra", "Ratón", "Hámster", "Pez payaso", "Pez globo", "Reno", "Oso polar", "Morsa", "Gorila", "Helado", "Pizza", "Hamburguesa", "Papas fritas", "Chocolate", "Caramelo", "Chupetín", "Alfajor", "Dulce de leche", "Galletitas", "Torta de cumpleaños", "Pochoclo", "Pancho", "Milanesa", "Fideos", "Arroz", "Sopa", "Ensalada", "Huevo frito", "Queso", "Pan", "Manteca", "Mermelada", "Miel", "Cereal", "Leche", "Jugo de naranja", "Limonada", "Licuado", "Chocolatada", "Manzana", "Banana", "Naranja", "Frutilla", "Sandía", "Melón", "Uva", "Durazno", "Pera", "Ananá", "Limón", "Cereza", "Kiwi", "Zanahoria", "Tomate", "Lechuga", "Papa", "Choclo", "Brócoli", "Zapallo", "Empanada", "Taco", "Sushi", "Donas", "Medialuna", "Churros", "Panqueques", "Waffles", "Gelatina", "Flan", "Budín", "Magdalena", "Malvavisco", "Algodón de azúcar", "Gomitas", "Chicle", "Turrón", "Huevos de Pascua", "Rosca de Reyes", "Sándwich", "Tostada", "Yogur", "Aceituna", "Palta", "Salchicha", "Escuela", "Mochila", "Lápiz", "Goma de borrar", "Sacapuntas", "Regla", "Tijera", "Plasticola", "Cuaderno", "Carpeta", "Cartuchera", "Marcadores", "Lápices de colores", "Crayones", "Témperas", "Pincel", "Acuarelas", "Plastilina", "Pizarrón", "Tiza", "Fibrón", "Maestra", "Profesor", "Recreo", "Patio", "Aula", "Biblioteca", "Libro", "Cuento", "Diccionario", "Mapa", "Globo terráqueo", "Compás", "Escuadra", "Calculadora", "Computadora", "Tablet", "Campana", "Timbre", "Bandera", "Acto escolar", "Excursión", "Tarea", "Examen", "Boletín", "Guardapolvo", "Uniforme", "Merienda", "Cantimplora", "Lonchera", "Microscopio", "Lupa", "Imán", "Flauta", "Tambor", "Pelota", "Muñeca", "Auto de juguete", "Tren de juguete", "Bloques", "Rompecabezas", "Yoyó", "Trompo", "Barrilete", "Patines", "Patineta", "Bicicleta", "Triciclo", "Monopatín", "Tobogán", "Hamaca", "Sube y baja", "Calesita", "Pelotero", "Castillo inflable", "Escondidas", "Mancha", "Rayuela", "Saltar la soga", "Piedra, papel o tijera", "Adivinanza", "Trabalenguas", "Chiste", "Títere", "Marioneta", "Disfraz", "Antifaz", "Varita mágica", "Espada de madera", "Escudo", "Corona", "Peluche", "Osito", "Robot", "Cohete", "Canicas", "Bolitas", "Cartas", "Dados", "Dominó", "Ajedrez", "Damas", "Lotería", "Bingo", "Videojuego", "Joystick", "Consola", "Burbuja", "Pistola de agua", "Bombucha", "Aro hula-hula", "Cama elástica", "Zancos", "Casa del árbol", "Carpa", "Linterna", "Binoculares", "Walkie-talkie", "Alcancia", "Figuritas", "Superhéroe", "Princesa", "Príncipe", "Rey", "Reina", "Caballero", "Mago", "Bruja", "Hada", "Duende", "Gigante", "Ogro", "Pirata", "Sirena", "Fantasma", "Vampiro", "Momia", "Hombre lobo", "Zombi", "Monstruo", "Extraterrestre", "Astronauta", "Ninja", "Samurái", "Vaquero", "Indio", "Detective", "Espía", "Payaso", "Acróbata", "Malabarista", "Domador", "Genio de la lámpara", "Caperucita Roja", "Pinocho", "Cenicienta", "Blancanieves", "Peter Pan", "Papá Noel", "Ratón Pérez", "Reyes Magos", "Conejo de Pascua", "Elfo", "Centauro", "Fénix", "Pegaso", "Yeti", "Cíclope", "Troll", "Gnomo", "Capitán", "Marinero", "Explorador", "Científico loco", "Inventor", "Cazador de tesoros", "Espantapájaros", "Muñeco de nieve", "Ángel", "Playa", "Mar", "Océano", "Isla", "Montaña", "Volcán", "Bosque", "Selva", "Desierto", "Río", "Lago", "Cascada", "Cueva", "Nieve", "Hielo", "Nube", "Lluvia", "Tormenta", "Arcoíris", "Sol", "Luna", "Estrella", "Planeta", "Espacio", "Galaxia", "Cometa", "Tierra", "Cielo", "Viento", "Trueno", "Relámpago", "Charco", "Barro", "Arena", "Piedra", "Árbol", "Flor", "Pasto", "Hoja", "Rama", "Semilla", "Raíz", "Jardín", "Plaza", "Parque", "Zoológico", "Acuario", "Granja", "Circo", "Cine", "Teatro", "Museo", "Castillo", "Palacio", "Faro", "Puente", "Túnel", "Piscina", "Camping", "Hospital", "Cuartel de bomberos", "Comisaría", "Supermercado", "Panadería", "Juguetería", "Casa", "Cama", "Almohada", "Frazada", "Pijama", "Pantuflas", "Cepillo de dientes", "Pasta dental", "Jabón", "Shampoo", "Toalla", "Espejo", "Peine", "Bañera", "Ducha", "Inodoro", "Sillón", "Mesa", "Silla", "Lámpara", "Reloj", "Teléfono", "Televisor", "Control remoto", "Heladera", "Horno", "Escoba", "Balde", "Llave", "Puerta", "Ventana", "Escalera", "Techo", "Chimenea", "Zapatillas", "Medias", "Pantalón", "Remera", "Buzo", "Campera", "Gorro", "Bufanda", "Guantes", "Paraguas", "Piloto de lluvia", "Gafas de sol", "Malla", "Ojotas", "Cinturón", "Bolso", "Cumpleaños", "Piñata", "Velitas", "Regalo", "Globo", "Auto", "Colectivo", "Tren", "Subte", "Avión", "Helicóptero", "Barco", "Submarino", "Cohete espacial", "Camión", "Ambulancia", "Camión de bomberos", "Patrullero", "Tractor", "Grúa", "Moto", "Globo aerostático", "Teleférico", "Fútbol", "Básquet", "Tenis", "Natación", "Karate", "Taekwondo", "Gimnasia artística", "Danza", "Atletismo", "Ciclismo", "Surf", "Esquí", "Rojo", "Azul", "Amarillo", "Verde", "Violeta", "Rosa", "Blanco", "Negro", "Dorado", "Círculo", "Cuadrado", "Triángulo", "Estrella fugaz", "Corazón", "Granjero", "Bombero"], "familia": ["Rockero", "Azul", "Asado", "Playa", "Invierno", "Verano", "Otoño", "Primavera", "Navidad", "Año Nuevo", "Cumpleaños", "Boda", "Luna de miel", "Mudanza", "Vacaciones", "Camping", "Hotel", "Aeropuerto", "Avión", "Crucero", "Tren", "Subte", "Colectivo", "Taxi", "Autopista", "Peaje", "Estación de servicio", "Taller mecánico", "Supermercado", "Feria", "Shopping", "Cine", "Teatro", "Concierto", "Estadio", "Gimnasio", "Peluquería", "Dentista", "Hospital", "Farmacia", "Banco", "Correo", "Biblioteca", "Museo", "Zoológico", "Parque de diversiones", "Circo", "Casino", "Restaurante", "Pizzería", "Cafetería", "Heladería", "Panadería", "Carnicería", "Verdulería", "Kiosco", "Ferretería", "Librería", "Juguetería", "Veterinaria", "Granja", "Campo", "Montaña", "Desierto", "Selva", "Bosque", "Isla desierta", "Volcán", "Terremoto", "Tormenta", "Inundación", "Apagón", "Incendio", "Robo", "Juicio", "Cárcel", "Detective", "Espía", "Vampiro", "Fantasma", "Extraterrestre", "Pirata", "Vaquero", "Astronauta", "Mago", "Payaso", "Científico", "Artista", "Fotógrafo", "Periodista", "Abogado", "Arquitecto", "Ingeniero", "Médico", "Enfermero", "Bombero", "Policía", "Piloto", "Capitán", "Chef", "Desayuno", "Almuerzo", "Merienda", "Cena", "Picada", "Mate", "Café", "Té", "Vino", "Cerveza", "Pizza", "Empanadas", "Milanesa", "Pasta", "Sushi", "Hamburguesa", "Ensalada", "Postre", "Helado", "Chocolate", "Domingo en familia", "Sobremesa", "Reunión familiar", "Foto familiar", "Álbum de fotos", "Herencia", "Apellido", "Árbol genealógico", "Mascota", "Pasear al perro", "Limpieza general", "Lavar los platos", "Lavar la ropa", "Planchar", "Cocinar", "Hacer las compras", "Lista del súper", "Heladera vacía", "Tupper", "Microondas", "Lavarropas", "Aspiradora", "Aire acondicionado", "Estufa", "Ventilador", "Cortina", "Alfombra", "Sillón", "Colchón", "Almohada", "Despertador", "Siesta", "Insomnio", "Pesadilla", "Sueño", "Bostezo", "Resfrío", "Fiebre", "Curita", "Termómetro", "Botiquín", "Receta médica", "Análisis de sangre", "Vacuna", "Anteojos", "Lentes de contacto", "Paraguas", "Valija", "Pasaporte", "Documento", "Billetera", "Llaves", "Llave perdida", "Celular sin batería", "Cargador", "Wi-Fi", "Contraseña", "Control remoto", "Televisor", "Serie", "Película", "Noticiero", "Publicidad", "Radio", "Podcast", "Música", "Guitarra", "Piano", "Batería", "Karaoke", "Baile", "Fiesta", "Disfraz", "Carnaval", "Halloween", "Pascuas", "Día del Padre", "Día de la Madre", "Día del Niño", "Día del Amigo", "Regalo", "Sorpresa", "Tarjeta de felicitación", "Ramo de flores", "Bombones", "Brindis", "Vela", "Fuegos artificiales", "Globos", "Piñata", "Jardín", "Parrilla", "Piscina", "Balcón", "Terraza", "Garaje", "Sótano", "Altillo", "Ascensor", "Escalera", "Fútbol", "Mundial", "Penal", "Árbitro", "Gol", "Hinchada", "Camiseta", "Tenis", "Pádel", "Básquet", "Vóley", "Rugby", "Golf", "Natación", "Ciclismo", "Maratón", "Boxeo", "Artes marciales", "Yoga", "Meditación", "Ajedrez", "Truco", "Póker", "Chinchón", "Generala", "Dominó", "Rompecabezas", "Crucigrama", "Sopa de letras", "Sudoku", "Bingo", "Lotería", "Rifa", "Bingo familiar", "Juego de mesa", "Dados", "Cartas", "Fichas", "Tablero", "Trampa", "Empate", "Victoria", "Derrota", "Trofeo", "Medalla", "Entrenamiento", "Lesión", "Calambre", "Transpiración", "Ducha fría", "Pesca", "Caza", "Senderismo", "Escalada", "Esquí", "Surf", "Buceo", "Navegar", "Velero", "Kayak", "Bicicleta", "Patineta", "Patines", "Lectura", "Novela", "Historieta", "Poesía", "Pintura", "Escultura", "Cerámica", "Carpintería", "Costura", "Tejido", "Jardinería", "Huerta", "Colección", "Antigüedad", "Subasta", "Reciclaje", "Ecología", "Egipto", "Pirámide", "Faraón", "Roma", "Gladiador", "Grecia", "Mitología", "Edad Media", "Castillo", "Caballero", "Vikingo", "Renacimiento", "Revolución", "Independencia", "Dinosaurio", "Fósil", "Evolución", "Prehistoria", "Cavernícola", "Fuego", "Rueda", "Invención", "Electricidad", "Gravedad", "Telescopio", "Microscopio", "Satélite", "Cohete", "Luna", "Marte", "Sistema Solar", "Eclipse", "Meteorito", "Agujero negro", "Ovni", "Robot", "Inteligencia Artificial", "Internet", "Redes sociales", "Correo electrónico", "Fotografía", "Selfie", "Video", "Cine mudo", "Dibujos animados", "Ciencia ficción", "Terror", "Comedia", "Drama", "Documental", "Circo Romano", "Ópera", "Ballet", "Orquesta", "Rock", "Jazz", "Tango", "Folklore", "Pop", "Reggaetón", "Arcoíris", "Amanecer", "Atardecer", "Medianoche", "Mediodía", "Calendario", "Reloj de arena", "Brújula", "Mapa", "Frontera", "Aduana", "Idioma", "Diccionario", "Acento", "Traducción", "Viaje", "Turista", "Guía turístico", "Souvenir", "Postal", "Moneda", "Billete", "Ahorro", "Alcancía", "Impuesto", "Factura", "Presupuesto", "Oferta", "Descuento", "Garantía", "Devolución", "Queja", "Propina", "Cuenta", "Reserva", "Fila", "Espera", "Turno", "Puntualidad", "Alegría", "Tristeza", "Enojo", "Miedo", "Vergüenza", "Orgullo", "Envidia", "Celos", "Nostalgia", "Paciencia", "Curiosidad", "Valentía", "Generosidad", "Honestidad", "Mentira", "Secreto", "Chisme", "Rumor", "Promesa", "Perdón", "Disculpa", "Agradecimiento", "Saludo", "Despedida", "Abrazo", "Beso", "Risa", "Carcajada", "Llanto", "Lágrima", "Suspiro", "Grito", "Susurro", "Silencio", "Ruido", "Eco", "Sombra", "Reflejo", "Espejo", "Laberinto", "Misterio", "Pista", "Sospechoso", "Coartada", "Testigo", "Tesoro", "Mapa del tesoro", "Nudo", "Cuerda", "Puente", "Muro", "Puerta cerrada", "Candado", "Llave maestra", "Caja fuerte", "Alarma", "Semáforo", "Multa", "Embotellamiento", "Choque", "Grúa", "Pinchazo", "Rueda de auxilio", "Gato hidráulico", "GPS", "Perdido", "Atajo", "Desvío", "Curva", "Túnel", "Maleta", "Equipaje de mano", "Turbulencia", "Despegue", "Aterrizaje", "Jet lag", "Bronceado", "Quemadura de sol", "Protector solar", "Repelente", "Picadura", "Mosquito", "Alergia", "Estornudo", "Tos", "Dolor de cabeza", "Dolor de muelas", "Vendas", "Yeso", "Muletas", "Silla de ruedas", "Ambulancia", "Camilla", "Carpintero", "Plomero", "Electricista", "Pintor", "Albañil", "Jardinero", "Cerrajero", "Sastre"], "adultos": ["Reunión de consorcio", "Expensas", "Alquiler", "Hipoteca", "Garantía propietaria", "Inflación", "Dólar", "Plazo fijo", "Tarjeta de crédito", "Resumen de tarjeta", "Cuotas sin interés", "Débito automático", "Transferencia", "CBU", "Clave fiscal", "AFIP / ARCA", "Contador", "Factura", "Recibo de sueldo", "Aguinaldo", "Bono anual", "Aumento de sueldo", "Entrevista laboral", "Currículum", "LinkedIn", "Renuncia", "Despido", "Indemnización", "Jubilación", "Pensión", "Obra social", "Prepaga", "Reintegro", "Copago", "Turno médico", "Chequeo anual", "Colesterol", "Presión arterial", "Estrés", "Burnout", "Terapia", "Psicólogo", "Psiquiatra", "Ansiedad", "Crisis de los 30", "Crisis de los 40", "Canas", "Calvicie", "Arrugas", "Crema antiage", "Dieta", "Gimnasio en enero", "Nutricionista", "Ayuno intermitente", "Proteína", "Suplementos", "Dolor de espalda", "Ciático", "Contractura", "Masajista", "Osteópata", "Kinesiología", "Home office", "Reunión por Zoom", "Micrófono muteado", "Compartir pantalla", "Correo corporativo", "En copia", "Para ayer", "Urgente", "Minuta", "Excel", "Presentación", "Jefe", "Subordinado", "Compañero tóxico", "Radio pasillo", "After office", "Fiesta de fin de año", "Amigo invisible", "Licencia por enfermedad", "Vacaciones pendientes", "Feriado puente", "Fin de semana largo", "Trámite bancario", "Fila en el banco", "Cajero automático sin plata", "Home banking", "Token", "Estafa virtual", "Spam", "Grupo de WhatsApp", "Audio de 5 minutos", "Visto", "Última conexión", "Bloqueado", "Silenciar grupo", "Sticker", "Meme", "Hilo de Twitter", "Algoritmo", "Suscripción", "Contraseña olvidada", "Autenticación en dos pasos", "Nube llena", "Backup", "Actualización", "Pantalla azul", "Router", "Cortes de luz", "Primera cita", "Tinder", "Match", "Ghosting", "Friendzone", "Casi algo", "Ex pareja", "Bloqueo de ex", "Stalkear", "Celos", "Infidelidad", "Amante", "Trampa", "Mentira piadosa", "Discusión de pareja", "Dormir en el sillón", "Aniversario", "Propuesta de matrimonio", "Anillo de compromiso", "Despedida de soltero", "Despedida de soltera", "Casamiento civil", "Iglesia", "Mesa de los solteros", "Ramo de novia", "Liga", "Vals", "Barra libre", "Cotillón", "Luna de miel", "Suegra", "Suegro", "Cuñado", "Concuñado", "Familia política", "Divorcio", "Separación", "División de bienes", "Cuota alimentaria", "Tenencia", "Convivencia", "Mudarse juntos", "Compartir gastos", "Reparto de tareas", "Lado de la cama", "Ronquidos", "Robar la frazada", "Baño ocupado", "Pelo en la ducha", "Tapa del inodoro", "Boda de plata", "Boda de oro", "Terapia de pareja", "Amor a primera vista", "Flechazo", "Beso", "Caricia", "Abrazo", "Chamuyo", "Levante", "Boliche", "Patovica", "Lista VIP", "Consumición", "Previas", "Trago", "Fernet", "Cerveza artesanal", "Vino tinto", "Espumante", "Brindis", "Shot", "Tequila", "Resaca", "Ibuprofeno", "Acidez", "Gastritis", "Café negro", "Bajón", "Pancho a las 5 AM", "Taxi de madrugada", "Uber", "Control de alcoholemia", "Multa de tránsito", "Acarreo", "Estacionamiento medido", "Trapito", "VTV", "Seguro del auto", "Choque", "Piquete", "Corte de calle", "Paro de transporte", "Hora pico", "Subte lleno", "Aire acondicionado roto", "Vecino ruidoso", "Fiesta arriba", "Perro que ladra", "Consorcio", "Grupo de mamis y papis", "Acto escolar", "Disfraz a último momento", "Cartulina el domingo", "Feria de ciencias", "Reunión de padres", "Cuaderno de comunicados", "Piojos", "Pediatra", "Guardia médica", "Pañales", "Mamadera", "Chupete", "Cochecito", "Sillita del auto", "Berrinche", "Cuento antes de dormir", "Vaso de agua", "Pesadilla", "Diente flojo", "Ratón Pérez", "Cumpleaños infantil", "Salón de fiestas", "Animador", "Souvenir", "Piñata", "Torta temática", "Niñera", "Abuelos al rescate", "Colonia de vacaciones", "Club", "Cuota del club", "Partido el sábado", "Torneo", "Tribuna", "Viaje de egresados", "Bariloche", "Previa adolescente", "Permiso para salir", "Horario de vuelta", "Primer auto", "Registro de conducir", "Examen práctico", "Estacionar en paralelo", "Universidad", "Carrera", "Tesis", "Recibida", "Huevos y harina", "Independizarse", "Primer departamento", "Garantía", "Flete", "Pintar antes de entregar", "Depósito", "Inmobiliaria", "Comisión", "Escritura", "Mudanza", "Cajas sin abrir", "Elecciones", "Cuarto oscuro", "Boleta", "Presidente de mesa", "Veda electoral", "Encuesta", "Debate presidencial", "Campaña", "Promesa electoral", "Corrupción", "Impuestos", "Subsidio", "Paritarias", "Sindicato", "Huelga", "Manifestación", "Noticiero", "Cadena nacional", "Infiltrado news", "Conspiración", "Horóscopo", "Carta natal", "Mercurio retrógrado", "Tarot", "Brujería", "Cábala", "Superstición", "Martes 13", "Gato negro", "Espejo roto", "Bingo", "Quiniela", "Lotería", "Casino", "Tragamonedas", "Ruleta", "Apuesta", "Póker", "Farol", "All-in", "Serie de Netflix", "Maratón de series", "Spoiler", "Tráiler", "Crítica", "Premios Oscar", "Alfombra roja", "Paparazzi", "Famoso", "Influencer", "Canje", "Publicidad encubierta", "Cancelación", "Hater", "Troll", "Viral", "Trending topic", "Podcast", "Streaming", "Suscriptor", "Ovni", "Área 51", "Fantasmas", "Espiritismo", "Ouija", "Casa embrujada", "Cementerio", "Velorio", "Testamento", "Cremación", "Seguros de vida", "Inmortalidad", "Reencarnación", "Karma", "Destino", "Casualidad", "Deja vu", "Intuición", "Corazonada", "Nostalgia", "Infancia", "Adolescencia", "Juventud", "Vejez", "Sabiduría", "Experiencia", "Arrepentimiento", "Segundas oportunidades", "Propósitos de año nuevo", "Motel", "Albergue transitorio", "Lencería", "Juguete sexual", "Sex shop", "Kamasutra", "Fantasía", "Fetiche", "Striptease", "Despedida", "Borrachera", "Laguna mental", "Mensaje borracho", "Llamada a las 3 AM", "Vergüenza ajena", "Papelón", "Trágame tierra", "Error de grupo", "Mandar captura al interesado", "Audio equivocado", "Saludar a quien no te saluda", "Confundir nombre", "Preguntar si está embarazada", "Mal aliento", "Transpiración", "Mancha en la ropa", "Cierre abierto", "Papel en el zapato", "Flatulencia", "Eructo", "Baño sin papel", "Inodoro tapado", "Olor en el ascensor", "Invitado que no se va", "Indirecta", "Sarcasmo", "Ironía", "Doble sentido", "Albur", "Chiste verde", "Humor negro", "Tabú", "Censura", "Secreto a voces", "Chisme de oficina", "Escándalo", "Infidelidad descubierta", "Mensaje comprometedor", "Contraseña del celular", "Modo incógnito", "Historial de búsqueda", "Cámara encendida por error", "Micrófono abierto", "Filtro fallido", "Foto comprometida", "Tatuaje de ex", "Tatuaje arrepentido", "Piercing", "Cirugía estética", "Botox", "Peluca", "Implante capilar", "Viagra", "Menopausia", "Andropausia", "Sofocos", "Insomnio", "Pastilla para dormir", "Antidepresivo", "Relajante muscular", "Colonoscopia", "Proctólogo", "Urólogo", "Ginecólogo", "Mamografía", "Análisis de orina", "Dieta líquida", "Intoxicación", "Empacho", "Vómito", "Maratón de baño", "Guardia de hospital", "Sueros", "Inyección", "Miedo a las agujas", "Desmayo", "Golpe de calor", "Insolación", "Resaca moral", "Culpabilidad", "Excusa barata", "Llegar tarde", "Plantón", "Dejar plantado", "Cobrar deuda", "Prestar plata", "Amigo ratón", "Dividir la cuenta", "El que pide lo más caro", "Propina rata", "Impuesto a las ganancias", "Bienes personales", "Monotributo", "Recategorización", "Factura electrónica", "Vencimiento", "Mora", "Intereses", "Veraz", "Préstamo personal", "Plazo fijo UVA", "Criptomoneda", "Bitcoin", "Billetera virtual", "QR", "Posnet sin señal", "Efectivo", "Cambio chico", "Billete falso", "Cajero roto", "Seguro de hogar", "Siniestro", "Franquicia", "Perito", "Denuncia policial", "Testigo", "Mediación", "Carta documento", "Telegrama", "Burocracia", "Sellado", "Apostilla", "Trámite online", "Página caída", "Captcha", "Soy un robot", "Términos y condiciones", "Cookies", "Suscripción oculta", "Dar de baja", "Call center"]};
 
-    const ADM_DECK = ["¿Quién de nosotros sería el primero en morir en una película de terror?", "¿Quién tiene más chances de terminar preso por una estupidez?", "¿Quién vendería a sus amigos por un millón de dólares sin dudarlo?", "¿Quién de la mesa es el peor conductor?", "¿Quién se haría el dormido para no ayudar a levantar la mesa?", "¿Quién tiene más probabilidades de unirse a una secta?", "¿Quién lloraría si le cortan el Wi-Fi por un fin de semana?", "¿Quién de nosotros se casaría por interés económico?", "¿Quién sería el primero en practicar canibalismo si nos perdemos en la cordillera?", "¿Quién manda los audios de WhatsApp más largos e insoportables?", "¿Quién tiene el historial de búsqueda más turbina de toda la mesa?", "¿Quién se anotaría en un reality show para hacerse famoso a cualquier costo?", "¿Quién fingiría una enfermedad grave para faltar a un compromiso?", "¿Quién de nosotros es el más rata a la hora de dividir la cuenta?", "¿Quién volvería con su ex más tóxico después de jurar que nunca más?", "¿Quién tiene más chances de caer en una estafa piramidal?", "¿Quién sería capaz de robarse algo de un hotel o restaurante?", "¿Quién se pondría a llorar en medio de una discusión laboral?", "¿Quién de la mesa tiene el peor gusto para vestirse?", "¿Quién se olvidaría el cumpleaños de su propia pareja?", "¿Quién tardaría menos de 24 horas en traicionar un secreto de Estado?", "¿Quién de nosotros envejecería convirtiéndose en el viejo más gruñón del barrio?", "¿Quién se quedaría mirando cómo roban a otro sin hacer absolutamente nada?", "¿Quién tiene más chances de terminar viviendo en una combi sin bañarse?", "¿Quién es el más chamuyero cuando cuenta una anécdota?", "¿Quién de nosotros sería el peor presidente del país?", "¿Quién se emborracharía primero en una fiesta de empresa?", "¿Quién stalkea a sus ex hasta el año 2014 en Instagram?", "¿Quién pediría lo más caro del menú sabiendo que después dividimos en partes iguales?", "¿Quién se haría el boludo cuando llega el momento de pagar el asado?", "¿Quién tiene más probabilidades de tener una doble familia secreta?", "¿Quién sería capaz de googlear sus síntomas y convencerse de que le quedan 3 días de vida?", "¿Quién de nosotros sobreviviría menos tiempo en una isla desierta?", "¿Quién es el más infiel potencial de este grupo?", "¿Quién se pondría a pelear con un desconocido en los comentarios de redes sociales?", "¿Quién tiene más chances de casarse en Las Vegas borracho?", "¿Quién dejaría plantado a un amigo por una cita de último momento?", "¿Quién de la mesa es el más dramático por cualquier pavada?", "¿Quién se robaría el crédito del trabajo de otro compañero?", "¿Quién tiene más probabilidades de terminar viviendo con 15 gatos?", "¿Quién sería el primero en paniquear durante una turbulencia en un avión?", "¿Quién es el más probable que mande un mensaje comprometedor al grupo equivocado?", "¿Quién se haría una cirugía estética que le quede horrible?", "¿Quién tiene la risa más contagiosa pero insoportable?", "¿Quién de nosotros se haría influencer de consejos de vida sin tener su vida ordenada?", "¿Quién tardaría más en devolver plata prestada?", "¿Quién sería capaz de comerse algo que se cayó al piso hace más de 10 segundos?", "¿Quién de la mesa tiene más chances de ser abducido por extraterrestres y que lo devuelvan?", "¿Quién se queja de todo pero nunca propone ningún plan?", "¿Quién llegaría tarde hasta a su propio velorio?", "¿Quién sería el primero en traicionar al grupo en un apocalipsis zombi?", "¿Quién tiene más chances de terminar trabajando en un circo?", "¿Quién se haría el lesionado para no jugar o no hacer fuerza?", "¿Quién tiene más probabilidades de quedarse encerrado en un baño público?", "¿Quién es el más probable que se quede dormido en medio de una película en el cine?", "¿Quién de nosotros compraría un curso online de 'cómo hacerte millonario'?", "¿Quién tiene el ego más grande de toda esta mesa?", "¿Quién se pondría a llorar si pierde en un juego de mesa?", "¿Quién sería capaz de revisar el celular de su pareja mientras duerme?", "¿Quién de nosotros tiene más chances de ganar la lotería y perder el ticket?", "¿Quién es el más propenso a hacer un papelón monumental en una primera cita?", "¿Quién se colaría en una fila fingiendo demencia?", "¿Quién tiene más probabilidades de hacerse un tatuaje del que se arrepienta al día siguiente?", "¿Quién de la mesa es el más chusma y sabe los rumores de todo el mundo?", "¿Quién sería el peor compañero de departamento para convivir?", "¿Quién se llevaría los tuppers de comida de una fiesta sin avisar?", "¿Quién tiene más chances de terminar en la guardia por un accidente doméstico ridículo?", "¿Quién de nosotros es el más manipulador cuando quiere conseguir algo?", "¿Quién sería capaz de fingir que no vio a un conocido en la calle para no saludarlo?", "¿Quién tiene más probabilidades de convertirse en un acumulador compulsivo?", "¿Quién es el más probable que se enamore en menos de 48 horas?", "¿Quién de nosotros tendría un canal de OnlyFans si estuviera desesperado de plata?", "¿Quién se haría el experto en un tema del que no tiene la más mínima idea?", "¿Quién es el que peor baila de toda la mesa?", "¿Quién tiene más chances de perder el pasaporte justo antes de embarcar?", "¿Quién sería capaz de regalar algo usado que le regalaron antes?", "¿Quién de nosotros es el más rencoroso y no olvida nada ni en 20 años?", "¿Quién se quedaría con el vuelto si el cajero se equivoca a su favor?", "¿Quién tiene más probabilidades de ser cancelado en redes sociales?", "¿Quién es el más probable que llame a su ex a las 4 de la mañana?", "¿Quién de nosotros sería el peor psicólogo por falta de empatía?", "¿Quién se pondría a discutir con el árbitro en un partido amistoso?", "¿Quién tiene más chances de quedarse sin batería justo cuando más se lo necesita?", "¿Quién sería capaz de comerse la porción de comida que otro guardó en la heladera?", "¿Quién de la mesa es el más hipocondríaco?", "¿Quién tiene más probabilidades de terminar en un programa de chimentos?", "¿Quién es el más propenso a confundir el nombre de su pareja con el de un ex?", "¿Quién de nosotros se haría amigo del ladrón si nos entran a robar?", "¿Quién tardaría horas en elegir qué pedir en un restaurante y después pediría lo mismo de siempre?", "¿Quién tiene más chances de olvidarse a un hijo o mascota en algún lado?", "¿Quién es el más probable que se ría en un momento súper serio como un velorio?", "¿Quién de nosotros se compraría algo carísimo que nunca va a usar?", "¿Quién sería el primero en abandonar un grupo de WhatsApp sin dar explicaciones?", "¿Quién tiene más probabilidades de ser expulsado de un boliche o bar?", "¿Quién es el más probable que invente una excusa ridícula para cancelar un plan a último minuto?", "¿Quién de la mesa tiene menos filtro para decir las cosas?", "¿Quién sería capaz de sabotear a un amigo para ganar una apuesta?", "¿Quién tiene más chances de terminar viviendo en otro país sin saber el idioma?", "¿Quién es el más probable que se quede pelado o con canas antes que todos?", "¿Quién de nosotros es claramente el 'amigo de mierda' oficial de este grupo?", "¿Quién sería capaz de pedir plata prestada y después subir fotos de vacaciones?", "¿Quién tiene más chances de chocar estacionando en un lugar completamente vacío?", "¿Quién se pondría a cantar karaoke desafinando como si estuviera en el Luna Park?", "¿Quién de nosotros es el más probable que crea en teorías conspirativas ridículas?", "¿Quién dejaría el baño tapado en casa ajena y saldría silbando bajito?", "¿Quién tiene más probabilidades de hacerse famoso por un video viral haciendo el ridículo?", "¿Quién es el más probable que se quede dormido en una juntada antes de las 12?", "¿Quién de nosotros se haría el ofendido para no pedir perdón cuando sabe que se equivocó?", "¿Quién sería capaz de usar la tarjeta de crédito de otro 'sin querer'?", "¿Quién tiene más chances de terminar casado con alguien que conoció hace dos semanas?", "¿Quién es el más probable que se pierda usando Google Maps?", "¿Quién de nosotros tiene más chances de sobrevivir a una guerra nuclear como una cucaracha?", "¿Quién sería capaz de criticar a alguien y saludarlo a los dos segundos con un abrazo?", "¿Quién es el más probable que mande un audio llorando por una borrachera?", "¿Quién de la mesa tiene el humor más negro e irrecuperable?", "¿Quién se anotaría en el gimnasio en enero, pagaría el año entero y no iría nunca?", "¿Quién tiene más chances de terminar en una comisaría por discutir con un policía?", "¿Quién sería capaz de spoilear el final de una serie a propósito?", "¿Quién es el más probable que se quede encerrado afuera de su casa en ropa interior?", "¿Quién de nosotros es el que peor consejo sentimental da?"];
+    
+    const ADM_DECKS = {
+      "ninos": [
+        "¿Quién se comería un bicho por un juguete nuevo?",
+        "¿Quién hace más trampa jugando a las escondidas?",
+        "¿Quién se ríe más en momentos donde no hay que reírse?",
+        "¿Quién tiene las peores ideas para hacer travesuras?",
+        "¿Quién lloraría más fuerte si se le cae el helado al piso?",
+        "¿Quién es el más probable de esconder comida en su pieza?",
+        "¿Quién es el peor perdedor de esta mesa?",
+        "¿Quién le tiene más miedo a la oscuridad?",
+        "¿Quién tardaría más en bañarse si no lo obligan?",
+        "¿Quién rompería algo en una casa ajena y echaría la culpa al perro?",
+        "¿Quién se quedaría dormido en el medio de una película en el cine?",
+        "¿Quién sería el más miedoso en una montaña rusa?",
+        "¿Quién se comería todos los chocolates sin compartir nada?",
+        "¿Quién cantaría más fuerte y más feo en el baño?",
+        "¿Quién se inventaría un dolor de panza para no ir a la escuela?",
+        "¿Quién sería el peor cuidando a una mascota de un amigo?",
+        "¿Quién haría el peor regalo de cumpleaños del mundo?",
+        "¿Quién se enoja por las cosas más tontas?",
+        "¿Quién se pondría a llorar si pierde en un juego de mesa?",
+        "¿Quién es el más desordenado de su habitación?",
+        "¿Quién mentiría sobre haberse lavado los dientes?",
+        "¿Quién se olvidaría de hacer la tarea todos los días?",
+        "¿Quién se pondría la ropa al revés y no se daría cuenta?",
+        "¿Quién se comería un moco cuando cree que nadie lo ve?",
+        "¿Quién pasaría más tiempo jugando a la Play sin comer ni ir al baño?"
+      ],
+      "familia": [
+        "¿Quién de nosotros sería el primero en morir en una película de terror?",
+        "¿Quién tiene más chances de terminar preso por una estupidez?",
+        "¿Quién de la mesa es el peor conductor?",
+        "¿Quién se haría el dormido para no ayudar a levantar la mesa?",
+        "¿Quién lloraría si le cortan el Wi-Fi por un fin de semana?",
+        "¿Quién manda los audios de WhatsApp más largos e insoportables?",
+        "¿Quién tiene el historial de búsqueda más raro de toda la mesa?",
+        "¿Quién se anotaría en un reality show para hacerse famoso a cualquier costo?",
+        "¿Quién fingiría una enfermedad para faltar a un compromiso aburrido?",
+        "¿Quién de nosotros es el más rata a la hora de dividir la cuenta?",
+        "¿Quién tiene más chances de caer en una estafa telefónica?",
+        "¿Quién de la mesa tiene el peor gusto para vestirse?",
+        "¿Quién se olvidaría el cumpleaños de su propia pareja/hijo?",
+        "¿Quién de nosotros envejecería convirtiéndose en el viejo más gruñón del barrio?",
+        "¿Quién se quedaría mirando cómo retan a otro sin hacer nada para defenderlo?",
+        "¿Quién es el más chamuyero cuando cuenta una anécdota?",
+        "¿Quién pediría lo más caro del menú sabiendo que después dividimos en partes iguales?",
+        "¿Quién se haría el boludo cuando llega el momento de pagar el asado?",
+        "¿Quién de nosotros sobreviviría menos tiempo en una isla desierta?",
+        "¿Quién se pondría a pelear con un desconocido en los comentarios de Facebook?",
+        "¿Quién dejaría plantado a un amigo por una cita de último momento?",
+        "¿Quién de la mesa es el más dramático por cualquier pavada?",
+        "¿Quién sería el primero en paniquear durante una turbulencia en un avión?",
+        "¿Quién tiene la risa más contagiosa pero insoportable?",
+        "¿Quién de nosotros se haría influencer de consejos de vida sin tener su vida ordenada?",
+        "¿Quién tardaría más en devolver plata prestada?",
+        "¿Quién se queja de todo pero nunca propone ningún plan?",
+        "¿Quién de la mesa es el más hipocondríaco?",
+        "¿Quién se haría el lesionado para no jugar o no hacer fuerza en una mudanza?",
+        "¿Quién se pondría a llorar si pierde en el TEG?"
+      ],
+      "adultos": [
+        "¿Quién volvería con su ex más tóxico después de jurar que nunca más?",
+        "¿Quién tiene más probabilidades de tener una doble familia secreta?",
+        "¿Quién es el más infiel potencial de este grupo?",
+        "¿Quién se emborracharía primero en una fiesta de la empresa y haría un papelón?",
+        "¿Quién stalkea a sus ex hasta el año 2014 en Instagram en modo incógnito?",
+        "¿Quién es el más probable que mande un mensaje comprometedor (o nudes) al grupo equivocado?",
+        "¿Quién sería capaz de sabotear a un amigo o compañero de trabajo para ganar un puesto?",
+        "¿Quién de nosotros se casaría exclusivamente por interés económico?",
+        "¿Quién de nosotros tendría un canal de OnlyFans si estuviera desesperado de plata?",
+        "¿Quién tiene más probabilidades de ser cancelado en redes sociales por un comentario fuera de lugar?",
+        "¿Quién es el más probable que llame a su ex a las 4 de la mañana un sábado?",
+        "¿Quién de nosotros sería el peor psicólogo por absoluta falta de empatía?",
+        "¿Quién sería capaz de acostarse con la ex pareja de un amigo de este mismo grupo?",
+        "¿Quién se haría una cirugía estética ridícula por crisis de los 40?",
+        "¿Quién es el más propenso a hacer un papelón monumental en una primera cita de Tinder?",
+        "¿Quién de la mesa es el más chusma y lleva y trae todos los puteríos?",
+        "¿Quién sería el peor compañero de departamento por sus mañas inbancables?",
+        "¿Quién tiene más probabilidades de terminar en un programa de chimentos?",
+        "¿Quién de nosotros es el que peor consejo sentimental da porque su vida es un desastre?",
+        "¿Quién sería el primero en vender información confidencial de un amigo por un millón de dólares?",
+        "¿Quién dejaría el baño tapado en casa ajena y saldría silbando bajito?",
+        "¿Quién se quedaría con un vuelto millonario si el cajero del banco se equivoca a su favor?",
+        "¿Quién sería capaz de mentir sobre una desgracia para que le perdonen una deuda?",
+        "¿Quién de nosotros es claramente el 'amigo de mierda' oficial de este grupo y no se da cuenta?",
+        "¿Quién pediría plata prestada llorando miseria y a los dos días subiría fotos en un restaurante carísimo?",
+        "¿Quién de nosotros es el más probable que invente un embarazo o enfermedad para retener a su pareja?",
+        "¿Quién tiene más chances de terminar en una comisaría por discutir a las piñas con un trapito o policía?",
+        "¿Quién sería capaz de spoilear el final de una serie o película muy esperada solo por maldad?",
+        "¿Quién es el más probable que se quede pelado o se vuelva impotente por puro karma?",
+        "¿Quién se compraría el auto más fantasma y ruidoso solo para compensar otras cosas?"
+      ]
+    };
+// // const ADM_DECK = ["¿Quién de nosotros sería el primero en morir en una película de terror?", "¿Quién tiene más chances de terminar preso por una estupidez?", "¿Quién vendería a sus amigos por un millón de dólares sin dudarlo?", "¿Quién de la mesa es el peor conductor?", "¿Quién se haría el dormido para no ayudar a levantar la mesa?", "¿Quién tiene más probabilidades de unirse a una secta?", "¿Quién lloraría si le cortan el Wi-Fi por un fin de semana?", "¿Quién de nosotros se casaría por interés económico?", "¿Quién sería el primero en practicar canibalismo si nos perdemos en la cordillera?", "¿Quién manda los audios de WhatsApp más largos e insoportables?", "¿Quién tiene el historial de búsqueda más turbina de toda la mesa?", "¿Quién se anotaría en un reality show para hacerse famoso a cualquier costo?", "¿Quién fingiría una enfermedad grave para faltar a un compromiso?", "¿Quién de nosotros es el más rata a la hora de dividir la cuenta?", "¿Quién volvería con su ex más tóxico después de jurar que nunca más?", "¿Quién tiene más chances de caer en una estafa piramidal?", "¿Quién sería capaz de robarse algo de un hotel o restaurante?", "¿Quién se pondría a llorar en medio de una discusión laboral?", "¿Quién de la mesa tiene el peor gusto para vestirse?", "¿Quién se olvidaría el cumpleaños de su propia pareja?", "¿Quién tardaría menos de 24 horas en traicionar un secreto de Estado?", "¿Quién de nosotros envejecería convirtiéndose en el viejo más gruñón del barrio?", "¿Quién se quedaría mirando cómo roban a otro sin hacer absolutamente nada?", "¿Quién tiene más chances de terminar viviendo en una combi sin bañarse?", "¿Quién es el más chamuyero cuando cuenta una anécdota?", "¿Quién de nosotros sería el peor presidente del país?", "¿Quién se emborracharía primero en una fiesta de empresa?", "¿Quién stalkea a sus ex hasta el año 2014 en Instagram?", "¿Quién pediría lo más caro del menú sabiendo que después dividimos en partes iguales?", "¿Quién se haría el boludo cuando llega el momento de pagar el asado?", "¿Quién tiene más probabilidades de tener una doble familia secreta?", "¿Quién sería capaz de googlear sus síntomas y convencerse de que le quedan 3 días de vida?", "¿Quién de nosotros sobreviviría menos tiempo en una isla desierta?", "¿Quién es el más infiel potencial de este grupo?", "¿Quién se pondría a pelear con un desconocido en los comentarios de redes sociales?", "¿Quién tiene más chances de casarse en Las Vegas borracho?", "¿Quién dejaría plantado a un amigo por una cita de último momento?", "¿Quién de la mesa es el más dramático por cualquier pavada?", "¿Quién se robaría el crédito del trabajo de otro compañero?", "¿Quién tiene más probabilidades de terminar viviendo con 15 gatos?", "¿Quién sería el primero en paniquear durante una turbulencia en un avión?", "¿Quién es el más probable que mande un mensaje comprometedor al grupo equivocado?", "¿Quién se haría una cirugía estética que le quede horrible?", "¿Quién tiene la risa más contagiosa pero insoportable?", "¿Quién de nosotros se haría influencer de consejos de vida sin tener su vida ordenada?", "¿Quién tardaría más en devolver plata prestada?", "¿Quién sería capaz de comerse algo que se cayó al piso hace más de 10 segundos?", "¿Quién de la mesa tiene más chances de ser abducido por extraterrestres y que lo devuelvan?", "¿Quién se queja de todo pero nunca propone ningún plan?", "¿Quién llegaría tarde hasta a su propio velorio?", "¿Quién sería el primero en traicionar al grupo en un apocalipsis zombi?", "¿Quién tiene más chances de terminar trabajando en un circo?", "¿Quién se haría el lesionado para no jugar o no hacer fuerza?", "¿Quién tiene más probabilidades de quedarse encerrado en un baño público?", "¿Quién es el más probable que se quede dormido en medio de una película en el cine?", "¿Quién de nosotros compraría un curso online de 'cómo hacerte millonario'?", "¿Quién tiene el ego más grande de toda esta mesa?", "¿Quién se pondría a llorar si pierde en un juego de mesa?", "¿Quién sería capaz de revisar el celular de su pareja mientras duerme?", "¿Quién de nosotros tiene más chances de ganar la lotería y perder el ticket?", "¿Quién es el más propenso a hacer un papelón monumental en una primera cita?", "¿Quién se colaría en una fila fingiendo demencia?", "¿Quién tiene más probabilidades de hacerse un tatuaje del que se arrepienta al día siguiente?", "¿Quién de la mesa es el más chusma y sabe los rumores de todo el mundo?", "¿Quién sería el peor compañero de departamento para convivir?", "¿Quién se llevaría los tuppers de comida de una fiesta sin avisar?", "¿Quién tiene más chances de terminar en la guardia por un accidente doméstico ridículo?", "¿Quién de nosotros es el más manipulador cuando quiere conseguir algo?", "¿Quién sería capaz de fingir que no vio a un conocido en la calle para no saludarlo?", "¿Quién tiene más probabilidades de convertirse en un acumulador compulsivo?", "¿Quién es el más probable que se enamore en menos de 48 horas?", "¿Quién de nosotros tendría un canal de OnlyFans si estuviera desesperado de plata?", "¿Quién se haría el experto en un tema del que no tiene la más mínima idea?", "¿Quién es el que peor baila de toda la mesa?", "¿Quién tiene más chances de perder el pasaporte justo antes de embarcar?", "¿Quién sería capaz de regalar algo usado que le regalaron antes?", "¿Quién de nosotros es el más rencoroso y no olvida nada ni en 20 años?", "¿Quién se quedaría con el vuelto si el cajero se equivoca a su favor?", "¿Quién tiene más probabilidades de ser cancelado en redes sociales?", "¿Quién es el más probable que llame a su ex a las 4 de la mañana?", "¿Quién de nosotros sería el peor psicólogo por falta de empatía?", "¿Quién se pondría a discutir con el árbitro en un partido amistoso?", "¿Quién tiene más chances de quedarse sin batería justo cuando más se lo necesita?", "¿Quién sería capaz de comerse la porción de comida que otro guardó en la heladera?", "¿Quién de la mesa es el más hipocondríaco?", "¿Quién tiene más probabilidades de terminar en un programa de chimentos?", "¿Quién es el más propenso a confundir el nombre de su pareja con el de un ex?", "¿Quién de nosotros se haría amigo del ladrón si nos entran a robar?", "¿Quién tardaría horas en elegir qué pedir en un restaurante y después pediría lo mismo de siempre?", "¿Quién tiene más chances de olvidarse a un hijo o mascota en algún lado?", "¿Quién es el más probable que se ría en un momento súper serio como un velorio?", "¿Quién de nosotros se compraría algo carísimo que nunca va a usar?", "¿Quién sería el primero en abandonar un grupo de WhatsApp sin dar explicaciones?", "¿Quién tiene más probabilidades de ser expulsado de un boliche o bar?", "¿Quién es el más probable que invente una excusa ridícula para cancelar un plan a último minuto?", "¿Quién de la mesa tiene menos filtro para decir las cosas?", "¿Quién sería capaz de sabotear a un amigo para ganar una apuesta?", "¿Quién tiene más chances de terminar viviendo en otro país sin saber el idioma?", "¿Quién es el más probable que se quede pelado o con canas antes que todos?", "¿Quién de nosotros es claramente el 'amigo de mierda' oficial de este grupo?", "¿Quién sería capaz de pedir plata prestada y después subir fotos de vacaciones?", "¿Quién tiene más chances de chocar estacionando en un lugar completamente vacío?", "¿Quién se pondría a cantar karaoke desafinando como si estuviera en el Luna Park?", "¿Quién de nosotros es el más probable que crea en teorías conspirativas ridículas?", "¿Quién dejaría el baño tapado en casa ajena y saldría silbando bajito?", "¿Quién tiene más probabilidades de hacerse famoso por un video viral haciendo el ridículo?", "¿Quién es el más probable que se quede dormido en una juntada antes de las 12?", "¿Quién de nosotros se haría el ofendido para no pedir perdón cuando sabe que se equivocó?", "¿Quién sería capaz de usar la tarjeta de crédito de otro 'sin querer'?", "¿Quién tiene más chances de terminar casado con alguien que conoció hace dos semanas?", "¿Quién es el más probable que se pierda usando Google Maps?", "¿Quién de nosotros tiene más chances de sobrevivir a una guerra nuclear como una cucaracha?", "¿Quién sería capaz de criticar a alguien y saludarlo a los dos segundos con un abrazo?", "¿Quién es el más probable que mande un audio llorando por una borrachera?", "¿Quién de la mesa tiene el humor más negro e irrecuperable?", "¿Quién se anotaría en el gimnasio en enero, pagaría el año entero y no iría nunca?", "¿Quién tiene más chances de terminar en una comisaría por discutir con un policía?", "¿Quién sería capaz de spoilear el final de una serie a propósito?", "¿Quién es el más probable que se quede encerrado afuera de su casa en ropa interior?", "¿Quién de nosotros es el que peor consejo sentimental da?"];
 
     const IMPOSTOR_DECKS = {"ninos": [{"w": "Perro", "c": "Animal"}, {"w": "Gato", "c": "Animal"}, {"w": "León", "c": "Animal"}, {"w": "Elefante", "c": "Animal"}, {"w": "Jirafa", "c": "Animal"}, {"w": "Pingüino", "c": "Animal"}, {"w": "Delfín", "c": "Animal"}, {"w": "Tiburón", "c": "Animal"}, {"w": "Mariposa", "c": "Insecto"}, {"w": "Abeja", "c": "Insecto"}, {"w": "Tortuga", "c": "Animal"}, {"w": "Conejo", "c": "Animal"}, {"w": "Dinosaurio", "c": "Animal"}, {"w": "Unicornio", "c": "Fantasía"}, {"w": "Dragón", "c": "Fantasía"}, {"w": "Mono", "c": "Animal"}, {"w": "Cocodrilo", "c": "Animal"}, {"w": "Canguro", "c": "Animal"}, {"w": "Oso Panda", "c": "Animal"}, {"w": "Pulpo", "c": "Animal"}, {"w": "Helado", "c": "Comida"}, {"w": "Pizza", "c": "Comida"}, {"w": "Hamburguesa", "c": "Comida"}, {"w": "Papas fritas", "c": "Comida"}, {"w": "Chocolate", "c": "Dulce"}, {"w": "Alfajor", "c": "Dulce"}, {"w": "Pochoclo", "c": "Comida"}, {"w": "Pancho", "c": "Comida"}, {"w": "Milanesa", "c": "Comida"}, {"w": "Fideos", "c": "Comida"}, {"w": "Torta de cumpleaños", "c": "Dulce"}, {"w": "Caramelo", "c": "Dulce"}, {"w": "Manzana", "c": "Fruta"}, {"w": "Banana", "c": "Fruta"}, {"w": "Sandía", "c": "Fruta"}, {"w": "Frutilla", "c": "Fruta"}, {"w": "Naranja", "c": "Fruta"}, {"w": "Chupetín", "c": "Dulce"}, {"w": "Galletitas", "c": "Comida"}, {"w": "Donas", "c": "Dulce"}, {"w": "Escuela", "c": "Lugar"}, {"w": "Playa", "c": "Lugar"}, {"w": "Zoológico", "c": "Lugar"}, {"w": "Circo", "c": "Lugar"}, {"w": "Plaza", "c": "Lugar"}, {"w": "Cine", "c": "Lugar"}, {"w": "Hospital", "c": "Lugar"}, {"w": "Supermercado", "c": "Lugar"}, {"w": "Castillo", "c": "Lugar"}, {"w": "Selva", "c": "Lugar"}, {"w": "Espacio", "c": "Lugar"}, {"w": "Granja", "c": "Lugar"}, {"w": "Pelota", "c": "Juguete"}, {"w": "Bicicleta", "c": "Transporte"}, {"w": "Patineta", "c": "Juguete"}, {"w": "Tobogán", "c": "Juego"}, {"w": "Hamaca", "c": "Juego"}, {"w": "Rompecabezas", "c": "Juego"}, {"w": "Barrilete", "c": "Juguete"}, {"w": "Peluche", "c": "Juguete"}, {"w": "Robot", "c": "Personaje"}, {"w": "Superhéroe", "c": "Personaje"}, {"w": "Princesa", "c": "Personaje"}, {"w": "Pirata", "c": "Personaje"}, {"w": "Astronauta", "c": "Profesión"}, {"w": "Bombero", "c": "Profesión"}, {"w": "Policía", "c": "Profesión"}, {"w": "Mago", "c": "Personaje"}, {"w": "Bruja", "c": "Personaje"}, {"w": "Payaso", "c": "Personaje"}, {"w": "Fantasma", "c": "Personaje"}, {"w": "Sirena", "c": "Fantasía"}, {"w": "Papá Noel", "c": "Personaje"}, {"w": "Ratón Pérez", "c": "Personaje"}, {"w": "Ninja", "c": "Personaje"}, {"w": "Detective", "c": "Profesión"}, {"w": "Avión", "c": "Transporte"}, {"w": "Tren", "c": "Transporte"}, {"w": "Cohete", "c": "Transporte"}, {"w": "Submarino", "c": "Transporte"}, {"w": "Barco", "c": "Transporte"}, {"w": "Auto", "c": "Transporte"}, {"w": "Helicóptero", "c": "Transporte"}, {"w": "Colectivo", "c": "Transporte"}, {"w": "Fútbol", "c": "Deporte"}, {"w": "Natación", "c": "Deporte"}, {"w": "Taekwondo", "c": "Deporte"}, {"w": "Tenis", "c": "Deporte"}, {"w": "Sol", "c": "Naturaleza"}, {"w": "Luna", "c": "Naturaleza"}, {"w": "Arcoíris", "c": "Naturaleza"}, {"w": "Nieve", "c": "Clima"}, {"w": "Lluvia", "c": "Clima"}, {"w": "Volcán", "c": "Naturaleza"}, {"w": "Árbol", "c": "Naturaleza"}, {"w": "Flor", "c": "Naturaleza"}, {"w": "Mochila", "c": "Objeto"}, {"w": "Lápiz", "c": "Útil"}, {"w": "Tijera", "c": "Útil"}, {"w": "Cepillo de dientes", "c": "Objeto"}, {"w": "Almohada", "c": "Objeto"}, {"w": "Paraguas", "c": "Objeto"}, {"w": "Linterna", "c": "Objeto"}, {"w": "Guitarra", "c": "Música"}, {"w": "Batería", "c": "Música"}, {"w": "Piano", "c": "Música"}, {"w": "Reloj", "c": "Objeto"}, {"w": "Zapatillas", "c": "Ropa"}, {"w": "Pijama", "c": "Ropa"}, {"w": "Gafas de sol", "c": "Accesorio"}, {"w": "Corona", "c": "Objeto"}, {"w": "Piñata", "c": "Fiesta"}, {"w": "Globo", "c": "Fiesta"}, {"w": "Regalo", "c": "Fiesta"}, {"w": "Cama elástica", "c": "Juego"}, {"w": "Carpita", "c": "Objeto"}, {"w": "Microscopio", "c": "Ciencia"}, {"w": "Lupa", "c": "Objeto"}, {"w": "Imán", "c": "Objeto"}, {"w": "Espejo", "c": "Objeto"}], "familia": [{"w": "Asado", "c": "Comida"}, {"w": "Mate", "c": "Bebida"}, {"w": "Empanadas", "c": "Comida"}, {"w": "Sushi", "c": "Comida"}, {"w": "Picada", "c": "Comida"}, {"w": "Café", "c": "Bebida"}, {"w": "Dulce de leche", "c": "Comida"}, {"w": "Facturas", "c": "Comida"}, {"w": "Aeropuerto", "c": "Lugar"}, {"w": "Camping", "c": "Actividad"}, {"w": "Crucero", "c": "Viaje"}, {"w": "Hotel", "c": "Lugar"}, {"w": "Supermercado", "c": "Lugar"}, {"w": "Peluquería", "c": "Lugar"}, {"w": "Dentista", "c": "Profesión"}, {"w": "Gimnasio", "c": "Lugar"}, {"w": "Biblioteca", "c": "Lugar"}, {"w": "Museo", "c": "Lugar"}, {"w": "Estadio", "c": "Lugar"}, {"w": "Casino", "c": "Lugar"}, {"w": "Ferretería", "c": "Comercio"}, {"w": "Farmacia", "c": "Comercio"}, {"w": "Kiosco", "c": "Comercio"}, {"w": "Shopping", "c": "Lugar"}, {"w": "Subte", "c": "Transporte"}, {"w": "Taxi", "c": "Transporte"}, {"w": "Peaje", "c": "Viaje"}, {"w": "Autopista", "c": "Lugar"}, {"w": "Taller mecánico", "c": "Lugar"}, {"w": "Estación de servicio", "c": "Lugar"}, {"w": "Mudanza", "c": "Situación"}, {"w": "Boda", "c": "Evento"}, {"w": "Navidad", "c": "Festividad"}, {"w": "Año Nuevo", "c": "Festividad"}, {"w": "Carnaval", "c": "Festividad"}, {"w": "Halloween", "c": "Festividad"}, {"w": "Vacaciones", "c": "Concepto"}, {"w": "Siesta", "c": "Hábito"}, {"w": "Insomnio", "c": "Salud"}, {"w": "Pesadilla", "c": "Sueño"}, {"w": "Apagón", "c": "Situación"}, {"w": "Tormenta", "c": "Clima"}, {"w": "Terremoto", "c": "Naturaleza"}, {"w": "Isla desierta", "c": "Lugar"}, {"w": "Pirámide", "c": "Historia"}, {"w": "Vikingo", "c": "Historia"}, {"w": "Gladiador", "c": "Historia"}, {"w": "Faraón", "c": "Historia"}, {"w": "Extraterrestre", "c": "Ciencia Ficción"}, {"w": "Agujero negro", "c": "Espacio"}, {"w": "Satélite", "c": "Tecnología"}, {"w": "Inteligencia Artificial", "c": "Tecnología"}, {"w": "Wi-Fi", "c": "Tecnología"}, {"w": "Contraseña", "c": "Tecnología"}, {"w": "Selfie", "c": "Fotografía"}, {"w": "Karaoke", "c": "Entretenimiento"}, {"w": "Truco", "c": "Juego"}, {"w": "Ajedrez", "c": "Juego"}, {"w": "Bingo", "c": "Juego"}, {"w": "Rompecabezas", "c": "Juego"}, {"w": "Mundial de Fútbol", "c": "Deporte"}, {"w": "Penal", "c": "Deporte"}, {"w": "Árbitro", "c": "Deporte"}, {"w": "Pádel", "c": "Deporte"}, {"w": "Maratón", "c": "Deporte"}, {"w": "Yoga", "c": "Actividad"}, {"w": "Pesca", "c": "Actividad"}, {"w": "Jardinería", "c": "Hobby"}, {"w": "Parrilla", "c": "Objeto"}, {"w": "Microondas", "c": "Electrodoméstico"}, {"w": "Lavarropas", "c": "Electrodoméstico"}, {"w": "Aire acondicionado", "c": "Electrodoméstico"}, {"w": "Aspiradora", "c": "Electrodoméstico"}, {"w": "Despertador", "c": "Objeto"}, {"w": "Pasaporte", "c": "Documento"}, {"w": "Billetera", "c": "Objeto"}, {"w": "Llave", "c": "Objeto"}, {"w": "Caja fuerte", "c": "Objeto"}, {"w": "Brújula", "c": "Objeto"}, {"w": "Telescopio", "c": "Ciencia"}, {"w": "Semáforo", "c": "Ciudad"}, {"w": "Multa", "c": "Tránsito"}, {"w": "Embotellamiento", "c": "Tránsito"}, {"w": "Rueda de auxilio", "c": "Auto"}, {"w": "Arquitecto", "c": "Profesión"}, {"w": "Abogado", "c": "Profesión"}, {"w": "Periodista", "c": "Profesión"}, {"w": "Fotógrafo", "c": "Profesión"}, {"w": "Chef", "c": "Profesión"}, {"w": "Veterinario", "c": "Profesión"}, {"w": "Carpintero", "c": "Oficio"}, {"w": "Plomero", "c": "Oficio"}, {"w": "Electricista", "c": "Oficio"}, {"w": "Cerrajero", "c": "Oficio"}, {"w": "Espía", "c": "Personaje"}, {"w": "Vampiro", "c": "Ficción"}, {"w": "Magia", "c": "Entretenimiento"}, {"w": "Ópera", "c": "Arte"}, {"w": "Rock", "c": "Música"}, {"w": "Tango", "c": "Música"}, {"w": "Historieta", "c": "Lectura"}, {"w": "Cine mudo", "c": "Cine"}, {"w": "Spoiler", "c": "Cultura Pop"}, {"w": "Subasta", "c": "Evento"}, {"w": "Alcancía", "c": "Objeto"}, {"w": "Propina", "c": "Dinero"}, {"w": "Descuento", "c": "Compras"}, {"w": "Reciclaje", "c": "Ecología"}, {"w": "Protector solar", "c": "Verano"}, {"w": "Repelente", "c": "Verano"}, {"w": "Termómetro", "c": "Salud"}, {"w": "Vacuna", "c": "Salud"}, {"w": "Yeso", "c": "Salud"}, {"w": "Ambulancia", "c": "Emergencia"}, {"w": "Extintor", "c": "Seguridad"}, {"w": "Alarma", "c": "Seguridad"}, {"w": "Laberinto", "c": "Lugar"}, {"w": "Faro", "c": "Construcción"}, {"w": "Subte", "c": "Ciudad"}, {"w": "Sobremesa", "c": "Costumbre"}], "adultos": [{"w": "Reunión de consorcio", "c": "Vida Adulta"}, {"w": "Expensas", "c": "Finanzas"}, {"w": "Hipoteca", "c": "Finanzas"}, {"w": "Inflación", "c": "Economía"}, {"w": "Tarjeta de crédito", "c": "Finanzas"}, {"w": "Aguinaldo", "c": "Trabajo"}, {"w": "Entrevista laboral", "c": "Trabajo"}, {"w": "Home office", "c": "Trabajo"}, {"w": "After office", "c": "Social"}, {"w": "Burnout", "c": "Salud"}, {"w": "Terapia", "c": "Salud"}, {"w": "Crisis de los 40", "c": "Vida"}, {"w": "Ayuno intermitente", "c": "Dieta"}, {"w": "Ciático", "c": "Salud"}, {"w": "Colesterol", "c": "Salud"}, {"w": "Colonoscopia", "c": "Medicina"}, {"w": "Tinder", "c": "Citas"}, {"w": "Ghosting", "c": "Relaciones"}, {"w": "Friendzone", "c": "Relaciones"}, {"w": "Casi algo", "c": "Relaciones"}, {"w": "Ex pareja", "c": "Relaciones"}, {"w": "Infidelidad", "c": "Relaciones"}, {"w": "Divorcio", "c": "Legal"}, {"w": "Suegra", "c": "Familia"}, {"w": "Despedida de soltero", "c": "Fiesta"}, {"w": "Luna de miel", "c": "Viaje"}, {"w": "Anillo de compromiso", "c": "Pareja"}, {"w": "Terapia de pareja", "c": "Relaciones"}, {"w": "Resaca", "c": "Fiesta"}, {"w": "Fernet", "c": "Bebida"}, {"w": "Control de alcoholemia", "c": "Tránsito"}, {"w": "Acarreo", "c": "Tránsito"}, {"w": "Trapito", "c": "Calle"}, {"w": "Piquete", "c": "Ciudad"}, {"w": "Hora pico", "c": "Tránsito"}, {"w": "VTV", "c": "Auto"}, {"w": "Grupo de mamis y papis", "c": "WhatsApp"}, {"w": "Audio de 5 minutos", "c": "WhatsApp"}, {"w": "Modo incógnito", "c": "Internet"}, {"w": "Historial de búsqueda", "c": "Internet"}, {"w": "Estafa virtual", "c": "Seguridad"}, {"w": "Home banking", "c": "Finanzas"}, {"w": "Plazo fijo", "c": "Finanzas"}, {"w": "Criptomoneda", "c": "Finanzas"}, {"w": "Monotributo", "c": "Impuestos"}, {"w": "Contador", "c": "Profesión"}, {"w": "Carta documento", "c": "Legal"}, {"w": "Veraz", "c": "Finanzas"}, {"w": "Motel", "c": "Lugar"}, {"w": "Sex shop", "c": "Comercio"}, {"w": "Lencería", "c": "Ropa"}, {"w": "Kamasutra", "c": "Libro"}, {"w": "Viagra", "c": "Farmacia"}, {"w": "Menopausia", "c": "Salud"}, {"w": "Botox", "c": "Estética"}, {"w": "Implante capilar", "c": "Estética"}, {"w": "Tatuaje de ex", "c": "Error"}, {"w": "Mensaje borracho", "c": "Error"}, {"w": "Error de grupo", "c": "WhatsApp"}, {"w": "Micrófono abierto", "c": "Videollamada"}, {"w": "Cámara encendida", "c": "Videollamada"}, {"w": "Spoiler", "c": "Series"}, {"w": "Maratón de Netflix", "c": "Ocio"}, {"w": "Canje", "c": "Redes"}, {"w": "Hater", "c": "Redes"}, {"w": "Funado / Cancelado", "c": "Redes"}, {"w": "Algoritmo", "c": "Tecnología"}, {"w": "Suscripción oculta", "c": "Gastos"}, {"w": "Cuarto oscuro", "c": "Elecciones"}, {"w": "Veda electoral", "c": "Política"}, {"w": "Cadena nacional", "c": "Política"}, {"w": "Paritarias", "c": "Trabajo"}, {"w": "Mercurio retrógrado", "c": "Astrología"}, {"w": "Carta natal", "c": "Astrología"}, {"w": "Tarot", "c": "Esoterismo"}, {"w": "Ouija", "c": "Paranormal"}, {"w": "Testamento", "c": "Legal"}, {"w": "Velorio", "c": "Evento"}, {"w": "Cremación", "c": "Servicio"}, {"w": "Seguro de vida", "c": "Finanzas"}, {"w": "All-in", "c": "Póker"}, {"w": "Tragamonedas", "c": "Casino"}, {"w": "Quiniela", "c": "Apuestas"}, {"w": "Amigo invisible", "c": "Evento"}, {"w": "Dividir la cuenta", "c": "Salida"}, {"w": "Propina rata", "c": "Salida"}, {"w": "Deuda sin pagar", "c": "Dinero"}, {"w": "Garantía propietaria", "c": "Alquiler"}, {"w": "Inmobiliaria", "c": "Rubro"}, {"w": "Flete", "c": "Mudanza"}, {"w": "Cortes de luz", "c": "Verano"}, {"w": "Vecino ruidoso", "c": "Edificio"}, {"w": "Inodoro tapado", "c": "Emergencia"}, {"w": "Baño sin papel", "c": "Emergencia"}, {"w": "Mal aliento", "c": "Incómodo"}, {"w": "Cierre abierto", "c": "Incómodo"}, {"w": "Humor negro", "c": "Comedia"}, {"w": "Doble sentido", "c": "Lenguaje"}, {"w": "Sarcasmo", "c": "Actitud"}, {"w": "Indirecta", "c": "Comunicación"}, {"w": "Coartada", "c": "Misterio"}, {"w": "Chisme de oficina", "c": "Trabajo"}, {"w": "Radio pasillo", "c": "Trabajo"}, {"w": "Amigo con derechos", "c": "Relaciones"}, {"w": "Despedida de año", "c": "Trabajo"}, {"w": "Licencia médica", "c": "Trabajo"}, {"w": "Feriado puente", "c": "Calendario"}, {"w": "Jet lag", "c": "Viaje"}, {"w": "Equipaje perdido", "c": "Viaje"}, {"w": "Aduana", "c": "Frontera"}, {"w": "Dólar blue", "c": "Economía"}, {"w": "Call center", "c": "Servicio"}]};
 
@@ -2988,7 +3112,7 @@
       adultos: "Mazo Adultos (+18 años)"
     };
 
-    const STORAGE_KEY = "boardgame_hub_v23";
+    const STORAGE_KEY = "boardgame_hub_v24";
 
     let state = {
       activeView: 'menu',
@@ -3006,8 +3130,17 @@
         familia: 0,
         adultos: 0
       },
-      admPool: [...ADM_DECK],
-      admRound: 0,
+      admCat: 'familia',
+      admPools: {
+        ninos: [],
+        familia: [],
+        adultos: []
+      },
+      admRounds: {
+        ninos: 0,
+        familia: 0,
+        adultos: 0
+      },
       lobosConfig: {
         total: 8,
         wolves: 2,
@@ -3117,8 +3250,15 @@
           const parsed = JSON.parse(saved);
           if (parsed && parsed.pools && parsed.rounds) {
             state = { ...state, ...parsed };
-            if (!state.admPool) state.admPool = [...ADM_DECK];
-            if (typeof state.admRound !== 'number') state.admRound = 0;
+            if (!state.admPools || !state.admPools.ninos) {
+              state.admPools = {
+                ninos: [...ADM_DECKS.ninos],
+                familia: [...ADM_DECKS.familia],
+                adultos: [...ADM_DECKS.adultos]
+              };
+            }
+            if (!state.admRounds) state.admRounds = { ninos: 0, familia: 0, adultos: 0 };
+            if (!['ninos', 'familia', 'adultos'].includes(state.admCat)) state.admCat = 'familia';
                         if (!state.lobosConfig.names) {
               state.lobosConfig.names = ["Jugador 1", "Jugador 2", "Jugador 3", "Jugador 4", "Jugador 5", "Jugador 6", "Jugador 7", "Jugador 8"];
             }
@@ -3896,6 +4036,7 @@
       state.lobosConfig.names = state.players.slice(0, count).map(p => p.name);
       saveState();
       renderLobosConfig();
+    setAdmCategory(state.admCat || 'familia');
     }
 
     function adjustLobosConfig(field, delta) {
@@ -3914,6 +4055,7 @@
       state.lobosConfig.total = total;
       state.lobosConfig.wolves = wolves;
       renderLobosConfig();
+    setAdmCategory(state.admCat || 'familia');
       saveState();
     }
 
@@ -3960,6 +4102,20 @@
       if (lobosSession.phase === 'done') return;
       if (navigator.vibrate) navigator.vibrate(40);
 
+
+      let statusHtml = '';
+      if (lobosSession.assignments) {
+          const alive = lobosSession.assignments.filter(a => a.alive);
+          const aliveWolves = alive.filter(a => a.role === 'lobo').length;
+          const aliveVillagers = alive.length - aliveWolves;
+          
+          if (aliveWolves === 0 && alive.length > 0) {
+              statusHtml = '<div style="margin-bottom:0.8rem; padding:0.5rem; background:rgba(16, 185, 129, 0.2); color:#34d399; font-weight:900; border-radius:10px; text-transform:uppercase;">🏆 ¡Ganan los Aldeanos!</div>';
+          } else if (aliveWolves > 0 && aliveVillagers <= aliveWolves) {
+              statusHtml = '<div style="margin-bottom:0.8rem; padding:0.5rem; background:rgba(239, 68, 68, 0.2); color:#fb7185; font-weight:900; border-radius:10px; text-transform:uppercase;">🏆 ¡Ganan los Lobizones!</div>';
+          }
+      }
+
       if (lobosSession.phase === 'hidden') {
         lobosSession.phase = 'revealed';
         renderSecretCard();
@@ -3987,6 +4143,20 @@
       if(!lobosSession.assignments) return;
       const total = lobosSession.assignments.length;
       const idx = lobosSession.currentIdx;
+
+
+      let statusHtml = '';
+      if (lobosSession.assignments) {
+          const alive = lobosSession.assignments.filter(a => a.alive);
+          const aliveWolves = alive.filter(a => a.role === 'lobo').length;
+          const aliveVillagers = alive.length - aliveWolves;
+          
+          if (aliveWolves === 0 && alive.length > 0) {
+              statusHtml = '<div style="margin-bottom:0.8rem; padding:0.5rem; background:rgba(16, 185, 129, 0.2); color:#34d399; font-weight:900; border-radius:10px; text-transform:uppercase;">🏆 ¡Ganan los Aldeanos!</div>';
+          } else if (aliveWolves > 0 && aliveVillagers <= aliveWolves) {
+              statusHtml = '<div style="margin-bottom:0.8rem; padding:0.5rem; background:rgba(239, 68, 68, 0.2); color:#fb7185; font-weight:900; border-radius:10px; text-transform:uppercase;">🏆 ¡Ganan los Lobizones!</div>';
+          }
+      }
 
       if (lobosSession.phase === 'hidden') {
         const person = lobosSession.assignments[idx];
@@ -4042,6 +4212,7 @@
         
         card.innerHTML = `
           <div class="player-turn-badge" style="margin-bottom:0.4rem; color:var(--accent); background:rgba(56, 189, 248, 0.15);">Cae la noche en Entre Ríos...</div>
+          ${statusHtml}
           <div style="width:100%; display:flex; flex-direction:column;">
             ${lines}
           </div>
@@ -4064,30 +4235,62 @@
     // ==========================================
     // LÓGICA AMIGOS DE MIERDA
     // ==========================================
+    function setAdmCategory(cat, btnElement) {
+      state.admCat = cat;
+      document.querySelectorAll('#admCatSelector .cat-pill').forEach(b => b.classList.remove('active'));
+      if (btnElement) {
+        btnElement.classList.add('active');
+      } else {
+        const target = document.querySelector(`#admCatSelector .cat-pill[data-cat="${cat}"]`);
+        if (target) target.classList.add('active');
+      }
+
+      // Update card style based on category
+      const cardBox = document.getElementById('admCardBox');
+      if(cat === 'ninos') {
+        cardBox.style.background = 'radial-gradient(circle at top, #166534, #1e293b)';
+        cardBox.style.borderColor = 'rgba(74, 222, 128, 0.45)';
+      } else if (cat === 'familia') {
+        cardBox.style.background = 'radial-gradient(circle at top, #292118, #1e293b)';
+        cardBox.style.borderColor = 'rgba(245, 158, 11, 0.45)';
+      } else {
+        cardBox.style.background = 'radial-gradient(circle at top, #831843, #1e293b)';
+        cardBox.style.borderColor = 'rgba(244, 114, 182, 0.45)';
+      }
+
+      document.getElementById('admQuestionDisplay').innerText = 'Tocá "Siguiente tarjeta" para arrancar';
+      updateAdmCounter();
+      saveState();
+    }
+
     function updateAdmCounter() {
+      const cat = state.admCat;
       document.getElementById('admCounter').innerText = 
-        `Ronda ${state.admRound} | ${state.admPool.length} rest.`;
+        `Ronda ${state.admRounds[cat]} | ${state.admPools[cat].length} rest.`;
     }
 
     function nextAdmCard() {
-      if (state.admPool.length === 0) {
-        document.getElementById('admQuestionDisplay').innerText = '¡Se terminaron las tarjetas! Mezclá el mazo para seguir.';
+      const cat = state.admCat;
+      const pool = state.admPools[cat];
+      if (pool.length === 0) {
+        document.getElementById('admQuestionDisplay').innerText = '¡Se terminaron las tarjetas de esta categoría! Mezclá el mazo para seguir.';
         return;
       }
       if (navigator.vibrate) navigator.vibrate(35);
 
-      const index = Math.floor(Math.random() * state.admPool.length);
-      const chosen = state.admPool.splice(index, 1)[0];
+      const index = Math.floor(Math.random() * pool.length);
+      const chosen = pool.splice(index, 1)[0];
 
       document.getElementById('admQuestionDisplay').innerText = chosen;
-      state.admRound++;
+      state.admRounds[cat]++;
       updateAdmCounter();
       saveState();
     }
 
     function resetAdmDeck() {
-      state.admPool = [...ADM_DECK];
-      state.admRound = 0;
+      const cat = state.admCat;
+      state.admPools[cat] = [...ADM_DECKS[cat]];
+      state.admRounds[cat] = 0;
       document.getElementById('admQuestionDisplay').innerText = '¡Mazo mezclado! Tocá "Siguiente tarjeta".';
       updateAdmCounter();
       saveState();
@@ -4322,6 +4525,30 @@
     }
 
     
+
+    window.resumeImpGame = function() {
+      const card = document.getElementById('impSecretCard');
+      const header = document.getElementById('impStatusHeader');
+      header.innerText = 'Ronda de Acusación';
+      card.className = 'secret-card finished-state';
+      
+      const gridHtml = impSession.assignments.filter(a => !a.eliminated).map(a => 
+        `<button class="secondary-btn" style="padding: 0.6rem; font-size: 0.9rem;" onclick="accuseImp('${escapeHtml(a.name)}')">${escapeHtml(a.name)}</button>`
+      ).join('');
+
+      card.innerHTML = `
+        <div class="player-turn-badge">Ronda Continúa</div>
+        <div class="secret-icon">🗣️</div>
+        <div class="secret-title">Sigan debatiendo</div>
+        <div class="secret-hint">
+          El impostor sigue en la mesa.<br>Digan una nueva palabra de pista y voten de nuevo.
+        </div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.5rem; width:100%; margin-top:0.5rem;">
+          ${gridHtml}
+        </div>
+      `;
+    };
+
     function accuseImp(name) {
       const person = impSession.assignments.find(a => a.name === name);
       const card = document.getElementById('impSecretCard');
@@ -4336,12 +4563,25 @@
       } else {
           card.className = 'secret-card revealed-imp'; 
           const realImp = impSession.assignments.find(a => a.isImpostor).name;
-          card.innerHTML = `
-            <div class="secret-icon">❌</div>
-            <div class="secret-title">¡SE EQUIVOCARON!</div>
-            <div class="secret-hint"><strong>${escapeHtml(name)}</strong> era INOCENTE.<br>El verdadero impostor era <strong>${escapeHtml(realImp)}</strong>.</div>
-            <div class="tap-cta">¡Victoria del Impostor!</div>
-          `;
+          person.eliminated = true; // Mark as eliminated for next round
+          
+          const remaining = impSession.assignments.filter(a => !a.eliminated);
+          
+          if (remaining.length <= 2) {
+            card.innerHTML = `
+              <div class="secret-icon">❌</div>
+              <div class="secret-title">¡SE EQUIVOCARON!</div>
+              <div class="secret-hint"><strong>${escapeHtml(name)}</strong> era INOCENTE.<br>El pueblo se quedó sin tiempo.<br>El verdadero impostor era <strong>${escapeHtml(realImp)}</strong>.</div>
+              <div class="tap-cta">¡Victoria del Impostor!</div>
+            `;
+          } else {
+            card.innerHTML = `
+              <div class="secret-icon">❌</div>
+              <div class="secret-title">¡SE EQUIVOCARON!</div>
+              <div class="secret-hint"><strong>${escapeHtml(name)}</strong> es INOCENTE y fue eliminado/a.<br>¡El Impostor sigue suelto en la mesa!</div>
+              <button class="secondary-btn" style="margin-top:1rem; padding:0.75rem; width:100%; border-color:rgba(255,255,255,0.2);" onclick="resumeImpGame()">🔄 Seguir jugando</button>
+            `;
+          }
       }
     }
 
@@ -5597,6 +5837,7 @@
       saveState();
       renderPlayers();
       renderLobosConfig();
+    setAdmCategory(state.admCat || 'familia');
       renderImpConfig();
       renderGeneralaTable();
       renderInfiltradoConfig();
@@ -5617,6 +5858,7 @@
       saveState();
       renderPlayers();
       renderLobosConfig();
+    setAdmCategory(state.admCat || 'familia');
       renderImpConfig();
       renderGeneralaTable();
       renderInfiltradoConfig();
@@ -5701,6 +5943,10 @@
         const target = document.querySelector(`#mimicaLevelSelector .cat-pill[data-lvl="${lvl}"]`);
         if (target) target.classList.add('active');
       }
+      // Regenerate the visual UI to keep checkboxes checked across levels
+      document.querySelectorAll('#mimicaCatSelector .cat-pill').forEach(b => {
+        b.classList.toggle('active', state.mimicaCats.includes(b.dataset.cat));
+      });
       updateMimicaCounter();
       saveState();
     }
@@ -6489,7 +6735,7 @@
           
           for (let i = 0; i < boxes.length; i++) {
              // Separador de Malas y Buenas (después del cuadrado 3, es decir a los 15 pts)
-             if (i === 3) html += `<div style="width: 80%; height:2px; background: rgba(255,255,255,0.15); margin: 0.1rem 0; border-radius:2px;"></div>`;
+             if (i === 3) html += `<div style="width: 80%; height:2px; background: var(--muted); opacity: 0.4; margin: 0.1rem 0; border-radius:2px;"></div>`;
              html += `<div>${boxes[i]}</div>`;
           }
           container.innerHTML = html;
@@ -6645,6 +6891,7 @@
     setCategory(state.currentCat);
     setDuration(state.defaultTime);
     renderLobosConfig();
+    setAdmCategory(state.admCat || 'familia');
     updateAdmCounter();
     setImpCategory(state.impConfig.cat);
     renderImpConfig();
