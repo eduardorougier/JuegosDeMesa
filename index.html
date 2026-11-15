@@ -47,56 +47,61 @@
       gap: 0.9rem;
     }
 
-    /* CARRUSEL SELECTOR DE JUEGOS */
-    .game-carousel {
+    /* HEADER & MENÚ PRINCIPAL */
+    .main-header {
       background: var(--card);
-      border-radius: 18px;
-      padding: 0.65rem 0.75rem;
+      border-radius: 20px;
+      padding: 0.75rem 0.85rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 0.5rem;
       border: 1px solid rgba(255, 255, 255, 0.08);
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.35);
+      margin-bottom: 0.2rem;
     }
-    .nav-arrow {
-      background: var(--card-light);
-      color: var(--text);
-      border: 1px solid rgba(148, 163, 184, 0.25);
-      width: 44px;
-      height: 44px;
-      border-radius: 12px;
-      font-size: 1.35rem;
-      font-weight: 800;
-      cursor: pointer;
+    .header-left {
       display: flex;
       align-items: center;
-      justify-content: center;
-      transition: transform 0.1s ease, background-color 0.15s ease;
-      flex-shrink: 0;
+      min-width: 75px;
     }
-    .nav-arrow:active {
-      transform: scale(0.92);
-      background: rgba(56, 189, 248, 0.2);
-    }
-    .carousel-center {
+    .header-center {
       flex: 1;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      min-width: 0;
-      user-select: none;
+      overflow: hidden;
     }
+    .header-right {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 0.35rem;
+      min-width: 75px;
+    }
+    .back-btn {
+      background: rgba(56, 189, 248, 0.15);
+      color: var(--accent);
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      padding: 0.55rem 0.75rem;
+      border-radius: 12px;
+      font-weight: 900;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: transform 0.1s;
+    }
+    .back-btn:active { transform: scale(0.92); }
+    
     .game-kicker {
       font-size: 0.65rem;
       text-transform: uppercase;
       letter-spacing: 1.5px;
       color: var(--muted);
-      font-weight: 700;
+      font-weight: 800;
     }
     .game-title {
-      font-size: 1.15rem;
+      font-size: 1.05rem;
       font-weight: 900;
       letter-spacing: 0.5px;
       color: var(--text);
@@ -106,22 +111,45 @@
       max-width: 100%;
       margin: 0.15rem 0;
     }
-    .carousel-dots {
+    
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.65rem;
+      width: 100%;
+      padding-bottom: 1rem;
+    }
+    .menu-btn {
+      background: var(--card);
+      border: 2px solid rgba(255,255,255,0.05);
+      border-radius: 22px;
+      padding: 1.5rem 0.5rem;
       display: flex;
-      gap: 0.35rem;
-      margin-top: 0.2rem;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      cursor: pointer;
+      color: var(--text);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+      transition: transform 0.1s ease, border-color 0.2s ease;
     }
-    .dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: rgba(148, 163, 184, 0.35);
-      transition: all 0.2s ease;
+    .menu-btn:active {
+      transform: scale(0.95);
+      border-color: var(--accent);
     }
-    .dot.active {
-      width: 16px;
-      border-radius: 4px;
-      background: var(--accent);
+    .menu-btn-icon {
+      font-size: 2.8rem;
+      line-height: 1;
+      filter: drop-shadow(0 4px 6px rgba(0,0,0,0.4));
+    }
+    .menu-btn-title {
+      font-size: 0.8rem;
+      font-weight: 800;
+      line-height: 1.25;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 0 0.2rem;
     }
 
 
@@ -329,7 +357,7 @@
     .cat-selector {
       display: flex;
       gap: 0.4rem;
-      background: rgba(30, 41, 59, 0.75);
+      background: var(--card-light);
       padding: 0.35rem;
       border-radius: 14px;
       border: 1px solid rgba(255,255,255,0.06);
@@ -1189,7 +1217,7 @@
     .tu-round-bar {
       display: flex;
       gap: 0.4rem;
-      background: rgba(30, 41, 59, 0.75);
+      background: var(--card-light);
       padding: 0.35rem;
       border-radius: 14px;
       border: 1px solid rgba(255,255,255,0.06);
@@ -1270,7 +1298,7 @@
 
 
     /* ==========================================
-       ESTILOS FAKE ARTIST (ARTISTA FALSO)
+       ESTILOS ARTISTA INFILTRADO (ARTISTA FALSO)
        ========================================== */
     .btn-fake {
       background: linear-gradient(135deg, #ec4899, #be185d);
@@ -1369,7 +1397,7 @@
       text-align: center;
       width: 100%;
       outline: none;
-      border-bottom: 1px dashed rgba(255,255,255,0.2);
+      border-bottom: 1px dashed var(--muted);
       margin-bottom: 0.3rem;
       padding-bottom: 0.15rem;
     }
@@ -1839,7 +1867,18 @@
       --truco-bg2: rgba(2,132,199,0.1);
     }
 
-    [data-theme="light"] .game-carousel, 
+
+    [data-theme="light"] .tu-round-pill.active {
+      background: rgba(245, 158, 11, 0.15);
+      color: #d97706;
+    }
+    [data-theme="light"] .tu-rule-banner {
+      background: rgba(245, 158, 11, 0.12);
+      color: #d97706;
+      border-color: rgba(245, 158, 11, 0.28);
+    }
+
+    [data-theme="light"] .main-header, 
     [data-theme="light"] .rules-modal, 
     [data-theme="light"] .setup-panel,
     [data-theme="light"] .setup-row,
@@ -1852,15 +1891,18 @@
     [data-theme="light"] #storyDiceGrid,
     [data-theme="light"] #generalaDiceArea,
     [data-theme="light"] .tu-setup-strip,
+    [data-theme="light"] .tabu-hud,
+    [data-theme="light"] #diceDisplayArea,
     [data-theme="light"] .generala-table-wrap,
     [data-theme="light"] .team-score-card,
     [data-theme="light"] .name-slot,
     [data-theme="light"] .player-input,
-    [data-theme="light"] .time-pill {
+    [data-theme="light"] .time-pill,
+    [data-theme="light"] .menu-btn {
       border-color: rgba(0, 0, 0, 0.1) !important;
     }
 
-    [data-theme="light"] .nav-arrow,
+    [data-theme="light"] .back-btn,
     [data-theme="light"] .rules-close-x,
     [data-theme="light"] .stepper-btn,
     [data-theme="light"] .add-btn,
@@ -1900,21 +1942,26 @@
 <body>
 
   <div class="container">
-    <!-- SELECTOR TIPO CARRUSEL -->
-    <nav class="game-carousel" id="gameCarousel">
-      <button class="nav-arrow" onclick="switchGame(-1)" aria-label="Juego anterior">&#8249;</button>
-      <div class="carousel-center">
-        <div class="carousel-kicker-row">
-          <span class="game-kicker" id="gameCounterLabel">1/21</span>
-          <button type="button" class="help-pill-btn" onclick="toggleTheme()" aria-label="Modo Claro/Oscuro" id="themeToggleBtn">☀️</button>
-          <button type="button" class="help-pill-btn" onclick="openGameRules()" aria-label="Cómo se juega">Reglas</button>
-          <button type="button" class="reset-game-pill-btn" onclick="resetCurrentGame()" aria-label="Reiniciar juego actual">↻ Reiniciar</button>
-        </div>
-        <div class="game-title" id="carouselGameTitle">UNÁNIMO</div>
-        <div class="carousel-dots" id="carouselDots"></div>
+    <!-- HEADER PRINCIPAL -->
+    <header class="main-header" id="mainHeader">
+      <div class="header-left">
+        <button class="back-btn" id="backToMenuBtn" onclick="openMenu()" style="display:none;">◀ Menú</button>
       </div>
-      <button class="nav-arrow" onclick="switchGame(1)" aria-label="Siguiente juego">&#8250;</button>
-    </nav>
+      <div class="header-center">
+        <span class="game-kicker" id="gameKicker" style="display:none;">JUGANDO</span>
+        <div class="game-title" id="headerTitle">HUB DE JUEGOS</div>
+      </div>
+      <div class="header-right">
+        <button type="button" class="help-pill-btn" onclick="toggleTheme()" aria-label="Modo Claro/Oscuro" id="themeToggleBtn" style="padding:0.35rem 0.5rem; font-size:1.1rem; border-radius:12px;">☀️</button>
+        <button type="button" class="help-pill-btn" id="rulesBtn" onclick="openGameRules()" style="display:none; padding:0.35rem 0.65rem; border-radius:12px; font-weight:900;">ℹ️ Reglas</button>
+        <button type="button" class="reset-game-pill-btn" id="resetBtn" onclick="resetCurrentGame()" style="display:none; padding:0.35rem 0.65rem; border-radius:12px; font-weight:900;">↻ Reiniciar</button>
+      </div>
+    </header>
+
+    <!-- VISTA MENÚ -->
+    <main id="view-menu" class="game-view active">
+      <div class="menu-grid" id="menuGrid"></div>
+    </main>
 
     <!-- VISTA 1: UNÁNIMO -->
     <main id="view-unanimo" class="game-view active">
@@ -2040,7 +2087,7 @@
       <button class="btn-adm" onclick="nextAdmCard()">Siguiente tarjeta</button>
 
       <div class="controls-row">
-        <button class="reset-btn" onclick="resetAdmDeck()">Mezclar mazo de Amigos de Mierda</button>
+        <button class="reset-btn" onclick="resetAdmDeck()">Mezclar mazo de Amigos Terribles</button>
       </div>
     </main>
 
@@ -2322,7 +2369,7 @@
       </div>
     </main>
 
-    <!-- VISTA 9: FAKE ARTIST -->
+    <!-- VISTA 9: ARTISTA INFILTRADO -->
     <main id="view-fake" class="game-view">
       <div class="sub-header">
         <span class="game-subtitle">Dibujen entre todos en una hoja</span>
@@ -2331,15 +2378,15 @@
 
       <div id="fakeSetupPanel" class="setup-panel">
         <div class="cat-selector" id="fakeCatSelector">
-          <button class="cat-pill" data-cat="ninos" onclick="setFakeCategory('ninos', this)">
+          <button class="cat-pill" data-cat="ninos" onclick="setInfiltradoCategory('ninos', this)">
             <span class="cat-title">Niños</span>
             <span class="cat-age">+6 años</span>
           </button>
-          <button class="cat-pill active" data-cat="familia" onclick="setFakeCategory('familia', this)">
+          <button class="cat-pill active" data-cat="familia" onclick="setInfiltradoCategory('familia', this)">
             <span class="cat-title">Familia</span>
             <span class="cat-age">+10 años</span>
           </button>
-          <button class="cat-pill" data-cat="adultos" onclick="setFakeCategory('adultos', this)">
+          <button class="cat-pill" data-cat="adultos" onclick="setInfiltradoCategory('adultos', this)">
             <span class="cat-title">Adultos</span>
             <span class="cat-age">+18 años</span>
           </button>
@@ -2351,27 +2398,27 @@
             <span class="setup-sub">Mínimo 4, máximo 12</span>
           </div>
           <div class="stepper">
-            <button class="stepper-btn" onclick="adjustFakeConfig(-1)">-</button>
+            <button class="stepper-btn" onclick="adjustInfiltradoConfig(-1)">-</button>
             <span class="stepper-val" id="fakeTotalVal">5</span>
-            <button class="stepper-btn" onclick="adjustFakeConfig(1)">+</button>
+            <button class="stepper-btn" onclick="adjustInfiltradoConfig(1)">+</button>
           </div>
         </div>
 
         <div class="names-grid" id="fakeNamesGrid"></div>
 
-        <button type="button" class="copy-names-btn" id="fakeCopyFromScoreBtn" onclick="importFakeNamesFromScoreboard()" style="display:none; border-color: rgba(236, 72, 153, 0.45); color: #f9a8d4;">
+        <button type="button" class="copy-names-btn" id="fakeCopyFromScoreBtn" onclick="importInfiltradoNamesFromScoreboard()" style="display:none; border-color: rgba(236, 72, 153, 0.45); color: #f9a8d4;">
           ↻ Traer nombres del anotador de abajo
         </button>
 
-        <button class="btn-fake" onclick="startFakeGame()">Repartir roles de dibujo</button>
+        <button class="btn-fake" onclick="startInfiltradoGame()">Repartir roles de dibujo</button>
       </div>
 
       <div id="fakePlayPanel" style="display: none; flex-direction: column; gap: 0.9rem;">
-        <div id="fakeSecretCard" class="secret-card hidden-imp" onclick="handleFakeCardTap()"></div>
+        <div id="fakeSecretCard" class="secret-card hidden-imp" onclick="handleInfiltradoCardTap()"></div>
         <div id="fakeRevealAllBox" class="reveal-all-box"></div>
         <div class="lobos-actions">
-          <button class="secondary-btn" id="fakeToggleAllBtn" onclick="toggleFakeRevealAll()" style="display:none;">Revelar dibujo e impostor</button>
-          <button class="reset-btn" onclick="backToFakeSetup()">Nueva obra</button>
+          <button class="secondary-btn" id="fakeToggleAllBtn" onclick="toggleInfiltradoRevealAll()" style="display:none;">Revelar dibujo e impostor</button>
+          <button class="reset-btn" onclick="backToInfiltradoSetup()">Nueva obra</button>
         </div>
       </div>
     </main>
@@ -2552,9 +2599,9 @@
 
       <div class="charla-card familia" id="preferisCardBox" style="min-height: 280px; justify-content: space-evenly; gap: 0.5rem; padding: 1.5rem 1rem;">
         <span class="charla-tag" id="preferisBadge">Mazo Familia (+10 años)</span>
-        <div id="prefOptA" style="width:100%; padding:1.25rem 1rem; background:rgba(255,255,255,0.08); border-radius:12px; font-weight:800; font-size:1.15rem; color:var(--text); margin-top:0.5rem;">Tocá "Siguiente Dilema"</div>
+        <div id="prefOptA" style="width:100%; padding:1.25rem 1rem; background:var(--card-light); border-radius:12px; font-weight:800; font-size:1.15rem; color:var(--text); margin-top:0.5rem;">Tocá "Siguiente Dilema"</div>
         <div style="font-weight:900; color:var(--accent); font-size:1.4rem;">VS</div>
-        <div id="prefOptB" style="width:100%; padding:1.25rem 1rem; background:rgba(255,255,255,0.08); border-radius:12px; font-weight:800; font-size:1.15rem; color:var(--text);">Para arrancar</div>
+        <div id="prefOptB" style="width:100%; padding:1.25rem 1rem; background:var(--card-light); border-radius:12px; font-weight:800; font-size:1.15rem; color:var(--text);">Para arrancar</div>
       </div>
 
       <button class="btn-charla familia" id="preferisNextBtn" onclick="nextPreferisCard()">Siguiente dilema</button>
@@ -2679,7 +2726,7 @@
       <div class="charla-card familia" id="triviaCardBox">
         <span class="charla-tag" id="triviaBadge">Pregunta</span>
         <div class="charla-question" id="triviaQuestionDisplay" style="font-size: 1.4rem;">Toca Siguiente para empezar</div>
-        <div id="triviaAnswerBox" style="display:none; width:100%; margin-top:1rem; padding:1rem; background:rgba(255,255,255,0.1); border-radius:12px;">
+        <div id="triviaAnswerBox" style="display:none; width:100%; margin-top:1rem; padding:1rem; background:var(--card-light); border-radius:12px;">
             <div style="font-size:0.8rem; color:var(--muted); text-transform:uppercase; font-weight:800; letter-spacing:1px;">Respuesta exacta:</div>
             <div id="triviaAnswerDisplay" style="font-size:2.5rem; font-weight:900; color:#4ade80;">0</div>
         </div>
@@ -2871,7 +2918,7 @@
       <div class="rules-modal-header">
         <div>
           <div class="rules-modal-kicker">Cómo se juega</div>
-          <div class="rules-modal-title" id="rulesModalTitle">UNÁNIMO</div>
+          <div class="rules-modal-title" id="rulesModalTitle">COINCIDENCIAS</div>
         </div>
         <button type="button" class="rules-close-x" onclick="closeGameRules()" aria-label="Cerrar">✕</button>
       </div>
@@ -2885,30 +2932,30 @@
     // REGISTRO DE JUEGOS DEL CARRUSEL
     // ==========================================
     const GAMES = [
-      { id: 'unanimo', title: 'UNÁNIMO' },
-      { id: 'lobizones', title: 'LOS LOBIZONES DE ENTRE RÍOS' },
-      { id: 'amigos', title: 'AMIGOS DE MIERDA' },
-      { id: 'impostor', title: 'EL IMPOSTOR' },
-      { id: 'charla', title: 'CHARLA PROFUNDA' },
-      { id: 'tabu', title: 'PALABRA PROHIBIDA' },
-      { id: 'onda', title: 'LONGITUD DE ONDA' },
-      { id: 'timesup', title: "TIME'S UP!" },
-      { id: 'fake', title: 'FAKE ARTIST' },
-      { id: 'mimica', title: 'DÍGALO CON MÍMICA' },
-      { id: 'tuttifruti', title: 'TUTTI FRUTTI' },
-      { id: 'espia', title: 'EL ESPÍA' },
-      { id: 'preferis', title: '¿QUÉ PREFERÍS?' },
-      { id: 'bomba', title: 'BOMBA DE TIEMPO' },
-      { id: 'story', title: 'DADOS DE HISTORIAS' },
-      { id: 'solouna', title: 'SOLO UNA' },
-      { id: 'trivia', title: 'TRIVIA DE APUESTAS' },
-      { id: 'dados', title: 'TIRADA DE DADOS' },
-      { id: 'generala', title: 'GENERALA' },
-      { id: 'anotador', title: 'ANOTADOR TRUCO' },
-      { id: 'reloj', title: 'RELOJ DE ARENA' }
+      { id: 'unanimo', title: 'COINCIDENCIAS', icon: '🧠' },
+      { id: 'lobizones', title: 'LOBIZONES', icon: '🐺' },
+      { id: 'amigos', title: 'AMIGOS TERRIBLES', icon: '💩' },
+      { id: 'impostor', title: 'EL IMPOSTOR', icon: '🕵️' },
+      { id: 'charla', title: 'CHARLA PROFUNDA', icon: '💬' },
+      { id: 'tabu', title: 'PALABRA PROHIBIDA', icon: '🚫' },
+      { id: 'onda', title: 'CONEXIÓN MENTAL', icon: '📻' },
+      { id: 'timesup', title: '3 RONDAS', icon: '⏱️' },
+      { id: 'fake', title: 'ARTISTA INFILTRADO', icon: '🎨' },
+      { id: 'mimica', title: 'CON MÍMICA', icon: '🎭' },
+      { id: 'tuttifruti', title: 'TUTTI FRUTTI', icon: '🅰️' },
+      { id: 'espia', title: 'EL ESPÍA', icon: '🕶️' },
+      { id: 'preferis', title: '¿QUÉ PREFERÍS?', icon: '⚖️' },
+      { id: 'bomba', title: 'BOMBA TIEMPO', icon: '💣' },
+      { id: 'story', title: 'HISTORIAS', icon: '🎲' },
+      { id: 'solouna', title: 'PISTA ÚNICA', icon: '👁️' },
+      { id: 'trivia', title: 'TRIVIA APUESTA', icon: '💡' },
+      { id: 'dados', title: 'TIRADA DADOS', icon: '🎲' },
+      { id: 'generala', title: 'GENERALA', icon: '📝' },
+      { id: 'anotador', title: 'ANOTADOR', icon: '✏️' },
+      { id: 'reloj', title: 'RELOJ ARENA', icon: '⏳' }
     ];
 
-    const DECKS = {"ninos": ["Perro", "Gato", "León", "Elefante", "Jirafa", "Mono", "Tigre", "Oso", "Cebra", "Hipopótamo", "Cocodrilo", "Serpiente", "Tortuga", "Conejo", "Caballo", "Vaca", "Cerdo", "Oveja", "Gallina", "Pato", "Pingüino", "Delfín", "Ballena", "Tiburón", "Pulpo", "Cangrejo", "Estrella de mar", "Medusa", "Foca", "Caballito de mar", "Águila", "Búho", "Loro", "Flamenco", "Tucán", "Paloma", "Colibrí", "Pavo real", "Avestruz", "Murciélago", "Mariposa", "Abeja", "Hormiga", "Araña", "Mariquita", "Grillo", "Mosquito", "Caracol", "Gusano", "Libélula", "Rana", "Sapo", "Camaleón", "Iguana", "Dinosaurio", "Tiranosaurio", "Dragón", "Unicornio", "Canguro", "Koala", "Panda", "Lobo", "Zorro", "Ardilla", "Erizo", "Castor", "Mapache", "Ciervo", "Camello", "Llama", "Burro", "Cabra", "Ratón", "Hámster", "Pez payaso", "Pez globo", "Reno", "Oso polar", "Morsa", "Gorila", "Helado", "Pizza", "Hamburguesa", "Papas fritas", "Chocolate", "Caramelo", "Chupetín", "Alfajor", "Dulce de leche", "Galletitas", "Torta de cumpleaños", "Pochoclo", "Pancho", "Milanesa", "Fideos", "Arroz", "Sopa", "Ensalada", "Huevo frito", "Queso", "Pan", "Manteca", "Mermelada", "Miel", "Cereal", "Leche", "Jugo de naranja", "Limonada", "Licuado", "Chocolatada", "Manzana", "Banana", "Naranja", "Frutilla", "Sandía", "Melón", "Uva", "Durazno", "Pera", "Ananá", "Limón", "Cereza", "Kiwi", "Zanahoria", "Tomate", "Lechuga", "Papa", "Choclo", "Brócoli", "Zapallo", "Empanada", "Taco", "Sushi", "Donas", "Medialuna", "Churros", "Panqueques", "Waffles", "Gelatina", "Flan", "Budín", "Magdalena", "Malvavisco", "Algodón de azúcar", "Gomitas", "Chicle", "Turrón", "Huevos de Pascua", "Rosca de Reyes", "Sándwich", "Tostada", "Yogur", "Aceituna", "Palta", "Salchicha", "Escuela", "Mochila", "Lápiz", "Goma de borrar", "Sacapuntas", "Regla", "Tijera", "Plasticola", "Cuaderno", "Carpeta", "Cartuchera", "Marcadores", "Lápices de colores", "Crayones", "Témperas", "Pincel", "Acuarelas", "Plastilina", "Pizarrón", "Tiza", "Fibrón", "Maestra", "Profesor", "Recreo", "Patio", "Aula", "Biblioteca", "Libro", "Cuento", "Diccionario", "Mapa", "Globo terráqueo", "Compás", "Escuadra", "Calculadora", "Computadora", "Tablet", "Campana", "Timbre", "Bandera", "Acto escolar", "Excursión", "Tarea", "Examen", "Boletín", "Guardapolvo", "Uniforme", "Merienda", "Cantimplora", "Lonchera", "Microscopio", "Lupa", "Imán", "Flauta", "Tambor", "Pelota", "Muñeca", "Auto de juguete", "Tren de juguete", "Bloques", "Rompecabezas", "Yoyó", "Trompo", "Barrilete", "Patines", "Patineta", "Bicicleta", "Triciclo", "Monopatín", "Tobogán", "Hamaca", "Sube y baja", "Calesita", "Pelotero", "Castillo inflable", "Escondidas", "Mancha", "Rayuela", "Saltar la soga", "Piedra, papel o tijera", "Adivinanza", "Trabalenguas", "Chiste", "Títere", "Marioneta", "Disfraz", "Antifaz", "Varita mágica", "Espada de madera", "Escudo", "Corona", "Peluche", "Osito", "Robot", "Cohete", "Canicas", "Bolitas", "Cartas", "Dados", "Dominó", "Ajedrez", "Damas", "Lotería", "Bingo", "Videojuego", "Joystick", "Consola", "Burbuja", "Pistola de agua", "Bombucha", "Aro hula-hula", "Cama elástica", "Zancos", "Casa del árbol", "Carpa", "Linterna", "Binoculares", "Walkie-talkie", "Alcancia", "Figuritas", "Superhéroe", "Princesa", "Príncipe", "Rey", "Reina", "Caballero", "Mago", "Bruja", "Hada", "Duende", "Gigante", "Ogro", "Pirata", "Sirena", "Fantasma", "Vampiro", "Momia", "Hombre lobo", "Zombi", "Monstruo", "Extraterrestre", "Astronauta", "Ninja", "Samurái", "Vaquero", "Indio", "Detective", "Espía", "Payaso", "Acróbata", "Malabarista", "Domador", "Genio de la lámpara", "Caperucita Roja", "Pinocho", "Cenicienta", "Blancanieves", "Peter Pan", "Papá Noel", "Ratón Pérez", "Reyes Magos", "Conejo de Pascua", "Elfo", "Centauro", "Fénix", "Pegaso", "Yeti", "Cíclope", "Troll", "Gnomo", "Capitán", "Marinero", "Explorador", "Científico loco", "Inventor", "Cazador de tesoros", "Espantapájaros", "Muñeco de nieve", "Ángel", "Playa", "Mar", "Océano", "Isla", "Montaña", "Volcán", "Bosque", "Selva", "Desierto", "Río", "Lago", "Cascada", "Cueva", "Nieve", "Hielo", "Nube", "Lluvia", "Tormenta", "Arcoíris", "Sol", "Luna", "Estrella", "Planeta", "Espacio", "Galaxia", "Cometa", "Tierra", "Cielo", "Viento", "Trueno", "Relámpago", "Charco", "Barro", "Arena", "Piedra", "Árbol", "Flor", "Pasto", "Hoja", "Rama", "Semilla", "Raíz", "Jardín", "Plaza", "Parque", "Zoológico", "Acuario", "Granja", "Circo", "Cine", "Teatro", "Museo", "Castillo", "Palacio", "Faro", "Puente", "Túnel", "Piscina", "Camping", "Hospital", "Cuartel de bomberos", "Comisaría", "Supermercado", "Panadería", "Juguetería", "Casa", "Cama", "Almohada", "Frazada", "Pijama", "Pantuflas", "Cepillo de dientes", "Pasta dental", "Jabón", "Shampoo", "Toalla", "Espejo", "Peine", "Bañera", "Ducha", "Inodoro", "Sillón", "Mesa", "Silla", "Lámpara", "Reloj", "Teléfono", "Televisor", "Control remoto", "Heladera", "Horno", "Escoba", "Balde", "Llave", "Puerta", "Ventana", "Escalera", "Techo", "Chimenea", "Zapatillas", "Medias", "Pantalón", "Remera", "Buzo", "Campera", "Gorro", "Bufanda", "Guantes", "Paraguas", "Piloto de lluvia", "Gafas de sol", "Malla", "Ojotas", "Cinturón", "Bolso", "Cumpleaños", "Piñata", "Velitas", "Regalo", "Globo", "Auto", "Colectivo", "Tren", "Subte", "Avión", "Helicóptero", "Barco", "Submarino", "Cohete espacial", "Camión", "Ambulancia", "Camión de bomberos", "Patrullero", "Tractor", "Grúa", "Moto", "Globo aerostático", "Teleférico", "Fútbol", "Básquet", "Tenis", "Natación", "Karate", "Taekwondo", "Gimnasia artística", "Danza", "Atletismo", "Ciclismo", "Surf", "Esquí", "Rojo", "Azul", "Amarillo", "Verde", "Violeta", "Rosa", "Blanco", "Negro", "Dorado", "Círculo", "Cuadrado", "Triángulo", "Estrella fugaz", "Corazón", "Granjero", "Bombero"], "familia": ["Rockero", "Azul", "Asado", "Playa", "Invierno", "Verano", "Otoño", "Primavera", "Navidad", "Año Nuevo", "Cumpleaños", "Boda", "Luna de miel", "Mudanza", "Vacaciones", "Camping", "Hotel", "Aeropuerto", "Avión", "Crucero", "Tren", "Subte", "Colectivo", "Taxi", "Autopista", "Peaje", "Estación de servicio", "Taller mecánico", "Supermercado", "Feria", "Shopping", "Cine", "Teatro", "Concierto", "Estadio", "Gimnasio", "Peluquería", "Dentista", "Hospital", "Farmacia", "Banco", "Correo", "Biblioteca", "Museo", "Zoológico", "Parque de diversiones", "Circo", "Casino", "Restaurante", "Pizzería", "Cafetería", "Heladería", "Panadería", "Carnicería", "Verdulería", "Kiosco", "Ferretería", "Librería", "Juguetería", "Veterinaria", "Granja", "Campo", "Montaña", "Desierto", "Selva", "Bosque", "Isla desierta", "Volcán", "Terremoto", "Tormenta", "Inundación", "Apagón", "Incendio", "Robo", "Juicio", "Cárcel", "Detective", "Espía", "Vampiro", "Fantasma", "Extraterrestre", "Pirata", "Vaquero", "Astronauta", "Mago", "Payaso", "Científico", "Artista", "Fotógrafo", "Periodista", "Abogado", "Arquitecto", "Ingeniero", "Médico", "Enfermero", "Bombero", "Policía", "Piloto", "Capitán", "Chef", "Desayuno", "Almuerzo", "Merienda", "Cena", "Picada", "Mate", "Café", "Té", "Vino", "Cerveza", "Pizza", "Empanadas", "Milanesa", "Pasta", "Sushi", "Hamburguesa", "Ensalada", "Postre", "Helado", "Chocolate", "Domingo en familia", "Sobremesa", "Reunión familiar", "Foto familiar", "Álbum de fotos", "Herencia", "Apellido", "Árbol genealógico", "Mascota", "Pasear al perro", "Limpieza general", "Lavar los platos", "Lavar la ropa", "Planchar", "Cocinar", "Hacer las compras", "Lista del súper", "Heladera vacía", "Tupper", "Microondas", "Lavarropas", "Aspiradora", "Aire acondicionado", "Estufa", "Ventilador", "Cortina", "Alfombra", "Sillón", "Colchón", "Almohada", "Despertador", "Siesta", "Insomnio", "Pesadilla", "Sueño", "Bostezo", "Resfrío", "Fiebre", "Curita", "Termómetro", "Botiquín", "Receta médica", "Análisis de sangre", "Vacuna", "Anteojos", "Lentes de contacto", "Paraguas", "Valija", "Pasaporte", "Documento", "Billetera", "Llaves", "Llave perdida", "Celular sin batería", "Cargador", "Wi-Fi", "Contraseña", "Control remoto", "Televisor", "Serie", "Película", "Noticiero", "Publicidad", "Radio", "Podcast", "Música", "Guitarra", "Piano", "Batería", "Karaoke", "Baile", "Fiesta", "Disfraz", "Carnaval", "Halloween", "Pascuas", "Día del Padre", "Día de la Madre", "Día del Niño", "Día del Amigo", "Regalo", "Sorpresa", "Tarjeta de felicitación", "Ramo de flores", "Bombones", "Brindis", "Vela", "Fuegos artificiales", "Globos", "Piñata", "Jardín", "Parrilla", "Piscina", "Balcón", "Terraza", "Garaje", "Sótano", "Altillo", "Ascensor", "Escalera", "Fútbol", "Mundial", "Penal", "Árbitro", "Gol", "Hinchada", "Camiseta", "Tenis", "Pádel", "Básquet", "Vóley", "Rugby", "Golf", "Natación", "Ciclismo", "Maratón", "Boxeo", "Artes marciales", "Yoga", "Meditación", "Ajedrez", "Truco", "Póker", "Chinchón", "Generala", "Dominó", "Rompecabezas", "Crucigrama", "Sopa de letras", "Sudoku", "Bingo", "Lotería", "Rifa", "Bingo familiar", "Juego de mesa", "Dados", "Cartas", "Fichas", "Tablero", "Trampa", "Empate", "Victoria", "Derrota", "Trofeo", "Medalla", "Entrenamiento", "Lesión", "Calambre", "Transpiración", "Ducha fría", "Pesca", "Caza", "Senderismo", "Escalada", "Esquí", "Surf", "Buceo", "Navegar", "Velero", "Kayak", "Bicicleta", "Patineta", "Patines", "Lectura", "Novela", "Historieta", "Poesía", "Pintura", "Escultura", "Cerámica", "Carpintería", "Costura", "Tejido", "Jardinería", "Huerta", "Colección", "Antigüedad", "Subasta", "Reciclaje", "Ecología", "Egipto", "Pirámide", "Faraón", "Roma", "Gladiador", "Grecia", "Mitología", "Edad Media", "Castillo", "Caballero", "Vikingo", "Renacimiento", "Revolución", "Independencia", "Dinosaurio", "Fósil", "Evolución", "Prehistoria", "Cavernícola", "Fuego", "Rueda", "Invención", "Electricidad", "Gravedad", "Telescopio", "Microscopio", "Satélite", "Cohete", "Luna", "Marte", "Sistema Solar", "Eclipse", "Meteorito", "Agujero negro", "Ovni", "Robot", "Inteligencia Artificial", "Internet", "Redes sociales", "Correo electrónico", "Fotografía", "Selfie", "Video", "Cine mudo", "Dibujos animados", "Ciencia ficción", "Terror", "Comedia", "Drama", "Documental", "Circo Romano", "Ópera", "Ballet", "Orquesta", "Rock", "Jazz", "Tango", "Folklore", "Pop", "Reggaetón", "Arcoíris", "Amanecer", "Atardecer", "Medianoche", "Mediodía", "Calendario", "Reloj de arena", "Brújula", "Mapa", "Frontera", "Aduana", "Idioma", "Diccionario", "Acento", "Traducción", "Viaje", "Turista", "Guía turístico", "Souvenir", "Postal", "Moneda", "Billete", "Ahorro", "Alcancía", "Impuesto", "Factura", "Presupuesto", "Oferta", "Descuento", "Garantía", "Devolución", "Queja", "Propina", "Cuenta", "Reserva", "Fila", "Espera", "Turno", "Puntualidad", "Alegría", "Tristeza", "Enojo", "Miedo", "Vergüenza", "Orgullo", "Envidia", "Celos", "Nostalgia", "Paciencia", "Curiosidad", "Valentía", "Generosidad", "Honestidad", "Mentira", "Secreto", "Chisme", "Rumor", "Promesa", "Perdón", "Disculpa", "Agradecimiento", "Saludo", "Despedida", "Abrazo", "Beso", "Risa", "Carcajada", "Llanto", "Lágrima", "Suspiro", "Grito", "Susurro", "Silencio", "Ruido", "Eco", "Sombra", "Reflejo", "Espejo", "Laberinto", "Misterio", "Pista", "Sospechoso", "Coartada", "Testigo", "Tesoro", "Mapa del tesoro", "Nudo", "Cuerda", "Puente", "Muro", "Puerta cerrada", "Candado", "Llave maestra", "Caja fuerte", "Alarma", "Semáforo", "Multa", "Embotellamiento", "Choque", "Grúa", "Pinchazo", "Rueda de auxilio", "Gato hidráulico", "GPS", "Perdido", "Atajo", "Desvío", "Curva", "Túnel", "Maleta", "Equipaje de mano", "Turbulencia", "Despegue", "Aterrizaje", "Jet lag", "Bronceado", "Quemadura de sol", "Protector solar", "Repelente", "Picadura", "Mosquito", "Alergia", "Estornudo", "Tos", "Dolor de cabeza", "Dolor de muelas", "Vendas", "Yeso", "Muletas", "Silla de ruedas", "Ambulancia", "Camilla", "Carpintero", "Plomero", "Electricista", "Pintor", "Albañil", "Jardinero", "Cerrajero", "Sastre"], "adultos": ["Reunión de consorcio", "Expensas", "Alquiler", "Hipoteca", "Garantía propietaria", "Inflación", "Dólar", "Plazo fijo", "Tarjeta de crédito", "Resumen de tarjeta", "Cuotas sin interés", "Débito automático", "Transferencia", "CBU", "Clave fiscal", "AFIP / ARCA", "Contador", "Factura", "Recibo de sueldo", "Aguinaldo", "Bono anual", "Aumento de sueldo", "Entrevista laboral", "Currículum", "LinkedIn", "Renuncia", "Despido", "Indemnización", "Jubilación", "Pensión", "Obra social", "Prepaga", "Reintegro", "Copago", "Turno médico", "Chequeo anual", "Colesterol", "Presión arterial", "Estrés", "Burnout", "Terapia", "Psicólogo", "Psiquiatra", "Ansiedad", "Crisis de los 30", "Crisis de los 40", "Canas", "Calvicie", "Arrugas", "Crema antiage", "Dieta", "Gimnasio en enero", "Nutricionista", "Ayuno intermitente", "Proteína", "Suplementos", "Dolor de espalda", "Ciático", "Contractura", "Masajista", "Osteópata", "Kinesiología", "Home office", "Reunión por Zoom", "Micrófono muteado", "Compartir pantalla", "Correo corporativo", "En copia", "Para ayer", "Urgente", "Minuta", "Excel", "Presentación", "Jefe", "Subordinado", "Compañero tóxico", "Radio pasillo", "After office", "Fiesta de fin de año", "Amigo invisible", "Licencia por enfermedad", "Vacaciones pendientes", "Feriado puente", "Fin de semana largo", "Trámite bancario", "Fila en el banco", "Cajero automático sin plata", "Home banking", "Token", "Estafa virtual", "Spam", "Grupo de WhatsApp", "Audio de 5 minutos", "Visto", "Última conexión", "Bloqueado", "Silenciar grupo", "Sticker", "Meme", "Hilo de Twitter", "Algoritmo", "Suscripción", "Contraseña olvidada", "Autenticación en dos pasos", "Nube llena", "Backup", "Actualización", "Pantalla azul", "Router", "Cortes de luz", "Primera cita", "Tinder", "Match", "Ghosting", "Friendzone", "Casi algo", "Ex pareja", "Bloqueo de ex", "Stalkear", "Celos", "Infidelidad", "Amante", "Trampa", "Mentira piadosa", "Discusión de pareja", "Dormir en el sillón", "Aniversario", "Propuesta de matrimonio", "Anillo de compromiso", "Despedida de soltero", "Despedida de soltera", "Casamiento civil", "Iglesia", "Mesa de los solteros", "Ramo de novia", "Liga", "Vals", "Barra libre", "Cotillón", "Luna de miel", "Suegra", "Suegro", "Cuñado", "Concuñado", "Familia política", "Divorcio", "Separación", "División de bienes", "Cuota alimentaria", "Tenencia", "Convivencia", "Mudarse juntos", "Compartir gastos", "Reparto de tareas", "Lado de la cama", "Ronquidos", "Robar la frazada", "Baño ocupado", "Pelo en la ducha", "Tapa del inodoro", "Boda de plata", "Boda de oro", "Terapia de pareja", "Amor a primera vista", "Flechazo", "Beso", "Caricia", "Abrazo", "Chamuyo", "Levante", "Boliche", "Patovica", "Lista VIP", "Consumición", "Previas", "Trago", "Fernet", "Cerveza artesanal", "Vino tinto", "Espumante", "Brindis", "Shot", "Tequila", "Resaca", "Ibuprofeno", "Acidez", "Gastritis", "Café negro", "Bajón", "Pancho a las 5 AM", "Taxi de madrugada", "Uber", "Control de alcoholemia", "Multa de tránsito", "Acarreo", "Estacionamiento medido", "Trapito", "VTV", "Seguro del auto", "Choque", "Piquete", "Corte de calle", "Paro de transporte", "Hora pico", "Subte lleno", "Aire acondicionado roto", "Vecino ruidoso", "Fiesta arriba", "Perro que ladra", "Consorcio", "Grupo de mamis y papis", "Acto escolar", "Disfraz a último momento", "Cartulina el domingo", "Feria de ciencias", "Reunión de padres", "Cuaderno de comunicados", "Piojos", "Pediatra", "Guardia médica", "Pañales", "Mamadera", "Chupete", "Cochecito", "Sillita del auto", "Berrinche", "Cuento antes de dormir", "Vaso de agua", "Pesadilla", "Diente flojo", "Ratón Pérez", "Cumpleaños infantil", "Salón de fiestas", "Animador", "Souvenir", "Piñata", "Torta temática", "Niñera", "Abuelos al rescate", "Colonia de vacaciones", "Club", "Cuota del club", "Partido el sábado", "Torneo", "Tribuna", "Viaje de egresados", "Bariloche", "Previa adolescente", "Permiso para salir", "Horario de vuelta", "Primer auto", "Registro de conducir", "Examen práctico", "Estacionar en paralelo", "Universidad", "Carrera", "Tesis", "Recibida", "Huevos y harina", "Independizarse", "Primer departamento", "Garantía", "Flete", "Pintar antes de entregar", "Depósito", "Inmobiliaria", "Comisión", "Escritura", "Mudanza", "Cajas sin abrir", "Elecciones", "Cuarto oscuro", "Boleta", "Presidente de mesa", "Veda electoral", "Encuesta", "Debate presidencial", "Campaña", "Promesa electoral", "Corrupción", "Impuestos", "Subsidio", "Paritarias", "Sindicato", "Huelga", "Manifestación", "Noticiero", "Cadena nacional", "Fake news", "Conspiración", "Horóscopo", "Carta natal", "Mercurio retrógrado", "Tarot", "Brujería", "Cábala", "Superstición", "Martes 13", "Gato negro", "Espejo roto", "Bingo", "Quiniela", "Lotería", "Casino", "Tragamonedas", "Ruleta", "Apuesta", "Póker", "Farol", "All-in", "Serie de Netflix", "Maratón de series", "Spoiler", "Tráiler", "Crítica", "Premios Oscar", "Alfombra roja", "Paparazzi", "Famoso", "Influencer", "Canje", "Publicidad encubierta", "Cancelación", "Hater", "Troll", "Viral", "Trending topic", "Podcast", "Streaming", "Suscriptor", "Ovni", "Área 51", "Fantasmas", "Espiritismo", "Ouija", "Casa embrujada", "Cementerio", "Velorio", "Testamento", "Cremación", "Seguros de vida", "Inmortalidad", "Reencarnación", "Karma", "Destino", "Casualidad", "Deja vu", "Intuición", "Corazonada", "Nostalgia", "Infancia", "Adolescencia", "Juventud", "Vejez", "Sabiduría", "Experiencia", "Arrepentimiento", "Segundas oportunidades", "Propósitos de año nuevo", "Motel", "Albergue transitorio", "Lencería", "Juguete sexual", "Sex shop", "Kamasutra", "Fantasía", "Fetiche", "Striptease", "Despedida", "Borrachera", "Laguna mental", "Mensaje borracho", "Llamada a las 3 AM", "Vergüenza ajena", "Papelón", "Trágame tierra", "Error de grupo", "Mandar captura al interesado", "Audio equivocado", "Saludar a quien no te saluda", "Confundir nombre", "Preguntar si está embarazada", "Mal aliento", "Transpiración", "Mancha en la ropa", "Cierre abierto", "Papel en el zapato", "Flatulencia", "Eructo", "Baño sin papel", "Inodoro tapado", "Olor en el ascensor", "Invitado que no se va", "Indirecta", "Sarcasmo", "Ironía", "Doble sentido", "Albur", "Chiste verde", "Humor negro", "Tabú", "Censura", "Secreto a voces", "Chisme de oficina", "Escándalo", "Infidelidad descubierta", "Mensaje comprometedor", "Contraseña del celular", "Modo incógnito", "Historial de búsqueda", "Cámara encendida por error", "Micrófono abierto", "Filtro fallido", "Foto comprometida", "Tatuaje de ex", "Tatuaje arrepentido", "Piercing", "Cirugía estética", "Botox", "Peluca", "Implante capilar", "Viagra", "Menopausia", "Andropausia", "Sofocos", "Insomnio", "Pastilla para dormir", "Antidepresivo", "Relajante muscular", "Colonoscopia", "Proctólogo", "Urólogo", "Ginecólogo", "Mamografía", "Análisis de orina", "Dieta líquida", "Intoxicación", "Empacho", "Vómito", "Maratón de baño", "Guardia de hospital", "Sueros", "Inyección", "Miedo a las agujas", "Desmayo", "Golpe de calor", "Insolación", "Resaca moral", "Culpabilidad", "Excusa barata", "Llegar tarde", "Plantón", "Dejar plantado", "Cobrar deuda", "Prestar plata", "Amigo ratón", "Dividir la cuenta", "El que pide lo más caro", "Propina rata", "Impuesto a las ganancias", "Bienes personales", "Monotributo", "Recategorización", "Factura electrónica", "Vencimiento", "Mora", "Intereses", "Veraz", "Préstamo personal", "Plazo fijo UVA", "Criptomoneda", "Bitcoin", "Billetera virtual", "QR", "Posnet sin señal", "Efectivo", "Cambio chico", "Billete falso", "Cajero roto", "Seguro de hogar", "Siniestro", "Franquicia", "Perito", "Denuncia policial", "Testigo", "Mediación", "Carta documento", "Telegrama", "Burocracia", "Sellado", "Apostilla", "Trámite online", "Página caída", "Captcha", "Soy un robot", "Términos y condiciones", "Cookies", "Suscripción oculta", "Dar de baja", "Call center"]};
+    const DECKS = {"ninos": ["Perro", "Gato", "León", "Elefante", "Jirafa", "Mono", "Tigre", "Oso", "Cebra", "Hipopótamo", "Cocodrilo", "Serpiente", "Tortuga", "Conejo", "Caballo", "Vaca", "Cerdo", "Oveja", "Gallina", "Pato", "Pingüino", "Delfín", "Ballena", "Tiburón", "Pulpo", "Cangrejo", "Estrella de mar", "Medusa", "Foca", "Caballito de mar", "Águila", "Búho", "Loro", "Flamenco", "Tucán", "Paloma", "Colibrí", "Pavo real", "Avestruz", "Murciélago", "Mariposa", "Abeja", "Hormiga", "Araña", "Mariquita", "Grillo", "Mosquito", "Caracol", "Gusano", "Libélula", "Rana", "Sapo", "Camaleón", "Iguana", "Dinosaurio", "Tiranosaurio", "Dragón", "Unicornio", "Canguro", "Koala", "Panda", "Lobo", "Zorro", "Ardilla", "Erizo", "Castor", "Mapache", "Ciervo", "Camello", "Llama", "Burro", "Cabra", "Ratón", "Hámster", "Pez payaso", "Pez globo", "Reno", "Oso polar", "Morsa", "Gorila", "Helado", "Pizza", "Hamburguesa", "Papas fritas", "Chocolate", "Caramelo", "Chupetín", "Alfajor", "Dulce de leche", "Galletitas", "Torta de cumpleaños", "Pochoclo", "Pancho", "Milanesa", "Fideos", "Arroz", "Sopa", "Ensalada", "Huevo frito", "Queso", "Pan", "Manteca", "Mermelada", "Miel", "Cereal", "Leche", "Jugo de naranja", "Limonada", "Licuado", "Chocolatada", "Manzana", "Banana", "Naranja", "Frutilla", "Sandía", "Melón", "Uva", "Durazno", "Pera", "Ananá", "Limón", "Cereza", "Kiwi", "Zanahoria", "Tomate", "Lechuga", "Papa", "Choclo", "Brócoli", "Zapallo", "Empanada", "Taco", "Sushi", "Donas", "Medialuna", "Churros", "Panqueques", "Waffles", "Gelatina", "Flan", "Budín", "Magdalena", "Malvavisco", "Algodón de azúcar", "Gomitas", "Chicle", "Turrón", "Huevos de Pascua", "Rosca de Reyes", "Sándwich", "Tostada", "Yogur", "Aceituna", "Palta", "Salchicha", "Escuela", "Mochila", "Lápiz", "Goma de borrar", "Sacapuntas", "Regla", "Tijera", "Plasticola", "Cuaderno", "Carpeta", "Cartuchera", "Marcadores", "Lápices de colores", "Crayones", "Témperas", "Pincel", "Acuarelas", "Plastilina", "Pizarrón", "Tiza", "Fibrón", "Maestra", "Profesor", "Recreo", "Patio", "Aula", "Biblioteca", "Libro", "Cuento", "Diccionario", "Mapa", "Globo terráqueo", "Compás", "Escuadra", "Calculadora", "Computadora", "Tablet", "Campana", "Timbre", "Bandera", "Acto escolar", "Excursión", "Tarea", "Examen", "Boletín", "Guardapolvo", "Uniforme", "Merienda", "Cantimplora", "Lonchera", "Microscopio", "Lupa", "Imán", "Flauta", "Tambor", "Pelota", "Muñeca", "Auto de juguete", "Tren de juguete", "Bloques", "Rompecabezas", "Yoyó", "Trompo", "Barrilete", "Patines", "Patineta", "Bicicleta", "Triciclo", "Monopatín", "Tobogán", "Hamaca", "Sube y baja", "Calesita", "Pelotero", "Castillo inflable", "Escondidas", "Mancha", "Rayuela", "Saltar la soga", "Piedra, papel o tijera", "Adivinanza", "Trabalenguas", "Chiste", "Títere", "Marioneta", "Disfraz", "Antifaz", "Varita mágica", "Espada de madera", "Escudo", "Corona", "Peluche", "Osito", "Robot", "Cohete", "Canicas", "Bolitas", "Cartas", "Dados", "Dominó", "Ajedrez", "Damas", "Lotería", "Bingo", "Videojuego", "Joystick", "Consola", "Burbuja", "Pistola de agua", "Bombucha", "Aro hula-hula", "Cama elástica", "Zancos", "Casa del árbol", "Carpa", "Linterna", "Binoculares", "Walkie-talkie", "Alcancia", "Figuritas", "Superhéroe", "Princesa", "Príncipe", "Rey", "Reina", "Caballero", "Mago", "Bruja", "Hada", "Duende", "Gigante", "Ogro", "Pirata", "Sirena", "Fantasma", "Vampiro", "Momia", "Hombre lobo", "Zombi", "Monstruo", "Extraterrestre", "Astronauta", "Ninja", "Samurái", "Vaquero", "Indio", "Detective", "Espía", "Payaso", "Acróbata", "Malabarista", "Domador", "Genio de la lámpara", "Caperucita Roja", "Pinocho", "Cenicienta", "Blancanieves", "Peter Pan", "Papá Noel", "Ratón Pérez", "Reyes Magos", "Conejo de Pascua", "Elfo", "Centauro", "Fénix", "Pegaso", "Yeti", "Cíclope", "Troll", "Gnomo", "Capitán", "Marinero", "Explorador", "Científico loco", "Inventor", "Cazador de tesoros", "Espantapájaros", "Muñeco de nieve", "Ángel", "Playa", "Mar", "Océano", "Isla", "Montaña", "Volcán", "Bosque", "Selva", "Desierto", "Río", "Lago", "Cascada", "Cueva", "Nieve", "Hielo", "Nube", "Lluvia", "Tormenta", "Arcoíris", "Sol", "Luna", "Estrella", "Planeta", "Espacio", "Galaxia", "Cometa", "Tierra", "Cielo", "Viento", "Trueno", "Relámpago", "Charco", "Barro", "Arena", "Piedra", "Árbol", "Flor", "Pasto", "Hoja", "Rama", "Semilla", "Raíz", "Jardín", "Plaza", "Parque", "Zoológico", "Acuario", "Granja", "Circo", "Cine", "Teatro", "Museo", "Castillo", "Palacio", "Faro", "Puente", "Túnel", "Piscina", "Camping", "Hospital", "Cuartel de bomberos", "Comisaría", "Supermercado", "Panadería", "Juguetería", "Casa", "Cama", "Almohada", "Frazada", "Pijama", "Pantuflas", "Cepillo de dientes", "Pasta dental", "Jabón", "Shampoo", "Toalla", "Espejo", "Peine", "Bañera", "Ducha", "Inodoro", "Sillón", "Mesa", "Silla", "Lámpara", "Reloj", "Teléfono", "Televisor", "Control remoto", "Heladera", "Horno", "Escoba", "Balde", "Llave", "Puerta", "Ventana", "Escalera", "Techo", "Chimenea", "Zapatillas", "Medias", "Pantalón", "Remera", "Buzo", "Campera", "Gorro", "Bufanda", "Guantes", "Paraguas", "Piloto de lluvia", "Gafas de sol", "Malla", "Ojotas", "Cinturón", "Bolso", "Cumpleaños", "Piñata", "Velitas", "Regalo", "Globo", "Auto", "Colectivo", "Tren", "Subte", "Avión", "Helicóptero", "Barco", "Submarino", "Cohete espacial", "Camión", "Ambulancia", "Camión de bomberos", "Patrullero", "Tractor", "Grúa", "Moto", "Globo aerostático", "Teleférico", "Fútbol", "Básquet", "Tenis", "Natación", "Karate", "Taekwondo", "Gimnasia artística", "Danza", "Atletismo", "Ciclismo", "Surf", "Esquí", "Rojo", "Azul", "Amarillo", "Verde", "Violeta", "Rosa", "Blanco", "Negro", "Dorado", "Círculo", "Cuadrado", "Triángulo", "Estrella fugaz", "Corazón", "Granjero", "Bombero"], "familia": ["Rockero", "Azul", "Asado", "Playa", "Invierno", "Verano", "Otoño", "Primavera", "Navidad", "Año Nuevo", "Cumpleaños", "Boda", "Luna de miel", "Mudanza", "Vacaciones", "Camping", "Hotel", "Aeropuerto", "Avión", "Crucero", "Tren", "Subte", "Colectivo", "Taxi", "Autopista", "Peaje", "Estación de servicio", "Taller mecánico", "Supermercado", "Feria", "Shopping", "Cine", "Teatro", "Concierto", "Estadio", "Gimnasio", "Peluquería", "Dentista", "Hospital", "Farmacia", "Banco", "Correo", "Biblioteca", "Museo", "Zoológico", "Parque de diversiones", "Circo", "Casino", "Restaurante", "Pizzería", "Cafetería", "Heladería", "Panadería", "Carnicería", "Verdulería", "Kiosco", "Ferretería", "Librería", "Juguetería", "Veterinaria", "Granja", "Campo", "Montaña", "Desierto", "Selva", "Bosque", "Isla desierta", "Volcán", "Terremoto", "Tormenta", "Inundación", "Apagón", "Incendio", "Robo", "Juicio", "Cárcel", "Detective", "Espía", "Vampiro", "Fantasma", "Extraterrestre", "Pirata", "Vaquero", "Astronauta", "Mago", "Payaso", "Científico", "Artista", "Fotógrafo", "Periodista", "Abogado", "Arquitecto", "Ingeniero", "Médico", "Enfermero", "Bombero", "Policía", "Piloto", "Capitán", "Chef", "Desayuno", "Almuerzo", "Merienda", "Cena", "Picada", "Mate", "Café", "Té", "Vino", "Cerveza", "Pizza", "Empanadas", "Milanesa", "Pasta", "Sushi", "Hamburguesa", "Ensalada", "Postre", "Helado", "Chocolate", "Domingo en familia", "Sobremesa", "Reunión familiar", "Foto familiar", "Álbum de fotos", "Herencia", "Apellido", "Árbol genealógico", "Mascota", "Pasear al perro", "Limpieza general", "Lavar los platos", "Lavar la ropa", "Planchar", "Cocinar", "Hacer las compras", "Lista del súper", "Heladera vacía", "Tupper", "Microondas", "Lavarropas", "Aspiradora", "Aire acondicionado", "Estufa", "Ventilador", "Cortina", "Alfombra", "Sillón", "Colchón", "Almohada", "Despertador", "Siesta", "Insomnio", "Pesadilla", "Sueño", "Bostezo", "Resfrío", "Fiebre", "Curita", "Termómetro", "Botiquín", "Receta médica", "Análisis de sangre", "Vacuna", "Anteojos", "Lentes de contacto", "Paraguas", "Valija", "Pasaporte", "Documento", "Billetera", "Llaves", "Llave perdida", "Celular sin batería", "Cargador", "Wi-Fi", "Contraseña", "Control remoto", "Televisor", "Serie", "Película", "Noticiero", "Publicidad", "Radio", "Podcast", "Música", "Guitarra", "Piano", "Batería", "Karaoke", "Baile", "Fiesta", "Disfraz", "Carnaval", "Halloween", "Pascuas", "Día del Padre", "Día de la Madre", "Día del Niño", "Día del Amigo", "Regalo", "Sorpresa", "Tarjeta de felicitación", "Ramo de flores", "Bombones", "Brindis", "Vela", "Fuegos artificiales", "Globos", "Piñata", "Jardín", "Parrilla", "Piscina", "Balcón", "Terraza", "Garaje", "Sótano", "Altillo", "Ascensor", "Escalera", "Fútbol", "Mundial", "Penal", "Árbitro", "Gol", "Hinchada", "Camiseta", "Tenis", "Pádel", "Básquet", "Vóley", "Rugby", "Golf", "Natación", "Ciclismo", "Maratón", "Boxeo", "Artes marciales", "Yoga", "Meditación", "Ajedrez", "Truco", "Póker", "Chinchón", "Generala", "Dominó", "Rompecabezas", "Crucigrama", "Sopa de letras", "Sudoku", "Bingo", "Lotería", "Rifa", "Bingo familiar", "Juego de mesa", "Dados", "Cartas", "Fichas", "Tablero", "Trampa", "Empate", "Victoria", "Derrota", "Trofeo", "Medalla", "Entrenamiento", "Lesión", "Calambre", "Transpiración", "Ducha fría", "Pesca", "Caza", "Senderismo", "Escalada", "Esquí", "Surf", "Buceo", "Navegar", "Velero", "Kayak", "Bicicleta", "Patineta", "Patines", "Lectura", "Novela", "Historieta", "Poesía", "Pintura", "Escultura", "Cerámica", "Carpintería", "Costura", "Tejido", "Jardinería", "Huerta", "Colección", "Antigüedad", "Subasta", "Reciclaje", "Ecología", "Egipto", "Pirámide", "Faraón", "Roma", "Gladiador", "Grecia", "Mitología", "Edad Media", "Castillo", "Caballero", "Vikingo", "Renacimiento", "Revolución", "Independencia", "Dinosaurio", "Fósil", "Evolución", "Prehistoria", "Cavernícola", "Fuego", "Rueda", "Invención", "Electricidad", "Gravedad", "Telescopio", "Microscopio", "Satélite", "Cohete", "Luna", "Marte", "Sistema Solar", "Eclipse", "Meteorito", "Agujero negro", "Ovni", "Robot", "Inteligencia Artificial", "Internet", "Redes sociales", "Correo electrónico", "Fotografía", "Selfie", "Video", "Cine mudo", "Dibujos animados", "Ciencia ficción", "Terror", "Comedia", "Drama", "Documental", "Circo Romano", "Ópera", "Ballet", "Orquesta", "Rock", "Jazz", "Tango", "Folklore", "Pop", "Reggaetón", "Arcoíris", "Amanecer", "Atardecer", "Medianoche", "Mediodía", "Calendario", "Reloj de arena", "Brújula", "Mapa", "Frontera", "Aduana", "Idioma", "Diccionario", "Acento", "Traducción", "Viaje", "Turista", "Guía turístico", "Souvenir", "Postal", "Moneda", "Billete", "Ahorro", "Alcancía", "Impuesto", "Factura", "Presupuesto", "Oferta", "Descuento", "Garantía", "Devolución", "Queja", "Propina", "Cuenta", "Reserva", "Fila", "Espera", "Turno", "Puntualidad", "Alegría", "Tristeza", "Enojo", "Miedo", "Vergüenza", "Orgullo", "Envidia", "Celos", "Nostalgia", "Paciencia", "Curiosidad", "Valentía", "Generosidad", "Honestidad", "Mentira", "Secreto", "Chisme", "Rumor", "Promesa", "Perdón", "Disculpa", "Agradecimiento", "Saludo", "Despedida", "Abrazo", "Beso", "Risa", "Carcajada", "Llanto", "Lágrima", "Suspiro", "Grito", "Susurro", "Silencio", "Ruido", "Eco", "Sombra", "Reflejo", "Espejo", "Laberinto", "Misterio", "Pista", "Sospechoso", "Coartada", "Testigo", "Tesoro", "Mapa del tesoro", "Nudo", "Cuerda", "Puente", "Muro", "Puerta cerrada", "Candado", "Llave maestra", "Caja fuerte", "Alarma", "Semáforo", "Multa", "Embotellamiento", "Choque", "Grúa", "Pinchazo", "Rueda de auxilio", "Gato hidráulico", "GPS", "Perdido", "Atajo", "Desvío", "Curva", "Túnel", "Maleta", "Equipaje de mano", "Turbulencia", "Despegue", "Aterrizaje", "Jet lag", "Bronceado", "Quemadura de sol", "Protector solar", "Repelente", "Picadura", "Mosquito", "Alergia", "Estornudo", "Tos", "Dolor de cabeza", "Dolor de muelas", "Vendas", "Yeso", "Muletas", "Silla de ruedas", "Ambulancia", "Camilla", "Carpintero", "Plomero", "Electricista", "Pintor", "Albañil", "Jardinero", "Cerrajero", "Sastre"], "adultos": ["Reunión de consorcio", "Expensas", "Alquiler", "Hipoteca", "Garantía propietaria", "Inflación", "Dólar", "Plazo fijo", "Tarjeta de crédito", "Resumen de tarjeta", "Cuotas sin interés", "Débito automático", "Transferencia", "CBU", "Clave fiscal", "AFIP / ARCA", "Contador", "Factura", "Recibo de sueldo", "Aguinaldo", "Bono anual", "Aumento de sueldo", "Entrevista laboral", "Currículum", "LinkedIn", "Renuncia", "Despido", "Indemnización", "Jubilación", "Pensión", "Obra social", "Prepaga", "Reintegro", "Copago", "Turno médico", "Chequeo anual", "Colesterol", "Presión arterial", "Estrés", "Burnout", "Terapia", "Psicólogo", "Psiquiatra", "Ansiedad", "Crisis de los 30", "Crisis de los 40", "Canas", "Calvicie", "Arrugas", "Crema antiage", "Dieta", "Gimnasio en enero", "Nutricionista", "Ayuno intermitente", "Proteína", "Suplementos", "Dolor de espalda", "Ciático", "Contractura", "Masajista", "Osteópata", "Kinesiología", "Home office", "Reunión por Zoom", "Micrófono muteado", "Compartir pantalla", "Correo corporativo", "En copia", "Para ayer", "Urgente", "Minuta", "Excel", "Presentación", "Jefe", "Subordinado", "Compañero tóxico", "Radio pasillo", "After office", "Fiesta de fin de año", "Amigo invisible", "Licencia por enfermedad", "Vacaciones pendientes", "Feriado puente", "Fin de semana largo", "Trámite bancario", "Fila en el banco", "Cajero automático sin plata", "Home banking", "Token", "Estafa virtual", "Spam", "Grupo de WhatsApp", "Audio de 5 minutos", "Visto", "Última conexión", "Bloqueado", "Silenciar grupo", "Sticker", "Meme", "Hilo de Twitter", "Algoritmo", "Suscripción", "Contraseña olvidada", "Autenticación en dos pasos", "Nube llena", "Backup", "Actualización", "Pantalla azul", "Router", "Cortes de luz", "Primera cita", "Tinder", "Match", "Ghosting", "Friendzone", "Casi algo", "Ex pareja", "Bloqueo de ex", "Stalkear", "Celos", "Infidelidad", "Amante", "Trampa", "Mentira piadosa", "Discusión de pareja", "Dormir en el sillón", "Aniversario", "Propuesta de matrimonio", "Anillo de compromiso", "Despedida de soltero", "Despedida de soltera", "Casamiento civil", "Iglesia", "Mesa de los solteros", "Ramo de novia", "Liga", "Vals", "Barra libre", "Cotillón", "Luna de miel", "Suegra", "Suegro", "Cuñado", "Concuñado", "Familia política", "Divorcio", "Separación", "División de bienes", "Cuota alimentaria", "Tenencia", "Convivencia", "Mudarse juntos", "Compartir gastos", "Reparto de tareas", "Lado de la cama", "Ronquidos", "Robar la frazada", "Baño ocupado", "Pelo en la ducha", "Tapa del inodoro", "Boda de plata", "Boda de oro", "Terapia de pareja", "Amor a primera vista", "Flechazo", "Beso", "Caricia", "Abrazo", "Chamuyo", "Levante", "Boliche", "Patovica", "Lista VIP", "Consumición", "Previas", "Trago", "Fernet", "Cerveza artesanal", "Vino tinto", "Espumante", "Brindis", "Shot", "Tequila", "Resaca", "Ibuprofeno", "Acidez", "Gastritis", "Café negro", "Bajón", "Pancho a las 5 AM", "Taxi de madrugada", "Uber", "Control de alcoholemia", "Multa de tránsito", "Acarreo", "Estacionamiento medido", "Trapito", "VTV", "Seguro del auto", "Choque", "Piquete", "Corte de calle", "Paro de transporte", "Hora pico", "Subte lleno", "Aire acondicionado roto", "Vecino ruidoso", "Fiesta arriba", "Perro que ladra", "Consorcio", "Grupo de mamis y papis", "Acto escolar", "Disfraz a último momento", "Cartulina el domingo", "Feria de ciencias", "Reunión de padres", "Cuaderno de comunicados", "Piojos", "Pediatra", "Guardia médica", "Pañales", "Mamadera", "Chupete", "Cochecito", "Sillita del auto", "Berrinche", "Cuento antes de dormir", "Vaso de agua", "Pesadilla", "Diente flojo", "Ratón Pérez", "Cumpleaños infantil", "Salón de fiestas", "Animador", "Souvenir", "Piñata", "Torta temática", "Niñera", "Abuelos al rescate", "Colonia de vacaciones", "Club", "Cuota del club", "Partido el sábado", "Torneo", "Tribuna", "Viaje de egresados", "Bariloche", "Previa adolescente", "Permiso para salir", "Horario de vuelta", "Primer auto", "Registro de conducir", "Examen práctico", "Estacionar en paralelo", "Universidad", "Carrera", "Tesis", "Recibida", "Huevos y harina", "Independizarse", "Primer departamento", "Garantía", "Flete", "Pintar antes de entregar", "Depósito", "Inmobiliaria", "Comisión", "Escritura", "Mudanza", "Cajas sin abrir", "Elecciones", "Cuarto oscuro", "Boleta", "Presidente de mesa", "Veda electoral", "Encuesta", "Debate presidencial", "Campaña", "Promesa electoral", "Corrupción", "Impuestos", "Subsidio", "Paritarias", "Sindicato", "Huelga", "Manifestación", "Noticiero", "Cadena nacional", "Infiltrado news", "Conspiración", "Horóscopo", "Carta natal", "Mercurio retrógrado", "Tarot", "Brujería", "Cábala", "Superstición", "Martes 13", "Gato negro", "Espejo roto", "Bingo", "Quiniela", "Lotería", "Casino", "Tragamonedas", "Ruleta", "Apuesta", "Póker", "Farol", "All-in", "Serie de Netflix", "Maratón de series", "Spoiler", "Tráiler", "Crítica", "Premios Oscar", "Alfombra roja", "Paparazzi", "Famoso", "Influencer", "Canje", "Publicidad encubierta", "Cancelación", "Hater", "Troll", "Viral", "Trending topic", "Podcast", "Streaming", "Suscriptor", "Ovni", "Área 51", "Fantasmas", "Espiritismo", "Ouija", "Casa embrujada", "Cementerio", "Velorio", "Testamento", "Cremación", "Seguros de vida", "Inmortalidad", "Reencarnación", "Karma", "Destino", "Casualidad", "Deja vu", "Intuición", "Corazonada", "Nostalgia", "Infancia", "Adolescencia", "Juventud", "Vejez", "Sabiduría", "Experiencia", "Arrepentimiento", "Segundas oportunidades", "Propósitos de año nuevo", "Motel", "Albergue transitorio", "Lencería", "Juguete sexual", "Sex shop", "Kamasutra", "Fantasía", "Fetiche", "Striptease", "Despedida", "Borrachera", "Laguna mental", "Mensaje borracho", "Llamada a las 3 AM", "Vergüenza ajena", "Papelón", "Trágame tierra", "Error de grupo", "Mandar captura al interesado", "Audio equivocado", "Saludar a quien no te saluda", "Confundir nombre", "Preguntar si está embarazada", "Mal aliento", "Transpiración", "Mancha en la ropa", "Cierre abierto", "Papel en el zapato", "Flatulencia", "Eructo", "Baño sin papel", "Inodoro tapado", "Olor en el ascensor", "Invitado que no se va", "Indirecta", "Sarcasmo", "Ironía", "Doble sentido", "Albur", "Chiste verde", "Humor negro", "Tabú", "Censura", "Secreto a voces", "Chisme de oficina", "Escándalo", "Infidelidad descubierta", "Mensaje comprometedor", "Contraseña del celular", "Modo incógnito", "Historial de búsqueda", "Cámara encendida por error", "Micrófono abierto", "Filtro fallido", "Foto comprometida", "Tatuaje de ex", "Tatuaje arrepentido", "Piercing", "Cirugía estética", "Botox", "Peluca", "Implante capilar", "Viagra", "Menopausia", "Andropausia", "Sofocos", "Insomnio", "Pastilla para dormir", "Antidepresivo", "Relajante muscular", "Colonoscopia", "Proctólogo", "Urólogo", "Ginecólogo", "Mamografía", "Análisis de orina", "Dieta líquida", "Intoxicación", "Empacho", "Vómito", "Maratón de baño", "Guardia de hospital", "Sueros", "Inyección", "Miedo a las agujas", "Desmayo", "Golpe de calor", "Insolación", "Resaca moral", "Culpabilidad", "Excusa barata", "Llegar tarde", "Plantón", "Dejar plantado", "Cobrar deuda", "Prestar plata", "Amigo ratón", "Dividir la cuenta", "El que pide lo más caro", "Propina rata", "Impuesto a las ganancias", "Bienes personales", "Monotributo", "Recategorización", "Factura electrónica", "Vencimiento", "Mora", "Intereses", "Veraz", "Préstamo personal", "Plazo fijo UVA", "Criptomoneda", "Bitcoin", "Billetera virtual", "QR", "Posnet sin señal", "Efectivo", "Cambio chico", "Billete falso", "Cajero roto", "Seguro de hogar", "Siniestro", "Franquicia", "Perito", "Denuncia policial", "Testigo", "Mediación", "Carta documento", "Telegrama", "Burocracia", "Sellado", "Apostilla", "Trámite online", "Página caída", "Captcha", "Soy un robot", "Términos y condiciones", "Cookies", "Suscripción oculta", "Dar de baja", "Call center"]};
 
     const ADM_DECK = ["¿Quién de nosotros sería el primero en morir en una película de terror?", "¿Quién tiene más chances de terminar preso por una estupidez?", "¿Quién vendería a sus amigos por un millón de dólares sin dudarlo?", "¿Quién de la mesa es el peor conductor?", "¿Quién se haría el dormido para no ayudar a levantar la mesa?", "¿Quién tiene más probabilidades de unirse a una secta?", "¿Quién lloraría si le cortan el Wi-Fi por un fin de semana?", "¿Quién de nosotros se casaría por interés económico?", "¿Quién sería el primero en practicar canibalismo si nos perdemos en la cordillera?", "¿Quién manda los audios de WhatsApp más largos e insoportables?", "¿Quién tiene el historial de búsqueda más turbina de toda la mesa?", "¿Quién se anotaría en un reality show para hacerse famoso a cualquier costo?", "¿Quién fingiría una enfermedad grave para faltar a un compromiso?", "¿Quién de nosotros es el más rata a la hora de dividir la cuenta?", "¿Quién volvería con su ex más tóxico después de jurar que nunca más?", "¿Quién tiene más chances de caer en una estafa piramidal?", "¿Quién sería capaz de robarse algo de un hotel o restaurante?", "¿Quién se pondría a llorar en medio de una discusión laboral?", "¿Quién de la mesa tiene el peor gusto para vestirse?", "¿Quién se olvidaría el cumpleaños de su propia pareja?", "¿Quién tardaría menos de 24 horas en traicionar un secreto de Estado?", "¿Quién de nosotros envejecería convirtiéndose en el viejo más gruñón del barrio?", "¿Quién se quedaría mirando cómo roban a otro sin hacer absolutamente nada?", "¿Quién tiene más chances de terminar viviendo en una combi sin bañarse?", "¿Quién es el más chamuyero cuando cuenta una anécdota?", "¿Quién de nosotros sería el peor presidente del país?", "¿Quién se emborracharía primero en una fiesta de empresa?", "¿Quién stalkea a sus ex hasta el año 2014 en Instagram?", "¿Quién pediría lo más caro del menú sabiendo que después dividimos en partes iguales?", "¿Quién se haría el boludo cuando llega el momento de pagar el asado?", "¿Quién tiene más probabilidades de tener una doble familia secreta?", "¿Quién sería capaz de googlear sus síntomas y convencerse de que le quedan 3 días de vida?", "¿Quién de nosotros sobreviviría menos tiempo en una isla desierta?", "¿Quién es el más infiel potencial de este grupo?", "¿Quién se pondría a pelear con un desconocido en los comentarios de redes sociales?", "¿Quién tiene más chances de casarse en Las Vegas borracho?", "¿Quién dejaría plantado a un amigo por una cita de último momento?", "¿Quién de la mesa es el más dramático por cualquier pavada?", "¿Quién se robaría el crédito del trabajo de otro compañero?", "¿Quién tiene más probabilidades de terminar viviendo con 15 gatos?", "¿Quién sería el primero en paniquear durante una turbulencia en un avión?", "¿Quién es el más probable que mande un mensaje comprometedor al grupo equivocado?", "¿Quién se haría una cirugía estética que le quede horrible?", "¿Quién tiene la risa más contagiosa pero insoportable?", "¿Quién de nosotros se haría influencer de consejos de vida sin tener su vida ordenada?", "¿Quién tardaría más en devolver plata prestada?", "¿Quién sería capaz de comerse algo que se cayó al piso hace más de 10 segundos?", "¿Quién de la mesa tiene más chances de ser abducido por extraterrestres y que lo devuelvan?", "¿Quién se queja de todo pero nunca propone ningún plan?", "¿Quién llegaría tarde hasta a su propio velorio?", "¿Quién sería el primero en traicionar al grupo en un apocalipsis zombi?", "¿Quién tiene más chances de terminar trabajando en un circo?", "¿Quién se haría el lesionado para no jugar o no hacer fuerza?", "¿Quién tiene más probabilidades de quedarse encerrado en un baño público?", "¿Quién es el más probable que se quede dormido en medio de una película en el cine?", "¿Quién de nosotros compraría un curso online de 'cómo hacerte millonario'?", "¿Quién tiene el ego más grande de toda esta mesa?", "¿Quién se pondría a llorar si pierde en un juego de mesa?", "¿Quién sería capaz de revisar el celular de su pareja mientras duerme?", "¿Quién de nosotros tiene más chances de ganar la lotería y perder el ticket?", "¿Quién es el más propenso a hacer un papelón monumental en una primera cita?", "¿Quién se colaría en una fila fingiendo demencia?", "¿Quién tiene más probabilidades de hacerse un tatuaje del que se arrepienta al día siguiente?", "¿Quién de la mesa es el más chusma y sabe los rumores de todo el mundo?", "¿Quién sería el peor compañero de departamento para convivir?", "¿Quién se llevaría los tuppers de comida de una fiesta sin avisar?", "¿Quién tiene más chances de terminar en la guardia por un accidente doméstico ridículo?", "¿Quién de nosotros es el más manipulador cuando quiere conseguir algo?", "¿Quién sería capaz de fingir que no vio a un conocido en la calle para no saludarlo?", "¿Quién tiene más probabilidades de convertirse en un acumulador compulsivo?", "¿Quién es el más probable que se enamore en menos de 48 horas?", "¿Quién de nosotros tendría un canal de OnlyFans si estuviera desesperado de plata?", "¿Quién se haría el experto en un tema del que no tiene la más mínima idea?", "¿Quién es el que peor baila de toda la mesa?", "¿Quién tiene más chances de perder el pasaporte justo antes de embarcar?", "¿Quién sería capaz de regalar algo usado que le regalaron antes?", "¿Quién de nosotros es el más rencoroso y no olvida nada ni en 20 años?", "¿Quién se quedaría con el vuelto si el cajero se equivoca a su favor?", "¿Quién tiene más probabilidades de ser cancelado en redes sociales?", "¿Quién es el más probable que llame a su ex a las 4 de la mañana?", "¿Quién de nosotros sería el peor psicólogo por falta de empatía?", "¿Quién se pondría a discutir con el árbitro en un partido amistoso?", "¿Quién tiene más chances de quedarse sin batería justo cuando más se lo necesita?", "¿Quién sería capaz de comerse la porción de comida que otro guardó en la heladera?", "¿Quién de la mesa es el más hipocondríaco?", "¿Quién tiene más probabilidades de terminar en un programa de chimentos?", "¿Quién es el más propenso a confundir el nombre de su pareja con el de un ex?", "¿Quién de nosotros se haría amigo del ladrón si nos entran a robar?", "¿Quién tardaría horas en elegir qué pedir en un restaurante y después pediría lo mismo de siempre?", "¿Quién tiene más chances de olvidarse a un hijo o mascota en algún lado?", "¿Quién es el más probable que se ría en un momento súper serio como un velorio?", "¿Quién de nosotros se compraría algo carísimo que nunca va a usar?", "¿Quién sería el primero en abandonar un grupo de WhatsApp sin dar explicaciones?", "¿Quién tiene más probabilidades de ser expulsado de un boliche o bar?", "¿Quién es el más probable que invente una excusa ridícula para cancelar un plan a último minuto?", "¿Quién de la mesa tiene menos filtro para decir las cosas?", "¿Quién sería capaz de sabotear a un amigo para ganar una apuesta?", "¿Quién tiene más chances de terminar viviendo en otro país sin saber el idioma?", "¿Quién es el más probable que se quede pelado o con canas antes que todos?", "¿Quién de nosotros es claramente el 'amigo de mierda' oficial de este grupo?", "¿Quién sería capaz de pedir plata prestada y después subir fotos de vacaciones?", "¿Quién tiene más chances de chocar estacionando en un lugar completamente vacío?", "¿Quién se pondría a cantar karaoke desafinando como si estuviera en el Luna Park?", "¿Quién de nosotros es el más probable que crea en teorías conspirativas ridículas?", "¿Quién dejaría el baño tapado en casa ajena y saldría silbando bajito?", "¿Quién tiene más probabilidades de hacerse famoso por un video viral haciendo el ridículo?", "¿Quién es el más probable que se quede dormido en una juntada antes de las 12?", "¿Quién de nosotros se haría el ofendido para no pedir perdón cuando sabe que se equivocó?", "¿Quién sería capaz de usar la tarjeta de crédito de otro 'sin querer'?", "¿Quién tiene más chances de terminar casado con alguien que conoció hace dos semanas?", "¿Quién es el más probable que se pierda usando Google Maps?", "¿Quién de nosotros tiene más chances de sobrevivir a una guerra nuclear como una cucaracha?", "¿Quién sería capaz de criticar a alguien y saludarlo a los dos segundos con un abrazo?", "¿Quién es el más probable que mande un audio llorando por una borrachera?", "¿Quién de la mesa tiene el humor más negro e irrecuperable?", "¿Quién se anotaría en el gimnasio en enero, pagaría el año entero y no iría nunca?", "¿Quién tiene más chances de terminar en una comisaría por discutir con un policía?", "¿Quién sería capaz de spoilear el final de una serie a propósito?", "¿Quién es el más probable que se quede encerrado afuera de su casa en ropa interior?", "¿Quién de nosotros es el que peor consejo sentimental da?"];
 
@@ -2916,7 +2963,7 @@
 
     const MIMICA_DECKS = {"ninos": {"acciones": ["Saltar como un perrito", "Saltar como un mono", "Saltar un helado gigante", "Saltar una pizza", "Saltar en un pie", "Saltar muy rápido", "Saltar muy lento", "Saltar con miedo", "Saltar como un robot", "Saltar como un monstruo", "Saltar con mucha alegría", "Correr como un perrito", "Correr como un mono", "Correr un helado gigante", "Correr una pizza", "Correr en un pie", "Correr muy rápido", "Correr muy lento", "Correr con miedo", "Correr como un robot", "Correr como un monstruo", "Correr con mucha alegría", "Dormir como un perrito", "Dormir como un mono", "Dormir un helado gigante", "Dormir una pizza", "Dormir en un pie", "Dormir muy rápido", "Dormir muy lento", "Dormir con miedo", "Dormir como un robot", "Dormir como un monstruo", "Dormir con mucha alegría", "Comer como un perrito", "Comer como un mono", "Comer un helado gigante", "Comer una pizza", "Comer en un pie", "Comer muy rápido", "Comer muy lento", "Comer con miedo", "Comer como un robot", "Comer como un monstruo", "Comer con mucha alegría", "Volar como un perrito", "Volar como un mono", "Volar un helado gigante", "Volar una pizza", "Volar en un pie", "Volar muy rápido", "Volar muy lento", "Volar con miedo", "Volar como un robot", "Volar como un monstruo", "Volar con mucha alegría", "Nadar como un perrito", "Nadar como un mono", "Nadar un helado gigante", "Nadar una pizza", "Nadar en un pie", "Nadar muy rápido", "Nadar muy lento", "Nadar con miedo", "Nadar como un robot", "Nadar como un monstruo", "Nadar con mucha alegría", "Pintar como un perrito", "Pintar como un mono", "Pintar un helado gigante", "Pintar una pizza", "Pintar en un pie", "Pintar muy rápido", "Pintar muy lento", "Pintar con miedo", "Pintar como un robot", "Pintar como un monstruo", "Pintar con mucha alegría", "Dibujar como un perrito", "Dibujar como un mono", "Dibujar un helado gigante", "Dibujar una pizza", "Dibujar en un pie", "Dibujar muy rápido", "Dibujar muy lento", "Dibujar con miedo", "Dibujar como un robot", "Dibujar como un monstruo", "Dibujar con mucha alegría", "Llorar como un perrito", "Llorar como un mono", "Llorar un helado gigante", "Llorar una pizza", "Llorar en un pie", "Llorar muy rápido", "Llorar muy lento", "Llorar con miedo", "Llorar como un robot", "Llorar como un monstruo", "Llorar con mucha alegría", "Reír como un perrito", "Reír como un mono", "Reír un helado gigante", "Reír una pizza", "Reír en un pie", "Reír muy rápido", "Reír muy lento", "Reír con miedo", "Reír como un robot", "Reír como un monstruo", "Reír con mucha alegría", "Bailar como un perrito", "Bailar como un mono", "Bailar un helado gigante", "Bailar una pizza", "Bailar en un pie", "Bailar muy rápido", "Bailar muy lento", "Bailar con miedo", "Bailar como un robot", "Bailar como un monstruo", "Bailar con mucha alegría", "Cantar como un perrito", "Cantar como un mono", "Cantar un helado gigante", "Cantar una pizza", "Cantar en un pie", "Cantar muy rápido", "Cantar muy lento", "Cantar con miedo", "Cantar como un robot", "Cantar como un monstruo", "Cantar con mucha alegría", "Trepar como un perrito", "Trepar como un mono", "Trepar un helado gigante", "Trepar una pizza", "Trepar en un pie", "Trepar muy rápido", "Trepar muy lento", "Trepar con miedo", "Trepar como un robot", "Trepar como un monstruo", "Trepar con mucha alegría", "Esconderse como un perrito", "Esconderse como un mono", "Esconderse un helado gigante", "Esconderse una pizza", "Esconderse en un pie", "Esconderse muy rápido", "Esconderse muy lento"], "peliculas": ["Toy Story", "Frozen", "El Rey León", "Buscando a Nemo", "Moana", "Encanto", "Cars", "Shrek", "Minions", "Intensa-Mente", "Monsters Inc.", "Coco", "Aladdín", "La Sirenita", "Mulan", "Tarzán", "Zootopia", "Los Increíbles", "Kung Fu Panda", "Madagascar", "La Era de Hielo", "Up", "Wall-E", "Ratatouille", "Peter Pan", "Blancanieves", "Cenicienta", "La Bella y la Bestia", "Valiente", "Enredados", "Bichos", "Lilo y Stitch", "El Lorax", "Sing", "La Vida Secreta de tus Mascotas", "Trolls", "Cómo entrenar a tu dragón", "Mi Villano Favorito", "Hotel Transylvania", "El Grinch", "El Gato con Botas", "Ralph el Demoledor", "Bolt", "Dumbo", "Bambi", "Pinocho", "El Libro de la Selva", "Alicia en el País de las Maravillas", "Robin Hood", "Los Pitufos", "Garfield", "Bob Esponja la Película", "Luca", "Red", "Super Mario Bros", "Sonic", "Pokémon", "Detective Pikachu", "Toy Story 2", "Frozen 2", "El Rey León 2", "Buscando a Nemo 2", "Moana 2", "Encanto 2", "Cars 2", "Shrek 2", "Minions 2", "Intensa-Mente 2", "Monsters Inc. 2", "Coco 2", "Aladdín 2", "La Sirenita 2", "Mulan 2", "Tarzán 2", "Zootopia 2", "Los Increíbles 2", "Kung Fu Panda 2", "Madagascar 2", "La Era de Hielo 2", "Up 2", "Wall-E 2", "Ratatouille 2", "Peter Pan 2", "Blancanieves 2", "Cenicienta 2", "La Bella y la Bestia 2", "Valiente 2", "Enredados 2", "Bichos 2", "Lilo y Stitch 2", "El Lorax 2", "Sing 2", "La Vida Secreta de tus Mascotas 2", "Trolls 2", "Cómo entrenar a tu dragón 2", "Mi Villano Favorito 2", "Hotel Transylvania 2", "El Grinch 2", "El Gato con Botas 2", "Ralph el Demoledor 2", "Bolt 2", "Dumbo 2", "Bambi 2", "Pinocho 2", "El Libro de la Selva 2", "Alicia en el País de las Maravillas 2", "Robin Hood 2", "Los Pitufos 2", "Garfield 2", "Bob Esponja la Película 2", "Luca 2", "Red 2", "Super Mario Bros 2", "Sonic 2", "Pokémon 2", "Detective Pikachu 2", "Toy Story 3", "Frozen 3", "El Rey León 3", "Buscando a Nemo 3", "Moana 3", "Encanto 3", "Cars 3", "Shrek 3", "Minions 3", "Intensa-Mente 3", "Monsters Inc. 3", "Coco 3", "Aladdín 3", "La Sirenita 3", "Mulan 3", "Tarzán 3", "Zootopia 3", "Los Increíbles 3", "Kung Fu Panda 3", "Madagascar 3", "La Era de Hielo 3", "Up 3", "Wall-E 3", "Ratatouille 3", "Peter Pan 3", "Blancanieves 3", "Cenicienta 3", "La Bella y la Bestia 3", "Valiente 3", "Enredados 3", "Bichos 3", "Lilo y Stitch 3", "El Lorax 3", "Sing 3"], "personajes": ["Mickey Mouse", "Pato Donald", "Spider-Man", "Batman", "Superman", "Mujer Maravilla", "Peppa Pig", "Bob Esponja", "Pikachu", "Elsa", "Olaf", "Simba", "Woody", "Buzz Lightyear", "Shrek", "Burro", "Goku", "Naruto", "Sonic", "Mario Bros", "Luigi", "Papá Noel", "Ratón Pérez", "Caperucita Roja", "El Lobo Feroz", "Pinocho", "Cenicienta", "Blancanieves", "Ariel", "Rapunzel", "Hulk", "Capitán América", "Iron Man", "Pantera Negra", "Groot", "Minnie Mouse", "Pluto", "Goofy", "Patricio Estrella", "Calamardo", "Peppa Cerdita", "George Pig", "Dora la Exploradora", "Botas", "Ben 10", "Bugs Bunny", "Pato Lucas", "Tom", "Jerry", "Silvestre", "Piolín", "Scooby-Doo", "Shaggy", "Las Chicas Superpoderosas", "Dexter", "Winnie Pooh", "Tigger", "Igor", "Piglet", "Stitch", "Lilo", "Super Mickey Mouse", "Super Pato Donald", "Super Spider-Man", "Super Batman", "Super Superman", "Super Mujer Maravilla", "Super Peppa Pig", "Super Bob Esponja", "Super Pikachu", "Super Elsa", "Super Olaf", "Super Simba", "Super Woody", "Super Buzz Lightyear", "Super Shrek", "Super Burro", "Super Goku", "Super Naruto", "Super Sonic", "Super Mario Bros", "Super Luigi", "Super Papá Noel", "Super Ratón Pérez", "Super Caperucita Roja", "Super El Lobo Feroz", "Super Pinocho", "Super Cenicienta", "Super Blancanieves", "Super Ariel", "Super Rapunzel", "Super Hulk", "Super Capitán América", "Super Iron Man", "Super Pantera Negra", "Super Groot", "Super Minnie Mouse", "Super Pluto", "Super Goofy", "Super Patricio Estrella", "Super Calamardo", "Super Peppa Cerdita", "Super George Pig", "Super Dora la Exploradora", "Super Botas", "Super Ben 10", "Super Bugs Bunny", "Super Pato Lucas", "Super Tom", "Super Jerry", "Super Silvestre", "Super Piolín", "Super Scooby-Doo", "Super Shaggy", "Super Las Chicas Superpoderosas", "Super Dexter", "Super Winnie Pooh", "Super Tigger", "Super Igor", "Super Piglet", "Super Stitch", "Super Lilo", "Super Mickey Mouse", "Super Pato Donald", "Super Spider-Man", "Super Batman", "Super Superman", "Super Mujer Maravilla", "Super Peppa Pig", "Super Bob Esponja", "Super Pikachu", "Super Elsa", "Super Olaf", "Super Simba", "Super Woody", "Super Buzz Lightyear", "Super Shrek", "Super Burro", "Super Goku", "Super Naruto", "Super Sonic", "Super Mario Bros", "Super Luigi", "Super Papá Noel", "Super Ratón Pérez", "Super Caperucita Roja", "Super El Lobo Feroz", "Super Pinocho", "Super Cenicienta", "Super Blancanieves"]}, "familia": {"acciones": ["Planchar la ropa", "Planchar el auto", "Planchar tenis", "Planchar fútbol", "Planchar el pasto", "Planchar un asado", "Planchar Netflix", "Planchar tango", "Planchar la computadora", "Planchar los platos", "Planchar la guitarra", "Planchar en la ducha", "Planchar una maratón", "Planchar pesas pesadas", "Lavar la ropa", "Lavar el auto", "Lavar tenis", "Lavar fútbol", "Lavar el pasto", "Lavar un asado", "Lavar Netflix", "Lavar tango", "Lavar la computadora", "Lavar los platos", "Lavar la guitarra", "Lavar en la ducha", "Lavar una maratón", "Lavar pesas pesadas", "Manejar la ropa", "Manejar el auto", "Manejar tenis", "Manejar fútbol", "Manejar el pasto", "Manejar un asado", "Manejar Netflix", "Manejar tango", "Manejar la computadora", "Manejar los platos", "Manejar la guitarra", "Manejar en la ducha", "Manejar una maratón", "Manejar pesas pesadas", "Jugar al la ropa", "Jugar al el auto", "Jugar al tenis", "Jugar al fútbol", "Jugar al el pasto", "Jugar al un asado", "Jugar al Netflix", "Jugar al tango", "Jugar al la computadora", "Jugar al los platos", "Jugar al la guitarra", "Jugar al en la ducha", "Jugar al una maratón", "Jugar al pesas pesadas", "Cortar la ropa", "Cortar el auto", "Cortar tenis", "Cortar fútbol", "Cortar el pasto", "Cortar un asado", "Cortar Netflix", "Cortar tango", "Cortar la computadora", "Cortar los platos", "Cortar la guitarra", "Cortar en la ducha", "Cortar una maratón", "Cortar pesas pesadas", "Cocinar la ropa", "Cocinar el auto", "Cocinar tenis", "Cocinar fútbol", "Cocinar el pasto", "Cocinar un asado", "Cocinar Netflix", "Cocinar tango", "Cocinar la computadora", "Cocinar los platos", "Cocinar la guitarra", "Cocinar en la ducha", "Cocinar una maratón", "Cocinar pesas pesadas", "Mirar la ropa", "Mirar el auto", "Mirar tenis", "Mirar fútbol", "Mirar el pasto", "Mirar un asado", "Mirar Netflix", "Mirar tango", "Mirar la computadora", "Mirar los platos", "Mirar la guitarra", "Mirar en la ducha", "Mirar una maratón", "Mirar pesas pesadas", "Bailar la ropa", "Bailar el auto", "Bailar tenis", "Bailar fútbol", "Bailar el pasto", "Bailar un asado", "Bailar Netflix", "Bailar tango", "Bailar la computadora", "Bailar los platos", "Bailar la guitarra", "Bailar en la ducha", "Bailar una maratón", "Bailar pesas pesadas", "Arreglar la ropa", "Arreglar el auto", "Arreglar tenis", "Arreglar fútbol", "Arreglar el pasto", "Arreglar un asado", "Arreglar Netflix", "Arreglar tango", "Arreglar la computadora", "Arreglar los platos", "Arreglar la guitarra", "Arreglar en la ducha", "Arreglar una maratón", "Arreglar pesas pesadas", "Limpiar la ropa", "Limpiar el auto", "Limpiar tenis", "Limpiar fútbol", "Limpiar el pasto", "Limpiar un asado", "Limpiar Netflix", "Limpiar tango", "Limpiar la computadora", "Limpiar los platos", "Limpiar la guitarra", "Limpiar en la ducha", "Limpiar una maratón", "Limpiar pesas pesadas", "Tocar la ropa", "Tocar el auto", "Tocar tenis", "Tocar fútbol", "Tocar el pasto", "Tocar un asado", "Tocar Netflix", "Tocar tango", "Tocar la computadora", "Tocar los platos"], "peliculas": ["Titanic", "Jurassic Park", "Star Wars", "El Señor de los Anillos", "Harry Potter", "Matrix", "Volver al Futuro", "Indiana Jones", "E.T.", "El Padrino", "Rocky", "Terminator", "Avatar", "Avengers", "Mi Pobre Angelito", "Esperando la Carroza", "El Secreto de sus Ojos", "Nueve Reinas", "Relatos Salvajes", "Gladiador", "Corazón Valiente", "Piratas del Caribe", "Misión Imposible", "Rápido y Furioso", "James Bond", "El Zorro", "Mujer Bonita", "Grease", "Mamma Mia!", "Forrest Gump", "La Vida es Bella", "El Club de la Pelea", "Sexto Sentido", "El Resplandor", "IT", "El Exorcista", "Juego de Gemelas", "Chicas Pesadas", "El Diablo Viste a la Moda", "El Gran Showman", "Bohemian Rhapsody", "Rocketman", "Escuela de Rock", "Crepúsculo", "Los Juegos del Hambre", "Dune", "Interestelar", "Gravedad", "El Regreso de Titanic", "El Regreso de Jurassic Park", "El Regreso de Star Wars", "El Regreso de El Señor de los Anillos", "El Regreso de Harry Potter", "El Regreso de Matrix", "El Regreso de Volver al Futuro", "El Regreso de Indiana Jones", "El Regreso de E.T.", "El Regreso de El Padrino", "El Regreso de Rocky", "El Regreso de Terminator", "El Regreso de Avatar", "El Regreso de Avengers", "El Regreso de Mi Pobre Angelito", "El Regreso de Esperando la Carroza", "El Regreso de El Secreto de sus Ojos", "El Regreso de Nueve Reinas", "El Regreso de Relatos Salvajes", "El Regreso de Gladiador", "El Regreso de Corazón Valiente", "El Regreso de Piratas del Caribe", "El Regreso de Misión Imposible", "El Regreso de Rápido y Furioso", "El Regreso de James Bond", "El Regreso de El Zorro", "El Regreso de Mujer Bonita", "El Regreso de Grease", "El Regreso de Mamma Mia!", "El Regreso de Forrest Gump", "El Regreso de La Vida es Bella", "El Regreso de El Club de la Pelea", "El Regreso de Sexto Sentido", "El Regreso de El Resplandor", "El Regreso de IT", "El Regreso de El Exorcista", "El Regreso de Juego de Gemelas", "El Regreso de Chicas Pesadas", "El Regreso de El Diablo Viste a la Moda", "El Regreso de El Gran Showman", "El Regreso de Bohemian Rhapsody", "El Regreso de Rocketman", "El Regreso de Escuela de Rock", "El Regreso de Crepúsculo", "El Regreso de Los Juegos del Hambre", "El Regreso de Dune", "El Regreso de Interestelar", "El Regreso de Gravedad", "El Regreso de Titanic", "El Regreso de Jurassic Park", "El Regreso de Star Wars", "El Regreso de El Señor de los Anillos", "El Regreso de Harry Potter", "El Regreso de Matrix", "El Regreso de Volver al Futuro", "El Regreso de Indiana Jones", "El Regreso de E.T.", "El Regreso de El Padrino", "El Regreso de Rocky", "El Regreso de Terminator", "El Regreso de Avatar", "El Regreso de Avengers", "El Regreso de Mi Pobre Angelito", "El Regreso de Esperando la Carroza", "El Regreso de El Secreto de sus Ojos", "El Regreso de Nueve Reinas", "El Regreso de Relatos Salvajes", "El Regreso de Gladiador", "El Regreso de Corazón Valiente", "El Regreso de Piratas del Caribe", "El Regreso de Misión Imposible", "El Regreso de Rápido y Furioso", "El Regreso de James Bond", "El Regreso de El Zorro", "El Regreso de Mujer Bonita", "El Regreso de Grease", "El Regreso de Mamma Mia!", "El Regreso de Forrest Gump", "El Regreso de La Vida es Bella", "El Regreso de El Club de la Pelea", "El Regreso de Sexto Sentido", "El Regreso de El Resplandor", "El Regreso de IT", "El Regreso de El Exorcista", "El Regreso de Juego de Gemelas", "El Regreso de Chicas Pesadas", "El Regreso de El Diablo Viste a la Moda", "El Regreso de El Gran Showman", "El Regreso de Bohemian Rhapsody", "El Regreso de Rocketman", "El Regreso de Escuela de Rock", "El Regreso de Crepúsculo", "El Regreso de Los Juegos del Hambre", "El Regreso de Dune", "El Regreso de Interestelar", "El Regreso de Gravedad", "El Regreso de Titanic", "El Regreso de Jurassic Park", "El Regreso de Star Wars", "El Regreso de El Señor de los Anillos", "El Regreso de Harry Potter", "El Regreso de Matrix"], "personajes": ["Lionel Messi", "Diego Maradona", "Michael Jackson", "Marilyn Monroe", "Elvis Presley", "Charlie Chaplin", "Albert Einstein", "Drácula", "Frankenstein", "Homero Simpson", "Mirtha Legrand", "Susana Giménez", "Ricardo Fort", "El Chavo del 8", "Don Ramón", "Charly García", "Shakira", "Bizarrap", "Dibu Martínez", "Che Guevara", "Cleopatra", "Julio César", "Leonardo da Vinci", "Mona Lisa", "Frida Kahlo", "Eminem", "Madonna", "Lady Gaga", "Taylor Swift", "Bad Bunny", "Míster Bean", "Jim Carrey", "Jackie Chan", "Bruce Lee", "Sylvester Stallone", "Arnold Schwarzenegger", "Tom Cruise", "Keanu Reeves", "Will Smith", "Brad Pitt", "Rey Arturo", "Robin Hood", "Hércules", "El doble de Lionel Messi", "El doble de Diego Maradona", "El doble de Michael Jackson", "El doble de Marilyn Monroe", "El doble de Elvis Presley", "El doble de Charlie Chaplin", "El doble de Albert Einstein", "El doble de Drácula", "El doble de Frankenstein", "El doble de Homero Simpson", "El doble de Mirtha Legrand", "El doble de Susana Giménez", "El doble de Ricardo Fort", "El doble de El Chavo del 8", "El doble de Don Ramón", "El doble de Charly García", "El doble de Shakira", "El doble de Bizarrap", "El doble de Dibu Martínez", "El doble de Che Guevara", "El doble de Cleopatra", "El doble de Julio César", "El doble de Leonardo da Vinci", "El doble de Mona Lisa", "El doble de Frida Kahlo", "El doble de Eminem", "El doble de Madonna", "El doble de Lady Gaga", "El doble de Taylor Swift", "El doble de Bad Bunny", "El doble de Míster Bean", "El doble de Jim Carrey", "El doble de Jackie Chan", "El doble de Bruce Lee", "El doble de Sylvester Stallone", "El doble de Arnold Schwarzenegger", "El doble de Tom Cruise", "El doble de Keanu Reeves", "El doble de Will Smith", "El doble de Brad Pitt", "El doble de Rey Arturo", "El doble de Robin Hood", "El doble de Hércules", "El doble de Lionel Messi", "El doble de Diego Maradona", "El doble de Michael Jackson", "El doble de Marilyn Monroe", "El doble de Elvis Presley", "El doble de Charlie Chaplin", "El doble de Albert Einstein", "El doble de Drácula", "El doble de Frankenstein", "El doble de Homero Simpson", "El doble de Mirtha Legrand", "El doble de Susana Giménez", "El doble de Ricardo Fort", "El doble de El Chavo del 8", "El doble de Don Ramón", "El doble de Charly García", "El doble de Shakira", "El doble de Bizarrap", "El doble de Dibu Martínez", "El doble de Che Guevara", "El doble de Cleopatra", "El doble de Julio César", "El doble de Leonardo da Vinci", "El doble de Mona Lisa", "El doble de Frida Kahlo", "El doble de Eminem", "El doble de Madonna", "El doble de Lady Gaga", "El doble de Taylor Swift", "El doble de Bad Bunny", "El doble de Míster Bean", "El doble de Jim Carrey", "El doble de Jackie Chan", "El doble de Bruce Lee", "El doble de Sylvester Stallone", "El doble de Arnold Schwarzenegger", "El doble de Tom Cruise", "El doble de Keanu Reeves", "El doble de Will Smith", "El doble de Brad Pitt", "El doble de Rey Arturo", "El doble de Robin Hood", "El doble de Hércules", "El doble de Lionel Messi", "El doble de Diego Maradona", "El doble de Michael Jackson", "El doble de Marilyn Monroe", "El doble de Elvis Presley", "El doble de Charlie Chaplin", "El doble de Albert Einstein", "El doble de Drácula", "El doble de Frankenstein", "El doble de Homero Simpson", "El doble de Mirtha Legrand", "El doble de Susana Giménez", "El doble de Ricardo Fort", "El doble de El Chavo del 8", "El doble de Don Ramón", "El doble de Charly García", "El doble de Shakira", "El doble de Bizarrap", "El doble de Dibu Martínez", "El doble de Che Guevara", "El doble de Cleopatra"]}, "adultos": {"acciones": ["Pagar las expensas", "Pagar el jefe", "Pagar una entrevista", "Pagar home office desnudo", "Pagar un ex", "Pagar las 4 AM", "Pagar el transporte público", "Pagar el currículum", "Pagar un impuesto", "Pagar la primera cita", "Pagar la contraseña del banco", "Discutir con las expensas", "Discutir con el jefe", "Discutir con una entrevista", "Discutir con home office desnudo", "Discutir con un ex", "Discutir con las 4 AM", "Discutir con el transporte público", "Discutir con el currículum", "Discutir con un impuesto", "Discutir con la primera cita", "Discutir con la contraseña del banco", "Llegar borracho a las expensas", "Llegar borracho a el jefe", "Llegar borracho a una entrevista", "Llegar borracho a home office desnudo", "Llegar borracho a un ex", "Llegar borracho a las 4 AM", "Llegar borracho a el transporte público", "Llegar borracho a el currículum", "Llegar borracho a un impuesto", "Llegar borracho a la primera cita", "Llegar borracho a la contraseña del banco", "Hacer las expensas", "Hacer el jefe", "Hacer una entrevista", "Hacer home office desnudo", "Hacer un ex", "Hacer las 4 AM", "Hacer el transporte público", "Hacer el currículum", "Hacer un impuesto", "Hacer la primera cita", "Hacer la contraseña del banco", "Stalkear a las expensas", "Stalkear a el jefe", "Stalkear a una entrevista", "Stalkear a home office desnudo", "Stalkear a un ex", "Stalkear a las 4 AM", "Stalkear a el transporte público", "Stalkear a el currículum", "Stalkear a un impuesto", "Stalkear a la primera cita", "Stalkear a la contraseña del banco", "Mandar mensaje a las expensas", "Mandar mensaje a el jefe", "Mandar mensaje a una entrevista", "Mandar mensaje a home office desnudo", "Mandar mensaje a un ex", "Mandar mensaje a las 4 AM", "Mandar mensaje a el transporte público", "Mandar mensaje a el currículum", "Mandar mensaje a un impuesto", "Mandar mensaje a la primera cita", "Mandar mensaje a la contraseña del banco", "Dormirse en las expensas", "Dormirse en el jefe", "Dormirse en una entrevista", "Dormirse en home office desnudo", "Dormirse en un ex", "Dormirse en las 4 AM", "Dormirse en el transporte público", "Dormirse en el currículum", "Dormirse en un impuesto", "Dormirse en la primera cita", "Dormirse en la contraseña del banco", "Mentir en las expensas", "Mentir en el jefe", "Mentir en una entrevista", "Mentir en home office desnudo", "Mentir en un ex", "Mentir en las 4 AM", "Mentir en el transporte público", "Mentir en el currículum", "Mentir en un impuesto", "Mentir en la primera cita", "Mentir en la contraseña del banco", "Llorar por las expensas", "Llorar por el jefe", "Llorar por una entrevista", "Llorar por home office desnudo", "Llorar por un ex", "Llorar por las 4 AM", "Llorar por el transporte público", "Llorar por el currículum", "Llorar por un impuesto", "Llorar por la primera cita", "Llorar por la contraseña del banco", "Eructar en las expensas", "Eructar en el jefe", "Eructar en una entrevista", "Eructar en home office desnudo", "Eructar en un ex", "Eructar en las 4 AM", "Eructar en el transporte público", "Eructar en el currículum", "Eructar en un impuesto", "Eructar en la primera cita", "Eructar en la contraseña del banco", "Olvidar las expensas", "Olvidar el jefe", "Olvidar una entrevista", "Olvidar home office desnudo", "Olvidar un ex", "Olvidar las 4 AM", "Olvidar el transporte público", "Olvidar el currículum", "Olvidar un impuesto", "Olvidar la primera cita", "Olvidar la contraseña del banco"], "peliculas": ["Pulp Fiction", "El Club de la Pelea", "El Padrino", "El Lobo de Wall Street", "Cincuenta Sombras de Grey", "Psicosis", "El Resplandor", "Alien", "Terminator 2", "Kill Bill", "Bastardos sin Gloria", "Django Sin Cadenas", "Scarface", "Taxi Driver", "La Naranja Mecánica", "El Silencio de los Inocentes", "Se7en", "El Cisne Negro", "Parasite", "Mad Max: Fury Road", "Joker", "Deadpool", "Hangover (¿Qué pasó ayer?)", "American Pie", "Supercool", "El Exorcista", "El Conjuro", "Actividad Paranormal", "Saw (El Juego del Miedo)", "Hostel", "Nueve Reinas", "El Secreto de sus Ojos", "Relatos Salvajes", "El Marginal", "Okupas", "Los Simuladores", "Breaking Bad", "Game of Thrones", "Peaky Blinders", "Black Mirror", "Secuela de Pulp Fiction", "Secuela de El Club de la Pelea", "Secuela de El Padrino", "Secuela de El Lobo de Wall Street", "Secuela de Cincuenta Sombras de Grey", "Secuela de Psicosis", "Secuela de El Resplandor", "Secuela de Alien", "Secuela de Terminator 2", "Secuela de Kill Bill", "Secuela de Bastardos sin Gloria", "Secuela de Django Sin Cadenas", "Secuela de Scarface", "Secuela de Taxi Driver", "Secuela de La Naranja Mecánica", "Secuela de El Silencio de los Inocentes", "Secuela de Se7en", "Secuela de El Cisne Negro", "Secuela de Parasite", "Secuela de Mad Max: Fury Road", "Secuela de Joker", "Secuela de Deadpool", "Secuela de Hangover (¿Qué pasó ayer?)", "Secuela de American Pie", "Secuela de Supercool", "Secuela de El Exorcista", "Secuela de El Conjuro", "Secuela de Actividad Paranormal", "Secuela de Saw (El Juego del Miedo)", "Secuela de Hostel", "Secuela de Nueve Reinas", "Secuela de El Secreto de sus Ojos", "Secuela de Relatos Salvajes", "Secuela de El Marginal", "Secuela de Okupas", "Secuela de Los Simuladores", "Secuela de Breaking Bad", "Secuela de Game of Thrones", "Secuela de Peaky Blinders", "Secuela de Black Mirror", "Secuela de Pulp Fiction", "Secuela de El Club de la Pelea", "Secuela de El Padrino", "Secuela de El Lobo de Wall Street", "Secuela de Cincuenta Sombras de Grey", "Secuela de Psicosis", "Secuela de El Resplandor", "Secuela de Alien", "Secuela de Terminator 2", "Secuela de Kill Bill", "Secuela de Bastardos sin Gloria", "Secuela de Django Sin Cadenas", "Secuela de Scarface", "Secuela de Taxi Driver", "Secuela de La Naranja Mecánica", "Secuela de El Silencio de los Inocentes", "Secuela de Se7en", "Secuela de El Cisne Negro", "Secuela de Parasite", "Secuela de Mad Max: Fury Road", "Secuela de Joker", "Secuela de Deadpool", "Secuela de Hangover (¿Qué pasó ayer?)", "Secuela de American Pie", "Secuela de Supercool", "Secuela de El Exorcista", "Secuela de El Conjuro", "Secuela de Actividad Paranormal", "Secuela de Saw (El Juego del Miedo)", "Secuela de Hostel", "Secuela de Nueve Reinas", "Secuela de El Secreto de sus Ojos", "Secuela de Relatos Salvajes", "Secuela de El Marginal", "Secuela de Okupas", "Secuela de Los Simuladores", "Secuela de Breaking Bad", "Secuela de Game of Thrones", "Secuela de Peaky Blinders", "Secuela de Black Mirror", "Secuela de Pulp Fiction", "Secuela de El Club de la Pelea", "Secuela de El Padrino", "Secuela de El Lobo de Wall Street", "Secuela de Cincuenta Sombras de Grey", "Secuela de Psicosis", "Secuela de El Resplandor", "Secuela de Alien", "Secuela de Terminator 2", "Secuela de Kill Bill", "Secuela de Bastardos sin Gloria", "Secuela de Django Sin Cadenas", "Secuela de Scarface", "Secuela de Taxi Driver", "Secuela de La Naranja Mecánica", "Secuela de El Silencio de los Inocentes", "Secuela de Se7en", "Secuela de El Cisne Negro", "Secuela de Parasite", "Secuela de Mad Max: Fury Road", "Secuela de Joker", "Secuela de Deadpool", "Secuela de Hangover (¿Qué pasó ayer?)", "Secuela de American Pie", "Secuela de Supercool", "Secuela de El Exorcista", "Secuela de El Conjuro", "Secuela de Actividad Paranormal", "Secuela de Saw (El Juego del Miedo)", "Secuela de Hostel"], "personajes": ["Walter White", "Tony Soprano", "Michael Scott", "Hannibal Lecter", "Moria Casán", "Diego Capusotto", "Luca Prodan", "Indio Solari", "Ricardo Iorio", "Pappo", "Luis Alberto Spinetta", "Astor Piazzolla", "Jorge Luis Borges", "Julio Cortázar", "Quentin Tarantino", "Stanley Kubrick", "Elon Musk", "Steve Jobs", "Sigmund Freud", "Friedrich Nietzsche", "Che Guevara", "Evita Perón", "Winston Churchill", "Kurt Cobain", "Amy Winehouse", "David Bowie", "Donald Trump", "Javier Milei", "Cristina Kirchner", "Mauricio Macri", "El Bananero", "Ibai Llanos", "Coscu", "Hasbulla", "Mia Khalifa", "Sasha Grey", "Pablo Escobar", "El Chapo Guzmán", "Al Capone", "Charles Manson", "Ted Bundy", "Jack el Destripador", "El fantasma de Walter White", "El fantasma de Tony Soprano", "El fantasma de Michael Scott", "El fantasma de Hannibal Lecter", "El fantasma de Moria Casán", "El fantasma de Diego Capusotto", "El fantasma de Luca Prodan", "El fantasma de Indio Solari", "El fantasma de Ricardo Iorio", "El fantasma de Pappo", "El fantasma de Luis Alberto Spinetta", "El fantasma de Astor Piazzolla", "El fantasma de Jorge Luis Borges", "El fantasma de Julio Cortázar", "El fantasma de Quentin Tarantino", "El fantasma de Stanley Kubrick", "El fantasma de Elon Musk", "El fantasma de Steve Jobs", "El fantasma de Sigmund Freud", "El fantasma de Friedrich Nietzsche", "El fantasma de Che Guevara", "El fantasma de Evita Perón", "El fantasma de Winston Churchill", "El fantasma de Kurt Cobain", "El fantasma de Amy Winehouse", "El fantasma de David Bowie", "El fantasma de Donald Trump", "El fantasma de Javier Milei", "El fantasma de Cristina Kirchner", "El fantasma de Mauricio Macri", "El fantasma de El Bananero", "El fantasma de Ibai Llanos", "El fantasma de Coscu", "El fantasma de Hasbulla", "El fantasma de Mia Khalifa", "El fantasma de Sasha Grey", "El fantasma de Pablo Escobar", "El fantasma de El Chapo Guzmán", "El fantasma de Al Capone", "El fantasma de Charles Manson", "El fantasma de Ted Bundy", "El fantasma de Jack el Destripador", "El fantasma de Walter White", "El fantasma de Tony Soprano", "El fantasma de Michael Scott", "El fantasma de Hannibal Lecter", "El fantasma de Moria Casán", "El fantasma de Diego Capusotto", "El fantasma de Luca Prodan", "El fantasma de Indio Solari", "El fantasma de Ricardo Iorio", "El fantasma de Pappo", "El fantasma de Luis Alberto Spinetta", "El fantasma de Astor Piazzolla", "El fantasma de Jorge Luis Borges", "El fantasma de Julio Cortázar", "El fantasma de Quentin Tarantino", "El fantasma de Stanley Kubrick", "El fantasma de Elon Musk", "El fantasma de Steve Jobs", "El fantasma de Sigmund Freud", "El fantasma de Friedrich Nietzsche", "El fantasma de Che Guevara", "El fantasma de Evita Perón", "El fantasma de Winston Churchill", "El fantasma de Kurt Cobain", "El fantasma de Amy Winehouse", "El fantasma de David Bowie", "El fantasma de Donald Trump", "El fantasma de Javier Milei", "El fantasma de Cristina Kirchner", "El fantasma de Mauricio Macri", "El fantasma de El Bananero", "El fantasma de Ibai Llanos", "El fantasma de Coscu", "El fantasma de Hasbulla", "El fantasma de Mia Khalifa", "El fantasma de Sasha Grey", "El fantasma de Pablo Escobar", "El fantasma de El Chapo Guzmán", "El fantasma de Al Capone", "El fantasma de Charles Manson", "El fantasma de Ted Bundy", "El fantasma de Jack el Destripador", "El fantasma de Walter White", "El fantasma de Tony Soprano", "El fantasma de Michael Scott", "El fantasma de Hannibal Lecter", "El fantasma de Moria Casán", "El fantasma de Diego Capusotto", "El fantasma de Luca Prodan", "El fantasma de Indio Solari", "El fantasma de Ricardo Iorio", "El fantasma de Pappo", "El fantasma de Luis Alberto Spinetta", "El fantasma de Astor Piazzolla", "El fantasma de Jorge Luis Borges", "El fantasma de Julio Cortázar", "El fantasma de Quentin Tarantino", "El fantasma de Stanley Kubrick", "El fantasma de Elon Musk", "El fantasma de Steve Jobs", "El fantasma de Sigmund Freud", "El fantasma de Friedrich Nietzsche", "El fantasma de Che Guevara", "El fantasma de Evita Perón", "El fantasma de Winston Churchill", "El fantasma de Kurt Cobain"]}};
 
-    const FAKE_DECKS = {"ninos": [{"w": "Sol", "c": "Naturaleza"}, {"w": "Casa", "c": "Construcción"}, {"w": "Perro", "c": "Animal"}, {"w": "Gato", "c": "Animal"}, {"w": "Árbol", "c": "Naturaleza"}, {"w": "Auto", "c": "Transporte"}, {"w": "Barco", "c": "Transporte"}, {"w": "Avión", "c": "Transporte"}, {"w": "Helado", "c": "Comida"}, {"w": "Pizza", "c": "Comida"}, {"w": "Manzana", "c": "Fruta"}, {"w": "Banana", "c": "Fruta"}, {"w": "Pez", "c": "Animal"}, {"w": "Tortuga", "c": "Animal"}, {"w": "Mariposa", "c": "Insecto"}, {"w": "Elefante", "c": "Animal"}, {"w": "Jirafa", "c": "Animal"}, {"w": "Dinosaurio", "c": "Animal"}, {"w": "Robot", "c": "Personaje"}, {"w": "Cohete", "c": "Espacio"}, {"w": "Estrella", "c": "Espacio"}, {"w": "Luna", "c": "Espacio"}, {"w": "Arcoíris", "c": "Clima"}, {"w": "Paraguas", "c": "Objeto"}, {"w": "Bicicleta", "c": "Transporte"}, {"w": "Pelota", "c": "Deporte"}, {"w": "Guitarra", "c": "Música"}, {"w": "Corona", "c": "Objeto"}, {"w": "Castillo", "c": "Lugar"}, {"w": "Fantasma", "c": "Personaje"}, {"w": "Pirata", "c": "Personaje"}, {"w": "Sirena", "c": "Fantasía"}, {"w": "Pulpo", "c": "Animal"}, {"w": "Pingüino", "c": "Animal"}, {"w": "Abeja", "c": "Insecto"}, {"w": "Flor", "c": "Naturaleza"}, {"w": "Torta", "c": "Comida"}, {"w": "Reloj", "c": "Objeto"}, {"w": "Anteojos", "c": "Objeto"}, {"w": "Barrilete", "c": "Juguete"}], "familia": [{"w": "Parrilla", "c": "Asado"}, {"w": "Mate", "c": "Bebida"}, {"w": "Faro", "c": "Construcción"}, {"w": "Submarino", "c": "Transporte"}, {"w": "Volcán", "c": "Naturaleza"}, {"w": "Pirámide", "c": "Historia"}, {"w": "Cactus", "c": "Planta"}, {"w": "Molino de viento", "c": "Construcción"}, {"w": "Globo aerostático", "c": "Transporte"}, {"w": "Teleférico", "c": "Transporte"}, {"w": "Semáforo", "c": "Ciudad"}, {"w": "Hidrante", "c": "Ciudad"}, {"w": "Espantapájaros", "c": "Campo"}, {"w": "Iglesia", "c": "Construcción"}, {"w": "Puente colgante", "c": "Construcción"}, {"w": "Iglú", "c": "Construcción"}, {"w": "Cámara de fotos", "c": "Objeto"}, {"w": "Microscopio", "c": "Ciencia"}, {"w": "Telescopio", "c": "Ciencia"}, {"w": "Brújula", "c": "Objeto"}, {"w": "Ancla", "c": "Náutica"}, {"w": "Velero", "c": "Náutica"}, {"w": "Pingüino", "c": "Animal"}, {"w": "Camello", "c": "Animal"}, {"w": "Canguro", "c": "Animal"}, {"w": "Flamenco", "c": "Ave"}, {"w": "Búho", "c": "Ave"}, {"w": "Murciélago", "c": "Animal"}, {"w": "Sushi", "c": "Comida"}, {"w": "Empanada", "c": "Comida"}, {"w": "Hamburguesa", "c": "Comida"}, {"w": "Taco", "c": "Comida"}, {"w": "Batería", "c": "Música"}, {"w": "Saxofón", "c": "Música"}, {"w": "Violín", "c": "Música"}, {"w": "Acordeón", "c": "Música"}, {"w": "Momia", "c": "Terror"}, {"w": "Vampiro", "c": "Terror"}, {"w": "Ovni", "c": "Ciencia Ficción"}, {"w": "Astronauta", "c": "Espacio"}], "adultos": [{"w": "Tinder", "c": "Aplicación"}, {"w": "Resaca", "c": "Estado"}, {"w": "Home office", "c": "Trabajo"}, {"w": "Inflación", "c": "Economía"}, {"w": "Divorcio", "c": "Legal"}, {"w": "Testamento", "c": "Legal"}, {"w": "Motel", "c": "Lugar"}, {"w": "Casino", "c": "Lugar"}, {"w": "Control de alcoholemia", "c": "Tránsito"}, {"w": "Grúa de acarreo", "c": "Tránsito"}, {"w": "Trapito", "c": "Calle"}, {"w": "Piquete", "c": "Ciudad"}, {"w": "Inodoro tapado", "c": "Hogar"}, {"w": "Gotera", "c": "Hogar"}, {"w": "Corte de luz", "c": "Servicio"}, {"w": "Router sin señal", "c": "Tecnología"}, {"w": "Modo incógnito", "c": "Internet"}, {"w": "Spam", "c": "Internet"}, {"w": "Fake news", "c": "Medios"}, {"w": "Influencer", "c": "Redes"}, {"w": "Tatuaje arrepentido", "c": "Estética"}, {"w": "Botox", "c": "Estética"}, {"w": "Peluca", "c": "Accesorio"}, {"w": "Viagra", "c": "Farmacia"}, {"w": "Colonoscopia", "c": "Medicina"}, {"w": "Suero", "c": "Medicina"}, {"w": "Yeso en la pierna", "c": "Lesión"}, {"w": "Ciático", "c": "Salud"}, {"w": "Despedida de soltero", "c": "Fiesta"}, {"w": "Barra libre", "c": "Fiesta"}, {"w": "Fernet con coca", "c": "Bebida"}, {"w": "Sacacorchos", "c": "Objeto"}, {"w": "Cuarto oscuro", "c": "Elecciones"}, {"w": "Urna", "c": "Elecciones"}, {"w": "Carta natal", "c": "Astrología"}, {"w": "Ouija", "c": "Paranormal"}, {"w": "Cementerio", "c": "Lugar"}, {"w": "Velorio", "c": "Evento"}, {"w": "Esposas policiales", "c": "Objeto"}, {"w": "Detector de mentiras", "c": "Objeto"}]};
+    const FAKE_DECKS = {"ninos": [{"w": "Sol", "c": "Naturaleza"}, {"w": "Casa", "c": "Construcción"}, {"w": "Perro", "c": "Animal"}, {"w": "Gato", "c": "Animal"}, {"w": "Árbol", "c": "Naturaleza"}, {"w": "Auto", "c": "Transporte"}, {"w": "Barco", "c": "Transporte"}, {"w": "Avión", "c": "Transporte"}, {"w": "Helado", "c": "Comida"}, {"w": "Pizza", "c": "Comida"}, {"w": "Manzana", "c": "Fruta"}, {"w": "Banana", "c": "Fruta"}, {"w": "Pez", "c": "Animal"}, {"w": "Tortuga", "c": "Animal"}, {"w": "Mariposa", "c": "Insecto"}, {"w": "Elefante", "c": "Animal"}, {"w": "Jirafa", "c": "Animal"}, {"w": "Dinosaurio", "c": "Animal"}, {"w": "Robot", "c": "Personaje"}, {"w": "Cohete", "c": "Espacio"}, {"w": "Estrella", "c": "Espacio"}, {"w": "Luna", "c": "Espacio"}, {"w": "Arcoíris", "c": "Clima"}, {"w": "Paraguas", "c": "Objeto"}, {"w": "Bicicleta", "c": "Transporte"}, {"w": "Pelota", "c": "Deporte"}, {"w": "Guitarra", "c": "Música"}, {"w": "Corona", "c": "Objeto"}, {"w": "Castillo", "c": "Lugar"}, {"w": "Fantasma", "c": "Personaje"}, {"w": "Pirata", "c": "Personaje"}, {"w": "Sirena", "c": "Fantasía"}, {"w": "Pulpo", "c": "Animal"}, {"w": "Pingüino", "c": "Animal"}, {"w": "Abeja", "c": "Insecto"}, {"w": "Flor", "c": "Naturaleza"}, {"w": "Torta", "c": "Comida"}, {"w": "Reloj", "c": "Objeto"}, {"w": "Anteojos", "c": "Objeto"}, {"w": "Barrilete", "c": "Juguete"}], "familia": [{"w": "Parrilla", "c": "Asado"}, {"w": "Mate", "c": "Bebida"}, {"w": "Faro", "c": "Construcción"}, {"w": "Submarino", "c": "Transporte"}, {"w": "Volcán", "c": "Naturaleza"}, {"w": "Pirámide", "c": "Historia"}, {"w": "Cactus", "c": "Planta"}, {"w": "Molino de viento", "c": "Construcción"}, {"w": "Globo aerostático", "c": "Transporte"}, {"w": "Teleférico", "c": "Transporte"}, {"w": "Semáforo", "c": "Ciudad"}, {"w": "Hidrante", "c": "Ciudad"}, {"w": "Espantapájaros", "c": "Campo"}, {"w": "Iglesia", "c": "Construcción"}, {"w": "Puente colgante", "c": "Construcción"}, {"w": "Iglú", "c": "Construcción"}, {"w": "Cámara de fotos", "c": "Objeto"}, {"w": "Microscopio", "c": "Ciencia"}, {"w": "Telescopio", "c": "Ciencia"}, {"w": "Brújula", "c": "Objeto"}, {"w": "Ancla", "c": "Náutica"}, {"w": "Velero", "c": "Náutica"}, {"w": "Pingüino", "c": "Animal"}, {"w": "Camello", "c": "Animal"}, {"w": "Canguro", "c": "Animal"}, {"w": "Flamenco", "c": "Ave"}, {"w": "Búho", "c": "Ave"}, {"w": "Murciélago", "c": "Animal"}, {"w": "Sushi", "c": "Comida"}, {"w": "Empanada", "c": "Comida"}, {"w": "Hamburguesa", "c": "Comida"}, {"w": "Taco", "c": "Comida"}, {"w": "Batería", "c": "Música"}, {"w": "Saxofón", "c": "Música"}, {"w": "Violín", "c": "Música"}, {"w": "Acordeón", "c": "Música"}, {"w": "Momia", "c": "Terror"}, {"w": "Vampiro", "c": "Terror"}, {"w": "Ovni", "c": "Ciencia Ficción"}, {"w": "Astronauta", "c": "Espacio"}], "adultos": [{"w": "Tinder", "c": "Aplicación"}, {"w": "Resaca", "c": "Estado"}, {"w": "Home office", "c": "Trabajo"}, {"w": "Inflación", "c": "Economía"}, {"w": "Divorcio", "c": "Legal"}, {"w": "Testamento", "c": "Legal"}, {"w": "Motel", "c": "Lugar"}, {"w": "Casino", "c": "Lugar"}, {"w": "Control de alcoholemia", "c": "Tránsito"}, {"w": "Grúa de acarreo", "c": "Tránsito"}, {"w": "Trapito", "c": "Calle"}, {"w": "Piquete", "c": "Ciudad"}, {"w": "Inodoro tapado", "c": "Hogar"}, {"w": "Gotera", "c": "Hogar"}, {"w": "Corte de luz", "c": "Servicio"}, {"w": "Router sin señal", "c": "Tecnología"}, {"w": "Modo incógnito", "c": "Internet"}, {"w": "Spam", "c": "Internet"}, {"w": "Infiltrado news", "c": "Medios"}, {"w": "Influencer", "c": "Redes"}, {"w": "Tatuaje arrepentido", "c": "Estética"}, {"w": "Botox", "c": "Estética"}, {"w": "Peluca", "c": "Accesorio"}, {"w": "Viagra", "c": "Farmacia"}, {"w": "Colonoscopia", "c": "Medicina"}, {"w": "Suero", "c": "Medicina"}, {"w": "Yeso en la pierna", "c": "Lesión"}, {"w": "Ciático", "c": "Salud"}, {"w": "Despedida de soltero", "c": "Fiesta"}, {"w": "Barra libre", "c": "Fiesta"}, {"w": "Fernet con coca", "c": "Bebida"}, {"w": "Sacacorchos", "c": "Objeto"}, {"w": "Cuarto oscuro", "c": "Elecciones"}, {"w": "Urna", "c": "Elecciones"}, {"w": "Carta natal", "c": "Astrología"}, {"w": "Ouija", "c": "Paranormal"}, {"w": "Cementerio", "c": "Lugar"}, {"w": "Velorio", "c": "Evento"}, {"w": "Esposas policiales", "c": "Objeto"}, {"w": "Detector de mentiras", "c": "Objeto"}]};
 
     const TIMESUP_DECKS = {"ninos": ["Harry Potter", "Elsa (Frozen)", "Spider-Man", "Peppa Pig", "Bob Esponja", "Pikachu", "Mickey Mouse", "Toy Story", "Shrek", "Minions", "Cenicienta", "Pinocho", "Caperucita Roja", "Peter Pan", "Papá Noel", "Ratón Pérez", "Batman", "Superman", "Mujer Maravilla", "Mario Bros", "Sonic", "Stitch", "Simba (El Rey León)", "Nemo", "Olaf", "Scooby-Doo", "Goku", "Naruto", "Lionel Messi", "Dibu Martínez", "Dinosaurio T-Rex", "Unicornio", "Pirata", "Astronauta", "Bombero", "Sirena", "Mago", "Robot", "Dragón", "Ninja", "Bailar ballet", "Andar en bici", "Comer helado", "Jugar al fútbol", "Nadar en la pileta", "Saltar la soga", "Tocar la guitarra", "Pintar un cuadro", "Hacer magia", "Dormir la siesta", "Tiburón", "Pingüino", "Elefante", "Jirafa", "Canguro", "Coco (Película)", "Moana", "Encanto", "Cars (Rayo McQueen)", "Monsters Inc."], "familia": ["Lionel Messi", "Diego Maradona", "Manu Ginóbili", "Juan Martín del Potro", "Franco Colapinto", "Ricardo Darín", "Guillermo Francella", "Susana Giménez", "Mirtha Legrand", "Charly García", "Gustavo Cerati", "Fito Páez", "Mercedes Sosa", "Carlos Gardel", "René Favaloro", "José de San Martín", "Manuel Belgrano", "Mafalda", "El Eternauta", "Hijitus", "Harry Potter", "Darth Vader", "Indiana Jones", "James Bond", "Sherlock Holmes", "Rocky Balboa", "Forrest Gump", "Jack Sparrow", "Homer Simpson", "El Chavo del 8", "Freddie Mercury", "Michael Jackson", "The Beatles", "Shakira", "Bizarrap", "Albert Einstein", "Leonardo da Vinci", "Cleopatra", "Julio César", "Napoleón", "Titanic", "Volver al Futuro", "Jurassic Park", "El Señor de los Anillos", "Star Wars", "Toy Story", "Mi Pobre Angelito", "Esperando la Carroza", "Relatos Salvajes", "Nueve Reinas", "Hacer un asado", "Cebar mate", "Cambiar una rueda", "Armar una carpa", "Bailar tango", "Jugar al truco", "Pescar con caña", "Andar en patines", "Sacarse una selfie", "Planchar una camisa"], "adultos": ["Walter White (Breaking Bad)", "Tony Soprano", "Michael Scott (The Office)", "Hannibal Lecter", "El Padrino", "Pulp Fiction", "El Club de la Pelea", "Matrix", "Black Mirror", "Game of Thrones", "Ricardo Fort", "Moria Casán", "Diego Capusotto", "Luca Prodan", "Indio Solari", "Ricardo Iorio", "Pappo", "Luis Alberto Spinetta", "Astor Piazzolla", "Jorge Luis Borges", "Julio Cortázar", "Frida Kahlo", "Salvador Dalí", "Quentin Tarantino", "Stanley Kubrick", "Elon Musk", "Steve Jobs", "Sigmund Freud", "Friedrich Nietzsche", "Nikola Tesla", "Che Guevara", "Evita Perón", "Winston Churchill", "Marilyn Monroe", "Elvis Presley", "Kurt Cobain", "Amy Winehouse", "David Bowie", "Madonna", "Eminem", "Reunión de consorcio", "Crisis de los 40", "Ir a terapia", "Hacer ayuno intermitente", "Quedarse sin batería", "Olvidarse la contraseña", "Llegar tarde al aeropuerto", "Dividir la cuenta", "Stalkear al ex", "Mandar audio de 5 minutos", "Hacer home office en pijama", "Mentir en el currículum", "Discutir con un trapito", "Hacer la VTV", "Colgar la ropa antes que llueva", "Armar muebles de melamina", "Descorchar un vino", "Curar el mate", "Perder las llaves", "Hacer zapping"]};
 
@@ -2941,10 +2988,10 @@
       adultos: "Mazo Adultos (+18 años)"
     };
 
-    const STORAGE_KEY = "boardgame_hub_v20";
+    const STORAGE_KEY = "boardgame_hub_v23";
 
     let state = {
-      activeGameIdx: 0,
+      activeView: 'menu',
       relojTotal: 60,
       theme: 'dark',
       currentCat: 'familia',
@@ -3202,9 +3249,7 @@
             if (!state.preferisRounds) state.preferisRounds = { ninos: 0, familia: 0, adultos: 0 };
             if (!['ninos', 'familia', 'adultos'].includes(state.preferisCat)) state.preferisCat = 'familia';
 
-            if (state.activeGameIdx >= GAMES.length || state.activeGameIdx < 0) {
-              state.activeGameIdx = 0;
-            }
+            if (!state.activeView) state.activeView = 'menu';
           }
         }
       } catch (e) {}
@@ -3244,7 +3289,7 @@
         steps: [
           "<strong>1. Lectura:</strong> Sacá una tarjeta y leela en voz alta para toda la mesa.",
           "<strong>2. Votación simultánea:</strong> A la cuenta de 3, todos señalan con el dedo al jugador que creen que merece llevarse esa tarjeta (vale señalarse a uno mismo).",
-          "<strong>3. Puntaje:</strong> Quien recibe más votos suma <strong>+1 punto</strong> en el anotador. El primero en llegar a 5 puntos es coronado el 'Amigo de Mierda' de la noche."
+          "<strong>3. Puntaje:</strong> Quien recibe más votos suma <strong>+1 punto</strong> en el anotador. El primero en llegar a 5 puntos es coronado el 'Amigo Terrible' de la noche."
         ],
         tip: "En caso de empate, los empatados defienden su caso en 15 segundos y se vuelve a votar solo entre ellos."
       },
@@ -3388,9 +3433,9 @@
       fake: {
         goal: "Dibujar entre todos una misma cosa en una hoja compartida, mientras un Artista Falso dibuja sin saber qué es.",
         steps: [
-          "<strong>1. Roles en secreto:</strong> Cada jugador mira el celular. Todos reciben la misma <strong>palabra a dibujar</strong>, excepto el <strong>Fake Artist</strong>, que solo recibe la categoría general.",
+          "<strong>1. Roles en secreto:</strong> Cada jugador mira el celular. Todos reciben la misma <strong>palabra a dibujar</strong>, excepto el <strong>Artista Infiltrado</strong>, que solo recibe la categoría general.",
           "<strong>2. Dos vueltas de un solo trazo:</strong> Pongan una hoja en el centro. Por turnos, cada jugador hace <strong>un único trazo continuo</strong> (sin levantar el lápiz) y lo pasa al siguiente hasta completar 2 vueltas.",
-          "<strong>3. Votación y escape:</strong> Al terminar, señalan quién creen que es el Fake Artist. Si lo atrapan, tiene una chance final de ganar si adivina qué estaban dibujando."
+          "<strong>3. Votación y escape:</strong> Al terminar, señalan quién creen que es el Artista Infiltrado. Si lo atrapan, tiene una chance final de ganar si adivina qué estaban dibujando."
         ],
         tip: "Si sos un artista real, no hagas un trazo demasiado obvio en la primera vuelta o el impostor va a descubrir qué es."
       },
@@ -3415,7 +3460,8 @@
     };
 
     function openGameRules() {
-      const current = GAMES[state.activeGameIdx];
+      if (state.activeView === 'menu') return;
+      const current = GAMES.find(g => g.id === state.activeView);
       const info = GAME_RULES[current.id];
       if (!info) return;
 
@@ -3438,7 +3484,8 @@
 
 
     function resetCurrentGame() {
-      const current = GAMES[state.activeGameIdx];
+      if (state.activeView === 'menu') return;
+      const current = GAMES.find(g => g.id === state.activeView);
       if (!current) return;
       if (navigator.vibrate) navigator.vibrate(45);
 
@@ -3495,7 +3542,7 @@
         case 'fake':
           fakeSession = { assignments: [], secretItem: null, currentIdx: 0, phase: 'hidden' };
           document.getElementById('fakeRevealAllBox').classList.remove('show');
-          backToFakeSetup();
+          backToInfiltradoSetup();
           break;
         case 'espia':
           espiaSession = { assignments: [], secretItem: null, currentIdx: 0, phase: 'hidden' };
@@ -3511,103 +3558,77 @@
       }
     }
 
-    function switchGame(direction) {
-      if (timerInterval) {
-        clearInterval(timerInterval);
-        timerInterval = null;
-        releaseWakeLock();
-        document.getElementById('timerBtn').innerText = 'Reanudar tiempo';
-      }
-      if (tabuInterval) {
-        clearInterval(tabuInterval);
-        tabuInterval = null;
-        releaseWakeLock();
-        document.getElementById('tabuStartBtn').innerText = '▶ Reanudar';
-      }
-      if (tuInterval) {
-        clearInterval(tuInterval);
-        tuInterval = null;
-        releaseWakeLock();
-        document.getElementById('tuStartBtn').innerText = '▶ Reanudar';
-      }
-      if (relojTimer) {
-        clearInterval(relojTimer);
-        relojTimer = null;
-        releaseWakeLock();
-        document.getElementById('hgStream').classList.remove('flowing');
-        document.getElementById('relojStartBtn').innerText = '▶ Reanudar';
-      }
-      if (mimicaInterval) {
-        clearInterval(mimicaInterval);
-        mimicaInterval = null;
-        releaseWakeLock();
-        document.getElementById('mimicaTimerBtn').innerText = '⏳ Reanudar';
-      }
-      
-      resetBomba(); // always clear tick tock
-      if(window.diceInterval) { clearInterval(window.diceInterval); window.diceInterval=null; }
+    function renderMenu() {
+      const grid = document.getElementById('menuGrid');
+      grid.innerHTML = GAMES.map(g => `
+        <div class="menu-btn" onclick="openGame('${g.id}')">
+          <div class="menu-btn-icon">${g.icon}</div>
+          <div class="menu-btn-title">${g.title}</div>
+        </div>
+      `).join('');
+    }
 
+    function openMenu() {
+      if (navigator.vibrate) navigator.vibrate(15);
+      // Detener todos los intervalos activos
+      if (timerInterval) { clearInterval(timerInterval); timerInterval = null; releaseWakeLock(); document.getElementById('timerBtn').innerText = 'Reanudar tiempo'; }
+      if (tabuInterval) { clearInterval(tabuInterval); tabuInterval = null; releaseWakeLock(); document.getElementById('tabuStartBtn').innerText = '▶ Reanudar'; }
+      if (tuInterval) { clearInterval(tuInterval); tuInterval = null; releaseWakeLock(); document.getElementById('tuStartBtn').innerText = '▶ Reanudar'; }
+      if (relojTimer) { clearInterval(relojTimer); relojTimer = null; releaseWakeLock(); document.getElementById('hgStream').classList.remove('flowing'); document.getElementById('relojStartBtn').innerText = '▶ Reanudar'; }
+      if (mimicaInterval) { clearInterval(mimicaInterval); mimicaInterval = null; releaseWakeLock(); document.getElementById('mimicaTimerBtn').innerText = '⏳ Reanudar'; }
+      resetBomba();
+      if(window.diceInterval) { clearInterval(window.diceInterval); window.diceInterval=null; }
       stopTuttiRoulette();
 
-      // Ocultar automáticamente tarjetas secretas si quedaron reveladas al cambiar de juego
-      if (lobosSession && lobosSession.phase === 'revealed') {
-        lobosSession.phase = 'hidden';
-        renderSecretCard();
-      }
-      if (impSession && impSession.phase === 'revealed') {
-        impSession.phase = 'hidden';
-        renderImpSecretCard();
-      }
-      if (fakeSession && fakeSession.phase === 'revealed') {
-        fakeSession.phase = 'hidden';
-        renderFakeSecretCard();
-      }
-      if (espiaSession && espiaSession.phase === 'revealed') {
-        espiaSession.phase = 'hidden';
-        renderEspiaSecretCard();
-      }
+      // Ocultar automáticamente tarjetas secretas
+      if (lobosSession && lobosSession.phase === 'revealed') { lobosSession.phase = 'hidden'; renderSecretCard(); }
+      if (impSession && impSession.phase === 'revealed') { impSession.phase = 'hidden'; renderImpSecretCard(); }
+      if (fakeSession && fakeSession.phase === 'revealed') { fakeSession.phase = 'hidden'; renderInfiltradoSecretCard(); }
+      if (espiaSession && espiaSession.phase === 'revealed') { espiaSession.phase = 'hidden'; renderEspiaSecretCard(); }
 
-      state.activeGameIdx = (state.activeGameIdx + direction + GAMES.length) % GAMES.length;
-      renderCarousel();
+      state.activeView = 'menu';
+      
+      document.querySelectorAll('.game-view').forEach(v => v.classList.remove('active'));
+      document.getElementById('view-menu').classList.add('active');
+      document.querySelector('.scoreboard').style.display = 'none';
+
+      // UI del Header
+      document.getElementById('backToMenuBtn').style.display = 'none';
+      document.getElementById('gameKicker').style.display = 'none';
+      document.getElementById('headerTitle').innerText = 'HUB DE JUEGOS';
+      document.getElementById('rulesBtn').style.display = 'none';
+      document.getElementById('resetBtn').style.display = 'none';
+      
       saveState();
     }
 
-    function renderCarousel() {
-      const current = GAMES[state.activeGameIdx];
-      document.getElementById('carouselGameTitle').innerText = current.title;
-      document.getElementById('gameCounterLabel').innerText = `${state.activeGameIdx + 1}/${GAMES.length}`;
-
-      const dotsContainer = document.getElementById('carouselDots');
-      dotsContainer.innerHTML = GAMES.map((g, idx) =>
-        `<span class="dot ${idx === state.activeGameIdx ? 'active' : ''}"></span>`
-      ).join('');
-
+    function openGame(gameId) {
+      if (navigator.vibrate) navigator.vibrate(25);
+      state.activeView = gameId;
+      const gameInfo = GAMES.find(g => g.id === gameId);
       
       document.querySelectorAll('.game-view').forEach(v => v.classList.remove('active'));
-      const activeView = document.getElementById(`view-${current.id}`);
+      const activeView = document.getElementById(`view-${gameId}`);
       if (activeView) activeView.classList.add('active');
 
+      // Scoreboard visibility logic
       const scoreboard = document.querySelector('.scoreboard');
-      if (['impostor', 'fake', 'lobizones', 'mimica', 'tuttifruti'].includes(current.id) || ['espia', 'story', 'dados', 'anotador'].includes(current.id)) {
+      if (['impostor', 'fake', 'lobizones', 'mimica', 'tuttifruti'].includes(gameId) || ['espia', 'story', 'dados', 'anotador'].includes(gameId)) {
         scoreboard.style.display = 'none';
       } else {
         scoreboard.style.display = 'flex';
       }
+      
+      // UI del Header
+      document.getElementById('backToMenuBtn').style.display = 'inline-block';
+      document.getElementById('gameKicker').style.display = 'inline-block';
+      document.getElementById('headerTitle').innerText = gameInfo.title;
+      document.getElementById('rulesBtn').style.display = 'inline-block';
+      document.getElementById('resetBtn').style.display = 'inline-block';
+
       renderPlayers();
-
+      saveState();
     }
-
-    let touchStartX = 0;
-    const carouselEl = document.getElementById('gameCarousel');
-    carouselEl.addEventListener('touchstart', e => {
-      touchStartX = e.changedTouches[0].screenX;
-    }, { passive: true });
-    carouselEl.addEventListener('touchend', e => {
-      const diff = e.changedTouches[0].screenX - touchStartX;
-      if (Math.abs(diff) > 45) {
-        switchGame(diff < 0 ? 1 : -1);
-      }
-    }, { passive: true });
 
     // ==========================================
     // WAKE LOCK & AUDIO
@@ -4139,7 +4160,7 @@
       state.impConfig.names = state.players.slice(0, count).map(p => p.name);
       saveState();
       renderImpConfig();
-      renderFakeConfig();
+      renderInfiltradoConfig();
       renderEspiaConfig();
     }
 
@@ -4356,7 +4377,7 @@
       document.getElementById('impSetupPanel').style.display = 'flex';
       document.getElementById('impStatusHeader').innerText = 'Configuración';
       renderImpConfig();
-      renderFakeConfig();
+      renderInfiltradoConfig();
       renderEspiaConfig();
     }
 
@@ -4929,7 +4950,7 @@
 
 
     // ==========================================
-    // LÓGICA FAKE ARTIST (ARTISTA FALSO)
+    // LÓGICA ARTISTA INFILTRADO (ARTISTA FALSO)
     // ==========================================
     const ARTIST_COLORS = [
       { name: "Rojo", hex: "#ef4444" },
@@ -4953,7 +4974,7 @@
       phase: 'hidden'
     };
 
-    function setFakeCategory(cat, btnElement) {
+    function setInfiltradoCategory(cat, btnElement) {
       state.fakeConfig.cat = cat;
       document.querySelectorAll('#fakeCatSelector .cat-pill').forEach(b => b.classList.remove('active'));
       if (btnElement) {
@@ -4965,7 +4986,7 @@
       saveState();
     }
 
-    function renderFakeConfig() {
+    function renderInfiltradoConfig() {
       const total = state.fakeConfig.total;
       document.getElementById('fakeTotalVal').innerText = total;
 
@@ -4982,7 +5003,7 @@
           <div class="name-slot">
             <span class="fake-color-dot" style="background:${color.hex};"></span>
             <input type="text" class="slot-input" value="${val}" maxlength="15"
-              oninput="updateFakePlayerName(${i}, this.value)"
+              oninput="updateInfiltradoPlayerName(${i}, this.value)"
               onfocus="this.select()"
               placeholder="Jugador ${i + 1}">
           </div>
@@ -4994,30 +5015,30 @@
       copyBtn.style.display = state.players.length >= 4 ? 'inline-block' : 'none';
     }
 
-    function updateFakePlayerName(index, val) {
+    function updateInfiltradoPlayerName(index, val) {
       state.fakeConfig.names[index] = val;
       saveState();
     }
 
-    function importFakeNamesFromScoreboard() {
+    function importInfiltradoNamesFromScoreboard() {
       if (state.players.length < 4) return;
       const count = Math.min(12, state.players.length);
       state.fakeConfig.total = count;
       state.fakeConfig.names = state.players.slice(0, count).map(p => p.name);
       saveState();
-      renderFakeConfig();
+      renderInfiltradoConfig();
       renderEspiaConfig();
     }
 
-    function adjustFakeConfig(delta) {
+    function adjustInfiltradoConfig(delta) {
       let total = state.fakeConfig.total;
       total = Math.min(12, Math.max(4, total + delta));
       state.fakeConfig.total = total;
-      renderFakeConfig();
+      renderInfiltradoConfig();
       saveState();
     }
 
-    function startFakeGame() {
+    function startInfiltradoGame() {
       const cat = state.fakeConfig.cat;
       const total = state.fakeConfig.total;
 
@@ -5035,7 +5056,7 @@
         const cleanName = (state.fakeConfig.names[i] || '').trim() || `Jugador ${i + 1}`;
         assignments.push({
           name: cleanName,
-          isFake: i === fakeIndex,
+          isInfiltrado: i === fakeIndex,
           color: ARTIST_COLORS[i % ARTIST_COLORS.length]
         });
       }
@@ -5053,16 +5074,16 @@
       document.getElementById('fakeToggleAllBtn').style.display = 'none';
       document.getElementById('fakeRevealAllBox').classList.remove('show');
 
-      renderFakeSecretCard();
+      renderInfiltradoSecretCard();
     }
 
-    function handleFakeCardTap() {
+    function handleInfiltradoCardTap() {
       if (fakeSession.phase === 'done') return;
       if (navigator.vibrate) navigator.vibrate(40);
 
       if (fakeSession.phase === 'hidden') {
         fakeSession.phase = 'revealed';
-        renderFakeSecretCard();
+        renderInfiltradoSecretCard();
       } else if (fakeSession.phase === 'revealed') {
         fakeSession.currentIdx++;
         if (fakeSession.currentIdx < fakeSession.assignments.length) {
@@ -5070,11 +5091,11 @@
         } else {
           fakeSession.phase = 'done';
         }
-        renderFakeSecretCard();
+        renderInfiltradoSecretCard();
       }
     }
 
-    function renderFakeSecretCard() {
+    function renderInfiltradoSecretCard() {
       const card = document.getElementById('fakeSecretCard');
       const header = document.getElementById('fakeStatusHeader');
       const total = fakeSession.assignments.length;
@@ -5101,12 +5122,12 @@
           ? `Tocá para ocultar y pasar a ${escapeHtml(nextPerson)}`
           : `Tocá para ocultar y empezar a dibujar`;
 
-        if (person.isFake) {
+        if (person.isInfiltrado) {
           card.className = 'secret-card revealed-imp';
           card.innerHTML = `
             <div class="player-turn-badge">${escapeHtml(person.name)}</div>
             <div class="secret-icon">🦊</div>
-            <div class="secret-title">SOS EL FAKE ARTIST</div>
+            <div class="secret-title">SOS EL ARTISTA INFILTRADO</div>
             <div class="secret-cat-tag">Categoría: ${escapeHtml(fakeSession.secretItem.c)}</div>
             <div class="secret-hint">
               No sabés qué se dibuja. Mirá los trazos de los demás, hacé 1 solo trazo por turno y fingí que sabés.
@@ -5120,7 +5141,7 @@
             <div class="secret-cat-tag">Categoría: ${escapeHtml(fakeSession.secretItem.c)}</div>
             <div class="secret-title">✏️ ${escapeHtml(fakeSession.secretItem.w)}</div>
             <div class="secret-hint">
-              Hacé <strong>1 solo trazo continuo</strong> por vuelta en la hoja sin regalarle el dibujo al Fake Artist.
+              Hacé <strong>1 solo trazo continuo</strong> por vuelta en la hoja sin regalarle el dibujo al Artista Infiltrado.
             </div>
             <div class="tap-cta">${nextLabel}</div>
           `;
@@ -5131,13 +5152,13 @@
         card.className = 'secret-card finished-state';
         
         const gridHtml = fakeSession.assignments.map(a => 
-          `<button class="secondary-btn" style="padding: 0.6rem; font-size: 0.9rem;" onclick="accuseFake('${escapeHtml(a.name)}')"><span class="fake-color-dot" style="background:${a.color.hex};"></span>${escapeHtml(a.name)}</button>`
+          `<button class="secondary-btn" style="padding: 0.6rem; font-size: 0.9rem;" onclick="accuseInfiltrado('${escapeHtml(a.name)}')"><span class="fake-color-dot" style="background:${a.color.hex};"></span>${escapeHtml(a.name)}</button>`
         ).join('');
 
         card.innerHTML = `
           <div class="player-turn-badge">¡Obra terminada!</div>
           <div class="secret-icon">🎨</div>
-          <div class="secret-title">¿Quién es el Fake?</div>
+          <div class="secret-title">¿Quién es el Infiltrado?</div>
           <div class="secret-hint">
             El primer trazo fue de <strong style="color:#f8fafc;">${escapeHtml(starter)}</strong>.<br>
             Observen el dibujo final y elijan a quién acusar:
@@ -5151,30 +5172,30 @@
     }
 
     
-    function accuseFake(name) {
+    function accuseInfiltrado(name) {
       const person = fakeSession.assignments.find(a => a.name === name);
       const card = document.getElementById('fakeSecretCard');
-      if (person.isFake) {
+      if (person.isInfiltrado) {
           card.className = 'secret-card revealed-aldeano'; 
           card.innerHTML = `
             <div class="secret-icon">✅</div>
             <div class="secret-title">¡ATRAPADO!</div>
-            <div class="secret-hint"><strong>${escapeHtml(name)}</strong> era el Fake Artist.<br>El dibujo era <strong>${escapeHtml(fakeSession.secretItem.w)}</strong>.</div>
-            <div class="tap-cta">¡Si el Fake adivina la palabra empata el juego!</div>
+            <div class="secret-hint"><strong>${escapeHtml(name)}</strong> era el Artista Infiltrado.<br>El dibujo era <strong>${escapeHtml(fakeSession.secretItem.w)}</strong>.</div>
+            <div class="tap-cta">¡Si el Infiltrado adivina la palabra empata el juego!</div>
           `;
       } else {
           card.className = 'secret-card revealed-imp'; 
-          const realFake = fakeSession.assignments.find(a => a.isFake).name;
+          const realInfiltrado = fakeSession.assignments.find(a => a.isInfiltrado).name;
           card.innerHTML = `
             <div class="secret-icon">❌</div>
             <div class="secret-title">¡SE ESCAPÓ!</div>
-            <div class="secret-hint"><strong>${escapeHtml(name)}</strong> era un artista real.<br>El Fake era <strong>${escapeHtml(realFake)}</strong>.</div>
-            <div class="tap-cta">El Fake Artist se salió con la suya.</div>
+            <div class="secret-hint"><strong>${escapeHtml(name)}</strong> era un artista real.<br>El Infiltrado era <strong>${escapeHtml(realInfiltrado)}</strong>.</div>
+            <div class="tap-cta">El Artista Infiltrado se salió con la suya.</div>
           `;
       }
     }
 
-    function toggleFakeRevealAll() {
+    function toggleInfiltradoRevealAll() {
       const box = document.getElementById('fakeRevealAllBox');
       const btn = document.getElementById('fakeToggleAllBtn');
       if (box.classList.contains('show')) {
@@ -5193,8 +5214,8 @@
               <span class="fake-color-dot" style="background:${a.color.hex};"></span>
               <strong>${escapeHtml(a.name)}</strong>
             </span>
-            <span style="color: ${a.isFake ? '#fb7185' : '#34d399'}; font-weight: 800;">
-              ${a.isFake ? '🦊 Fake Artist' : '🎨 Artista'}
+            <span style="color: ${a.isInfiltrado ? '#fb7185' : '#34d399'}; font-weight: 800;">
+              ${a.isInfiltrado ? '🦊 Artista Infiltrado' : '🎨 Artista'}
             </span>
           </div>
         `).join('');
@@ -5204,11 +5225,11 @@
       }
     }
 
-    function backToFakeSetup() {
+    function backToInfiltradoSetup() {
       document.getElementById('fakePlayPanel').style.display = 'none';
       document.getElementById('fakeSetupPanel').style.display = 'flex';
       document.getElementById('fakeStatusHeader').innerText = 'Configuración';
-      renderFakeConfig();
+      renderInfiltradoConfig();
       renderEspiaConfig();
     }
 
@@ -5578,7 +5599,7 @@
       renderLobosConfig();
       renderImpConfig();
       renderGeneralaTable();
-      renderFakeConfig();
+      renderInfiltradoConfig();
       renderEspiaConfig();
     }
 
@@ -5598,7 +5619,7 @@
       renderLobosConfig();
       renderImpConfig();
       renderGeneralaTable();
-      renderFakeConfig();
+      renderInfiltradoConfig();
       renderEspiaConfig();
     }
 
@@ -6615,7 +6636,12 @@
     // ==========================================
     loadState();
     applyTheme();
-    renderCarousel();
+    renderMenu();
+    if (state.activeView === 'menu' || !state.activeView) {
+      openMenu();
+    } else {
+      openGame(state.activeView);
+    }
     setCategory(state.currentCat);
     setDuration(state.defaultTime);
     renderLobosConfig();
@@ -6632,8 +6658,8 @@
     document.querySelectorAll('#tuCatSelector .cat-pill').forEach(b => {
       b.classList.toggle('active', b.dataset.cat === state.tuCat);
     });
-    setFakeCategory(state.fakeConfig.cat);
-    renderFakeConfig();
+    setInfiltradoCategory(state.fakeConfig.cat);
+    renderInfiltradoConfig();
     setTuPhase(state.tuPhase);
     updateTuCounter();
     
