@@ -297,51 +297,6 @@
     .rules-ok-btn:active { transform: scale(0.98); }
 
     
-    /* ESTILOS TA-TE-TI */
-    .tateti-board {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 0.5rem;
-      width: 100%;
-      max-width: 300px;
-      margin: 0 auto;
-    }
-    .tateti-cell {
-      background: var(--bg);
-      border: 2px solid rgba(255,255,255,0.06);
-      border-radius: 16px;
-      aspect-ratio: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 3.5rem;
-      font-weight: 900;
-      cursor: pointer;
-      color: var(--text);
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-      transition: all 0.15s ease;
-      user-select: none;
-    }
-    .tateti-cell:active { transform: scale(0.95); }
-    .tateti-cell.x { color: #ef4444; }
-    .tateti-cell.o { color: #38bdf8; }
-    .tateti-status {
-      font-size: 1.25rem;
-      font-weight: 900;
-      margin-bottom: 0.8rem;
-    }
-    .tateti-scores {
-      display: flex;
-      justify-content: space-around;
-      width: 100%;
-      max-width: 300px;
-      margin: 0 auto 1rem auto;
-      background: var(--card-light);
-      padding: 0.5rem;
-      border-radius: 14px;
-      font-weight: 800;
-      font-size: 1.2rem;
-    }
     /* VISTAS DE JUEGOS */
     .game-view {
       display: none;
@@ -1967,7 +1922,6 @@
     [data-theme="light"] .tabu-hud,
     [data-theme="light"] #diceDisplayArea,
     [data-theme="light"] .generala-table-wrap,
-    [data-theme="light"] .tateti-scores,
     [data-theme="light"] .team-score-card,
     [data-theme="light"] .name-slot,
     [data-theme="light"] .player-input,
@@ -2009,7 +1963,7 @@
     
     [data-theme="light"] .player-turn-badge, [data-theme="light"] .tap-cta { background: rgba(0, 0, 0, 0.06); }
     
-    [data-theme="light"] .tateti-cell { background: #f8fafc; border-color: rgba(0,0,0,0.1); }
+    
     [data-theme="light"] .die { background-color: #ffffff; box-shadow: inset 0 4px #f8fafc, inset 0 -4px #e2e8f0, 0 4px 10px rgba(0,0,0,0.15); }
     [data-theme="light"] .die-dot { background-color: #334155; }
     [data-theme="light"] .generala-table th, [data-theme="light"] .generala-table td { border-color: rgba(0,0,0,0.1); }
@@ -2998,41 +2952,6 @@
     </main>
 
     
-    <!-- VISTA 22: TA-TE-TI -->
-    <main id="view-tateti" class="game-view">
-      <div class="sub-header">
-        <span class="game-subtitle">El clásico 3 en línea</span>
-        <div class="counter">2 Jugadores</div>
-      </div>
-      
-      <div style="background:var(--card); padding:1.5rem 1rem; border-radius:24px; border:2px solid rgba(255,255,255,0.1); display:flex; flex-direction:column; align-items:center; width: 100%;">
-        
-        <div class="tateti-scores">
-          <span style="color:#ef4444;">❌ <span id="tttScoreX">0</span></span>
-          <span style="color:#38bdf8;">⭕ <span id="tttScoreO">0</span></span>
-        </div>
-
-        <div class="tateti-status" id="tttStatus">Turno de ❌</div>
-        
-        <div class="tateti-board" id="tttBoard">
-          <div class="tateti-cell" onclick="playTateti(0)"></div>
-          <div class="tateti-cell" onclick="playTateti(1)"></div>
-          <div class="tateti-cell" onclick="playTateti(2)"></div>
-          <div class="tateti-cell" onclick="playTateti(3)"></div>
-          <div class="tateti-cell" onclick="playTateti(4)"></div>
-          <div class="tateti-cell" onclick="playTateti(5)"></div>
-          <div class="tateti-cell" onclick="playTateti(6)"></div>
-          <div class="tateti-cell" onclick="playTateti(7)"></div>
-          <div class="tateti-cell" onclick="playTateti(8)"></div>
-        </div>
-      </div>
-
-      <div class="controls-row">
-        <button class="btn" style="flex:2; background:linear-gradient(135deg, #38bdf8, #0284c7); color:#fff; font-size:1.1rem; padding:1rem;" onclick="resetTatetiBoard()">↻ Nueva partida</button>
-        <button class="secondary-btn" style="flex:1; font-size:0.9rem;" onclick="resetTatetiScores()">Resetear</button>
-      </div>
-    </main>
-
     <!-- ANOTADOR DE PUNTOS UNIVERSAL PARA LA MESA -->
     <section class="scoreboard">
       <div class="score-header">
@@ -3089,8 +3008,7 @@
       { id: 'dados', title: 'TIRADA DADOS', icon: '🎲' },
       { id: 'generala', title: 'GENERALA', icon: '📝' },
       { id: 'anotador', title: 'ANOTADOR', icon: '✏️' },
-      { id: 'reloj', title: 'RELOJ ARENA', icon: '⏳' },
-      { id: 'tateti', title: 'TA-TE-TI', icon: '❌' }
+      { id: 'reloj', title: 'RELOJ ARENA', icon: '⏳' }
     ];
 
     const DECKS = {"ninos": ["Perro", "Gato", "León", "Elefante", "Jirafa", "Mono", "Tigre", "Oso", "Cebra", "Hipopótamo", "Cocodrilo", "Serpiente", "Tortuga", "Conejo", "Caballo", "Vaca", "Cerdo", "Oveja", "Gallina", "Pato", "Pingüino", "Delfín", "Ballena", "Tiburón", "Pulpo", "Cangrejo", "Estrella de mar", "Medusa", "Foca", "Caballito de mar", "Águila", "Búho", "Loro", "Flamenco", "Tucán", "Paloma", "Colibrí", "Pavo real", "Avestruz", "Murciélago", "Mariposa", "Abeja", "Hormiga", "Araña", "Mariquita", "Grillo", "Mosquito", "Caracol", "Gusano", "Libélula", "Rana", "Sapo", "Camaleón", "Iguana", "Dinosaurio", "Tiranosaurio", "Dragón", "Unicornio", "Canguro", "Koala", "Panda", "Lobo", "Zorro", "Ardilla", "Erizo", "Castor", "Mapache", "Ciervo", "Camello", "Llama", "Burro", "Cabra", "Ratón", "Hámster", "Pez payaso", "Pez globo", "Reno", "Oso polar", "Morsa", "Gorila", "Helado", "Pizza", "Hamburguesa", "Papas fritas", "Chocolate", "Caramelo", "Chupetín", "Alfajor", "Dulce de leche", "Galletitas", "Torta de cumpleaños", "Pochoclo", "Pancho", "Milanesa", "Fideos", "Arroz", "Sopa", "Ensalada", "Huevo frito", "Queso", "Pan", "Manteca", "Mermelada", "Miel", "Cereal", "Leche", "Jugo de naranja", "Limonada", "Licuado", "Chocolatada", "Manzana", "Banana", "Naranja", "Frutilla", "Sandía", "Melón", "Uva", "Durazno", "Pera", "Ananá", "Limón", "Cereza", "Kiwi", "Zanahoria", "Tomate", "Lechuga", "Papa", "Choclo", "Brócoli", "Zapallo", "Empanada", "Taco", "Sushi", "Donas", "Medialuna", "Churros", "Panqueques", "Waffles", "Gelatina", "Flan", "Budín", "Magdalena", "Malvavisco", "Algodón de azúcar", "Gomitas", "Chicle", "Turrón", "Huevos de Pascua", "Rosca de Reyes", "Sándwich", "Tostada", "Yogur", "Aceituna", "Palta", "Salchicha", "Escuela", "Mochila", "Lápiz", "Goma de borrar", "Sacapuntas", "Regla", "Tijera", "Plasticola", "Cuaderno", "Carpeta", "Cartuchera", "Marcadores", "Lápices de colores", "Crayones", "Témperas", "Pincel", "Acuarelas", "Plastilina", "Pizarrón", "Tiza", "Fibrón", "Maestra", "Profesor", "Recreo", "Patio", "Aula", "Biblioteca", "Libro", "Cuento", "Diccionario", "Mapa", "Globo terráqueo", "Compás", "Escuadra", "Calculadora", "Computadora", "Tablet", "Campana", "Timbre", "Bandera", "Acto escolar", "Excursión", "Tarea", "Examen", "Boletín", "Guardapolvo", "Uniforme", "Merienda", "Cantimplora", "Lonchera", "Microscopio", "Lupa", "Imán", "Flauta", "Tambor", "Pelota", "Muñeca", "Auto de juguete", "Tren de juguete", "Bloques", "Rompecabezas", "Yoyó", "Trompo", "Barrilete", "Patines", "Patineta", "Bicicleta", "Triciclo", "Monopatín", "Tobogán", "Hamaca", "Sube y baja", "Calesita", "Pelotero", "Castillo inflable", "Escondidas", "Mancha", "Rayuela", "Saltar la soga", "Piedra, papel o tijera", "Adivinanza", "Trabalenguas", "Chiste", "Títere", "Marioneta", "Disfraz", "Antifaz", "Varita mágica", "Espada de madera", "Escudo", "Corona", "Peluche", "Osito", "Robot", "Cohete", "Canicas", "Bolitas", "Cartas", "Dados", "Dominó", "Ajedrez", "Damas", "Lotería", "Bingo", "Videojuego", "Joystick", "Consola", "Burbuja", "Pistola de agua", "Bombucha", "Aro hula-hula", "Cama elástica", "Zancos", "Casa del árbol", "Carpa", "Linterna", "Binoculares", "Walkie-talkie", "Alcancia", "Figuritas", "Superhéroe", "Princesa", "Príncipe", "Rey", "Reina", "Caballero", "Mago", "Bruja", "Hada", "Duende", "Gigante", "Ogro", "Pirata", "Sirena", "Fantasma", "Vampiro", "Momia", "Hombre lobo", "Zombi", "Monstruo", "Extraterrestre", "Astronauta", "Ninja", "Samurái", "Vaquero", "Indio", "Detective", "Espía", "Payaso", "Acróbata", "Malabarista", "Domador", "Genio de la lámpara", "Caperucita Roja", "Pinocho", "Cenicienta", "Blancanieves", "Peter Pan", "Papá Noel", "Ratón Pérez", "Reyes Magos", "Conejo de Pascua", "Elfo", "Centauro", "Fénix", "Pegaso", "Yeti", "Cíclope", "Troll", "Gnomo", "Capitán", "Marinero", "Explorador", "Científico loco", "Inventor", "Cazador de tesoros", "Espantapájaros", "Muñeco de nieve", "Ángel", "Playa", "Mar", "Océano", "Isla", "Montaña", "Volcán", "Bosque", "Selva", "Desierto", "Río", "Lago", "Cascada", "Cueva", "Nieve", "Hielo", "Nube", "Lluvia", "Tormenta", "Arcoíris", "Sol", "Luna", "Estrella", "Planeta", "Espacio", "Galaxia", "Cometa", "Tierra", "Cielo", "Viento", "Trueno", "Relámpago", "Charco", "Barro", "Arena", "Piedra", "Árbol", "Flor", "Pasto", "Hoja", "Rama", "Semilla", "Raíz", "Jardín", "Plaza", "Parque", "Zoológico", "Acuario", "Granja", "Circo", "Cine", "Teatro", "Museo", "Castillo", "Palacio", "Faro", "Puente", "Túnel", "Piscina", "Camping", "Hospital", "Cuartel de bomberos", "Comisaría", "Supermercado", "Panadería", "Juguetería", "Casa", "Cama", "Almohada", "Frazada", "Pijama", "Pantuflas", "Cepillo de dientes", "Pasta dental", "Jabón", "Shampoo", "Toalla", "Espejo", "Peine", "Bañera", "Ducha", "Inodoro", "Sillón", "Mesa", "Silla", "Lámpara", "Reloj", "Teléfono", "Televisor", "Control remoto", "Heladera", "Horno", "Escoba", "Balde", "Llave", "Puerta", "Ventana", "Escalera", "Techo", "Chimenea", "Zapatillas", "Medias", "Pantalón", "Remera", "Buzo", "Campera", "Gorro", "Bufanda", "Guantes", "Paraguas", "Piloto de lluvia", "Gafas de sol", "Malla", "Ojotas", "Cinturón", "Bolso", "Cumpleaños", "Piñata", "Velitas", "Regalo", "Globo", "Auto", "Colectivo", "Tren", "Subte", "Avión", "Helicóptero", "Barco", "Submarino", "Cohete espacial", "Camión", "Ambulancia", "Camión de bomberos", "Patrullero", "Tractor", "Grúa", "Moto", "Globo aerostático", "Teleférico", "Fútbol", "Básquet", "Tenis", "Natación", "Karate", "Taekwondo", "Gimnasia artística", "Danza", "Atletismo", "Ciclismo", "Surf", "Esquí", "Rojo", "Azul", "Amarillo", "Verde", "Violeta", "Rosa", "Blanco", "Negro", "Dorado", "Círculo", "Cuadrado", "Triángulo", "Estrella fugaz", "Corazón", "Granjero", "Bombero"], "familia": ["Rockero", "Azul", "Asado", "Playa", "Invierno", "Verano", "Otoño", "Primavera", "Navidad", "Año Nuevo", "Cumpleaños", "Boda", "Luna de miel", "Mudanza", "Vacaciones", "Camping", "Hotel", "Aeropuerto", "Avión", "Crucero", "Tren", "Subte", "Colectivo", "Taxi", "Autopista", "Peaje", "Estación de servicio", "Taller mecánico", "Supermercado", "Feria", "Shopping", "Cine", "Teatro", "Concierto", "Estadio", "Gimnasio", "Peluquería", "Dentista", "Hospital", "Farmacia", "Banco", "Correo", "Biblioteca", "Museo", "Zoológico", "Parque de diversiones", "Circo", "Casino", "Restaurante", "Pizzería", "Cafetería", "Heladería", "Panadería", "Carnicería", "Verdulería", "Kiosco", "Ferretería", "Librería", "Juguetería", "Veterinaria", "Granja", "Campo", "Montaña", "Desierto", "Selva", "Bosque", "Isla desierta", "Volcán", "Terremoto", "Tormenta", "Inundación", "Apagón", "Incendio", "Robo", "Juicio", "Cárcel", "Detective", "Espía", "Vampiro", "Fantasma", "Extraterrestre", "Pirata", "Vaquero", "Astronauta", "Mago", "Payaso", "Científico", "Artista", "Fotógrafo", "Periodista", "Abogado", "Arquitecto", "Ingeniero", "Médico", "Enfermero", "Bombero", "Policía", "Piloto", "Capitán", "Chef", "Desayuno", "Almuerzo", "Merienda", "Cena", "Picada", "Mate", "Café", "Té", "Vino", "Cerveza", "Pizza", "Empanadas", "Milanesa", "Pasta", "Sushi", "Hamburguesa", "Ensalada", "Postre", "Helado", "Chocolate", "Domingo en familia", "Sobremesa", "Reunión familiar", "Foto familiar", "Álbum de fotos", "Herencia", "Apellido", "Árbol genealógico", "Mascota", "Pasear al perro", "Limpieza general", "Lavar los platos", "Lavar la ropa", "Planchar", "Cocinar", "Hacer las compras", "Lista del súper", "Heladera vacía", "Tupper", "Microondas", "Lavarropas", "Aspiradora", "Aire acondicionado", "Estufa", "Ventilador", "Cortina", "Alfombra", "Sillón", "Colchón", "Almohada", "Despertador", "Siesta", "Insomnio", "Pesadilla", "Sueño", "Bostezo", "Resfrío", "Fiebre", "Curita", "Termómetro", "Botiquín", "Receta médica", "Análisis de sangre", "Vacuna", "Anteojos", "Lentes de contacto", "Paraguas", "Valija", "Pasaporte", "Documento", "Billetera", "Llaves", "Llave perdida", "Celular sin batería", "Cargador", "Wi-Fi", "Contraseña", "Control remoto", "Televisor", "Serie", "Película", "Noticiero", "Publicidad", "Radio", "Podcast", "Música", "Guitarra", "Piano", "Batería", "Karaoke", "Baile", "Fiesta", "Disfraz", "Carnaval", "Halloween", "Pascuas", "Día del Padre", "Día de la Madre", "Día del Niño", "Día del Amigo", "Regalo", "Sorpresa", "Tarjeta de felicitación", "Ramo de flores", "Bombones", "Brindis", "Vela", "Fuegos artificiales", "Globos", "Piñata", "Jardín", "Parrilla", "Piscina", "Balcón", "Terraza", "Garaje", "Sótano", "Altillo", "Ascensor", "Escalera", "Fútbol", "Mundial", "Penal", "Árbitro", "Gol", "Hinchada", "Camiseta", "Tenis", "Pádel", "Básquet", "Vóley", "Rugby", "Golf", "Natación", "Ciclismo", "Maratón", "Boxeo", "Artes marciales", "Yoga", "Meditación", "Ajedrez", "Truco", "Póker", "Chinchón", "Generala", "Dominó", "Rompecabezas", "Crucigrama", "Sopa de letras", "Sudoku", "Bingo", "Lotería", "Rifa", "Bingo familiar", "Juego de mesa", "Dados", "Cartas", "Fichas", "Tablero", "Trampa", "Empate", "Victoria", "Derrota", "Trofeo", "Medalla", "Entrenamiento", "Lesión", "Calambre", "Transpiración", "Ducha fría", "Pesca", "Caza", "Senderismo", "Escalada", "Esquí", "Surf", "Buceo", "Navegar", "Velero", "Kayak", "Bicicleta", "Patineta", "Patines", "Lectura", "Novela", "Historieta", "Poesía", "Pintura", "Escultura", "Cerámica", "Carpintería", "Costura", "Tejido", "Jardinería", "Huerta", "Colección", "Antigüedad", "Subasta", "Reciclaje", "Ecología", "Egipto", "Pirámide", "Faraón", "Roma", "Gladiador", "Grecia", "Mitología", "Edad Media", "Castillo", "Caballero", "Vikingo", "Renacimiento", "Revolución", "Independencia", "Dinosaurio", "Fósil", "Evolución", "Prehistoria", "Cavernícola", "Fuego", "Rueda", "Invención", "Electricidad", "Gravedad", "Telescopio", "Microscopio", "Satélite", "Cohete", "Luna", "Marte", "Sistema Solar", "Eclipse", "Meteorito", "Agujero negro", "Ovni", "Robot", "Inteligencia Artificial", "Internet", "Redes sociales", "Correo electrónico", "Fotografía", "Selfie", "Video", "Cine mudo", "Dibujos animados", "Ciencia ficción", "Terror", "Comedia", "Drama", "Documental", "Circo Romano", "Ópera", "Ballet", "Orquesta", "Rock", "Jazz", "Tango", "Folklore", "Pop", "Reggaetón", "Arcoíris", "Amanecer", "Atardecer", "Medianoche", "Mediodía", "Calendario", "Reloj de arena", "Brújula", "Mapa", "Frontera", "Aduana", "Idioma", "Diccionario", "Acento", "Traducción", "Viaje", "Turista", "Guía turístico", "Souvenir", "Postal", "Moneda", "Billete", "Ahorro", "Alcancía", "Impuesto", "Factura", "Presupuesto", "Oferta", "Descuento", "Garantía", "Devolución", "Queja", "Propina", "Cuenta", "Reserva", "Fila", "Espera", "Turno", "Puntualidad", "Alegría", "Tristeza", "Enojo", "Miedo", "Vergüenza", "Orgullo", "Envidia", "Celos", "Nostalgia", "Paciencia", "Curiosidad", "Valentía", "Generosidad", "Honestidad", "Mentira", "Secreto", "Chisme", "Rumor", "Promesa", "Perdón", "Disculpa", "Agradecimiento", "Saludo", "Despedida", "Abrazo", "Beso", "Risa", "Carcajada", "Llanto", "Lágrima", "Suspiro", "Grito", "Susurro", "Silencio", "Ruido", "Eco", "Sombra", "Reflejo", "Espejo", "Laberinto", "Misterio", "Pista", "Sospechoso", "Coartada", "Testigo", "Tesoro", "Mapa del tesoro", "Nudo", "Cuerda", "Puente", "Muro", "Puerta cerrada", "Candado", "Llave maestra", "Caja fuerte", "Alarma", "Semáforo", "Multa", "Embotellamiento", "Choque", "Grúa", "Pinchazo", "Rueda de auxilio", "Gato hidráulico", "GPS", "Perdido", "Atajo", "Desvío", "Curva", "Túnel", "Maleta", "Equipaje de mano", "Turbulencia", "Despegue", "Aterrizaje", "Jet lag", "Bronceado", "Quemadura de sol", "Protector solar", "Repelente", "Picadura", "Mosquito", "Alergia", "Estornudo", "Tos", "Dolor de cabeza", "Dolor de muelas", "Vendas", "Yeso", "Muletas", "Silla de ruedas", "Ambulancia", "Camilla", "Carpintero", "Plomero", "Electricista", "Pintor", "Albañil", "Jardinero", "Cerrajero", "Sastre"], "adultos": ["Reunión de consorcio", "Expensas", "Alquiler", "Hipoteca", "Garantía propietaria", "Inflación", "Dólar", "Plazo fijo", "Tarjeta de crédito", "Resumen de tarjeta", "Cuotas sin interés", "Débito automático", "Transferencia", "CBU", "Clave fiscal", "AFIP / ARCA", "Contador", "Factura", "Recibo de sueldo", "Aguinaldo", "Bono anual", "Aumento de sueldo", "Entrevista laboral", "Currículum", "LinkedIn", "Renuncia", "Despido", "Indemnización", "Jubilación", "Pensión", "Obra social", "Prepaga", "Reintegro", "Copago", "Turno médico", "Chequeo anual", "Colesterol", "Presión arterial", "Estrés", "Burnout", "Terapia", "Psicólogo", "Psiquiatra", "Ansiedad", "Crisis de los 30", "Crisis de los 40", "Canas", "Calvicie", "Arrugas", "Crema antiage", "Dieta", "Gimnasio en enero", "Nutricionista", "Ayuno intermitente", "Proteína", "Suplementos", "Dolor de espalda", "Ciático", "Contractura", "Masajista", "Osteópata", "Kinesiología", "Home office", "Reunión por Zoom", "Micrófono muteado", "Compartir pantalla", "Correo corporativo", "En copia", "Para ayer", "Urgente", "Minuta", "Excel", "Presentación", "Jefe", "Subordinado", "Compañero tóxico", "Radio pasillo", "After office", "Fiesta de fin de año", "Amigo invisible", "Licencia por enfermedad", "Vacaciones pendientes", "Feriado puente", "Fin de semana largo", "Trámite bancario", "Fila en el banco", "Cajero automático sin plata", "Home banking", "Token", "Estafa virtual", "Spam", "Grupo de WhatsApp", "Audio de 5 minutos", "Visto", "Última conexión", "Bloqueado", "Silenciar grupo", "Sticker", "Meme", "Hilo de Twitter", "Algoritmo", "Suscripción", "Contraseña olvidada", "Autenticación en dos pasos", "Nube llena", "Backup", "Actualización", "Pantalla azul", "Router", "Cortes de luz", "Primera cita", "Tinder", "Match", "Ghosting", "Friendzone", "Casi algo", "Ex pareja", "Bloqueo de ex", "Stalkear", "Celos", "Infidelidad", "Amante", "Trampa", "Mentira piadosa", "Discusión de pareja", "Dormir en el sillón", "Aniversario", "Propuesta de matrimonio", "Anillo de compromiso", "Despedida de soltero", "Despedida de soltera", "Casamiento civil", "Iglesia", "Mesa de los solteros", "Ramo de novia", "Liga", "Vals", "Barra libre", "Cotillón", "Luna de miel", "Suegra", "Suegro", "Cuñado", "Concuñado", "Familia política", "Divorcio", "Separación", "División de bienes", "Cuota alimentaria", "Tenencia", "Convivencia", "Mudarse juntos", "Compartir gastos", "Reparto de tareas", "Lado de la cama", "Ronquidos", "Robar la frazada", "Baño ocupado", "Pelo en la ducha", "Tapa del inodoro", "Boda de plata", "Boda de oro", "Terapia de pareja", "Amor a primera vista", "Flechazo", "Beso", "Caricia", "Abrazo", "Chamuyo", "Levante", "Boliche", "Patovica", "Lista VIP", "Consumición", "Previas", "Trago", "Fernet", "Cerveza artesanal", "Vino tinto", "Espumante", "Brindis", "Shot", "Tequila", "Resaca", "Ibuprofeno", "Acidez", "Gastritis", "Café negro", "Bajón", "Pancho a las 5 AM", "Taxi de madrugada", "Uber", "Control de alcoholemia", "Multa de tránsito", "Acarreo", "Estacionamiento medido", "Trapito", "VTV", "Seguro del auto", "Choque", "Piquete", "Corte de calle", "Paro de transporte", "Hora pico", "Subte lleno", "Aire acondicionado roto", "Vecino ruidoso", "Fiesta arriba", "Perro que ladra", "Consorcio", "Grupo de mamis y papis", "Acto escolar", "Disfraz a último momento", "Cartulina el domingo", "Feria de ciencias", "Reunión de padres", "Cuaderno de comunicados", "Piojos", "Pediatra", "Guardia médica", "Pañales", "Mamadera", "Chupete", "Cochecito", "Sillita del auto", "Berrinche", "Cuento antes de dormir", "Vaso de agua", "Pesadilla", "Diente flojo", "Ratón Pérez", "Cumpleaños infantil", "Salón de fiestas", "Animador", "Souvenir", "Piñata", "Torta temática", "Niñera", "Abuelos al rescate", "Colonia de vacaciones", "Club", "Cuota del club", "Partido el sábado", "Torneo", "Tribuna", "Viaje de egresados", "Bariloche", "Previa adolescente", "Permiso para salir", "Horario de vuelta", "Primer auto", "Registro de conducir", "Examen práctico", "Estacionar en paralelo", "Universidad", "Carrera", "Tesis", "Recibida", "Huevos y harina", "Independizarse", "Primer departamento", "Garantía", "Flete", "Pintar antes de entregar", "Depósito", "Inmobiliaria", "Comisión", "Escritura", "Mudanza", "Cajas sin abrir", "Elecciones", "Cuarto oscuro", "Boleta", "Presidente de mesa", "Veda electoral", "Encuesta", "Debate presidencial", "Campaña", "Promesa electoral", "Corrupción", "Impuestos", "Subsidio", "Paritarias", "Sindicato", "Huelga", "Manifestación", "Noticiero", "Cadena nacional", "Infiltrado news", "Conspiración", "Horóscopo", "Carta natal", "Mercurio retrógrado", "Tarot", "Brujería", "Cábala", "Superstición", "Martes 13", "Gato negro", "Espejo roto", "Bingo", "Quiniela", "Lotería", "Casino", "Tragamonedas", "Ruleta", "Apuesta", "Póker", "Farol", "All-in", "Serie de Netflix", "Maratón de series", "Spoiler", "Tráiler", "Crítica", "Premios Oscar", "Alfombra roja", "Paparazzi", "Famoso", "Influencer", "Canje", "Publicidad encubierta", "Cancelación", "Hater", "Troll", "Viral", "Trending topic", "Podcast", "Streaming", "Suscriptor", "Ovni", "Área 51", "Fantasmas", "Espiritismo", "Ouija", "Casa embrujada", "Cementerio", "Velorio", "Testamento", "Cremación", "Seguros de vida", "Inmortalidad", "Reencarnación", "Karma", "Destino", "Casualidad", "Deja vu", "Intuición", "Corazonada", "Nostalgia", "Infancia", "Adolescencia", "Juventud", "Vejez", "Sabiduría", "Experiencia", "Arrepentimiento", "Segundas oportunidades", "Propósitos de año nuevo", "Motel", "Albergue transitorio", "Lencería", "Juguete sexual", "Sex shop", "Kamasutra", "Fantasía", "Fetiche", "Striptease", "Despedida", "Borrachera", "Laguna mental", "Mensaje borracho", "Llamada a las 3 AM", "Vergüenza ajena", "Papelón", "Trágame tierra", "Error de grupo", "Mandar captura al interesado", "Audio equivocado", "Saludar a quien no te saluda", "Confundir nombre", "Preguntar si está embarazada", "Mal aliento", "Transpiración", "Mancha en la ropa", "Cierre abierto", "Papel en el zapato", "Flatulencia", "Eructo", "Baño sin papel", "Inodoro tapado", "Olor en el ascensor", "Invitado que no se va", "Indirecta", "Sarcasmo", "Ironía", "Doble sentido", "Albur", "Chiste verde", "Humor negro", "Tabú", "Censura", "Secreto a voces", "Chisme de oficina", "Escándalo", "Infidelidad descubierta", "Mensaje comprometedor", "Contraseña del celular", "Modo incógnito", "Historial de búsqueda", "Cámara encendida por error", "Micrófono abierto", "Filtro fallido", "Foto comprometida", "Tatuaje de ex", "Tatuaje arrepentido", "Piercing", "Cirugía estética", "Botox", "Peluca", "Implante capilar", "Viagra", "Menopausia", "Andropausia", "Sofocos", "Insomnio", "Pastilla para dormir", "Antidepresivo", "Relajante muscular", "Colonoscopia", "Proctólogo", "Urólogo", "Ginecólogo", "Mamografía", "Análisis de orina", "Dieta líquida", "Intoxicación", "Empacho", "Vómito", "Maratón de baño", "Guardia de hospital", "Sueros", "Inyección", "Miedo a las agujas", "Desmayo", "Golpe de calor", "Insolación", "Resaca moral", "Culpabilidad", "Excusa barata", "Llegar tarde", "Plantón", "Dejar plantado", "Cobrar deuda", "Prestar plata", "Amigo ratón", "Dividir la cuenta", "El que pide lo más caro", "Propina rata", "Impuesto a las ganancias", "Bienes personales", "Monotributo", "Recategorización", "Factura electrónica", "Vencimiento", "Mora", "Intereses", "Veraz", "Préstamo personal", "Plazo fijo UVA", "Criptomoneda", "Bitcoin", "Billetera virtual", "QR", "Posnet sin señal", "Efectivo", "Cambio chico", "Billete falso", "Cajero roto", "Seguro de hogar", "Siniestro", "Franquicia", "Perito", "Denuncia policial", "Testigo", "Mediación", "Carta documento", "Telegrama", "Burocracia", "Sellado", "Apostilla", "Trámite online", "Página caída", "Captcha", "Soy un robot", "Términos y condiciones", "Cookies", "Suscripción oculta", "Dar de baja", "Call center"]};
@@ -3220,7 +3138,7 @@
       adultos: "Mazo Adultos (+18 años)"
     };
 
-    const STORAGE_KEY = "boardgame_hub_v28";
+    const STORAGE_KEY = "boardgame_hub_v29";
 
     let state = {
       activeView: 'menu',
@@ -3348,13 +3266,12 @@
       anoNames: { eq1: 'Nosotros', eq2: 'Ellos' },
       generalaScores: {},
       teamScores: { A: 0, B: 0 },
-      tatetiScores: { X: 0, O: 0 },
       players: []
     };
 
     function loadState() {
       try {
-        const saved = localStorage.getItem(STORAGE_KEY) || localStorage.getItem("boardgame_hub_v5") || localStorage.getItem("boardgame_hub_v4");
+        const saved = localStorage.getItem(STORAGE_KEY) || localStorage.getItem("boardgame_hub_v28") || localStorage.getItem("boardgame_hub_v27") || localStorage.getItem("boardgame_hub_v26") || localStorage.getItem("boardgame_hub_v25") || localStorage.getItem("boardgame_hub_v5");
         if (saved) {
           const parsed = JSON.parse(saved);
           if (parsed && parsed.pools && parsed.rounds) {
@@ -3522,15 +3439,6 @@
     // ==========================================
 
     const GAME_RULES = {
-      tateti: {
-        goal: "Alinear 3 de tus símbolos (cruces o círculos) en el tablero de 3x3.",
-        steps: [
-          "<strong>1. Turnos:</strong> Un jugador usa la ❌ y el otro la ⭕. Se turnan para tocar un casillero vacío.",
-          "<strong>2. Ganar:</strong> El primero en formar una línea de 3 (horizontal, vertical o diagonal) gana un punto.",
-          "<strong>3. Revancha:</strong> Toca 'Nueva partida' para limpiar el tablero. Los puntos se guardan automáticamente."
-        ],
-        tip: "¡Cuidado con la clásica trampa de armar dos líneas posibles al mismo tiempo!"
-      },
       unanimo: {
         goal: "Pensar exactamente lo mismo que los demás jugadores, no ser original.",
         steps: [
@@ -6833,7 +6741,7 @@
 
     function resetAnotador() {
       if (navigator.vibrate) navigator.vibrate(40);
-      if (state.anoMode === \'numeros\' || state.anoMode === \'escoba\') {
+      if (state.anoMode === 'numeros' || state.anoMode === 'escoba') {
           if(state.anoNumPlayers) state.anoNumPlayers.forEach(p => p.score = 0);
       } else {
           state.anoScores = { eq1: 0, eq2: 0 };
@@ -6854,7 +6762,7 @@
     }
 
     function renderAnotador() {
-      if (state.anoMode === \'numeros\' || state.anoMode === \'escoba\') {
+      if (state.anoMode === 'numeros' || state.anoMode === 'escoba') {
           renderAnoNumList();
           checkAnoWinner();
           return;
@@ -6903,7 +6811,7 @@
       const banner = document.getElementById('anoWinnerBanner');
       if (!banner) return;
       
-      if (state.anoMode === \'numeros\' || state.anoMode === \'escoba\') {
+      if (state.anoMode === 'numeros' || state.anoMode === 'escoba') {
           banner.style.display = 'none';
           return;
       }
@@ -7056,7 +6964,6 @@
       
       saveState();
       renderRelojSetup();
-    renderTateti();
     }
 
     function setRelojPreset(sec) {
@@ -7066,7 +6973,6 @@
       event.target.classList.add('active');
       saveState();
       renderRelojSetup();
-    renderTateti();
     }
 
     function toggleReloj() {
@@ -7201,7 +7107,6 @@
     renderAnotador();
 
     renderRelojSetup();
-    renderTateti();
 
 
     
@@ -7225,79 +7130,6 @@
 
     renderPlayers();
 
-    // ==========================================
-    // LÓGICA TA-TE-TI
-    // ==========================================
-    let tttBoard = ['', '', '', '', '', '', '', '', ''];
-    let tttCurrent = 'X';
-    let tttActive = true;
-
-    function renderTateti() {
-      const cells = document.querySelectorAll('.tateti-cell');
-      cells.forEach((cell, i) => {
-        cell.innerText = tttBoard[i] === 'X' ? '❌' : (tttBoard[i] === 'O' ? '⭕' : '');
-        cell.className = 'tateti-cell ' + (tttBoard[i] === 'X' ? 'x' : (tttBoard[i] === 'O' ? 'o' : ''));
-      });
-      document.getElementById('tttScoreX').innerText = state.tatetiScores.X;
-      document.getElementById('tttScoreO').innerText = state.tatetiScores.O;
-    }
-
-    function playTateti(idx) {
-      if (!tttActive || tttBoard[idx] !== '') return;
-      if (navigator.vibrate) navigator.vibrate(15);
-      
-      tttBoard[idx] = tttCurrent;
-      renderTateti();
-      checkTatetiWin();
-      
-      if (tttActive) {
-        tttCurrent = tttCurrent === 'X' ? 'O' : 'X';
-        document.getElementById('tttStatus').innerText = `Turno de ${tttCurrent === 'X' ? '❌' : '⭕'}`;
-      }
-    }
-
-    function checkTatetiWin() {
-      const winLines = [
-        [0, 1, 2], [3, 4, 5], [6, 7, 8],
-        [0, 3, 6], [1, 4, 7], [2, 5, 8],
-        [0, 4, 8], [2, 4, 6]
-      ];
-      for (let line of winLines) {
-        const [a, b, c] = line;
-        if (tttBoard[a] && tttBoard[a] === tttBoard[b] && tttBoard[a] === tttBoard[c]) {
-          tttActive = false;
-          const winner = tttBoard[a];
-          document.getElementById('tttStatus').innerHTML = `<span style="color:${winner === 'X' ? '#ef4444' : '#38bdf8'}">¡GANÓ ${winner === 'X' ? '❌' : '⭕'}!</span>`;
-          state.tatetiScores[winner]++;
-          saveState();
-          renderTateti();
-          if (navigator.vibrate) navigator.vibrate([100, 50, 100, 50, 200]);
-          return;
-        }
-      }
-      if (!tttBoard.includes('')) {
-        tttActive = false;
-        document.getElementById('tttStatus').innerText = '¡EMPATE!';
-        if (navigator.vibrate) navigator.vibrate(80);
-      }
-    }
-
-    function resetTatetiBoard() {
-      tttBoard = ['', '', '', '', '', '', '', '', ''];
-      tttCurrent = 'X';
-      tttActive = true;
-      document.getElementById('tttStatus').innerText = 'Turno de ❌';
-      renderTateti();
-      if (navigator.vibrate) navigator.vibrate(30);
-    }
-
-    function resetTatetiScores() {
-      state.tatetiScores = { X: 0, O: 0 };
-      saveState();
-      renderTateti();
-      if (navigator.vibrate) navigator.vibrate(40);
-    }
-
-  </script>
+    </script>
 </body>
 </html>
