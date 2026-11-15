@@ -296,6 +296,52 @@
     }
     .rules-ok-btn:active { transform: scale(0.98); }
 
+    
+    /* ESTILOS TA-TE-TI */
+    .tateti-board {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.5rem;
+      width: 100%;
+      max-width: 300px;
+      margin: 0 auto;
+    }
+    .tateti-cell {
+      background: var(--bg);
+      border: 2px solid rgba(255,255,255,0.06);
+      border-radius: 16px;
+      aspect-ratio: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3.5rem;
+      font-weight: 900;
+      cursor: pointer;
+      color: var(--text);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      transition: all 0.15s ease;
+      user-select: none;
+    }
+    .tateti-cell:active { transform: scale(0.95); }
+    .tateti-cell.x { color: #ef4444; }
+    .tateti-cell.o { color: #38bdf8; }
+    .tateti-status {
+      font-size: 1.25rem;
+      font-weight: 900;
+      margin-bottom: 0.8rem;
+    }
+    .tateti-scores {
+      display: flex;
+      justify-content: space-around;
+      width: 100%;
+      max-width: 300px;
+      margin: 0 auto 1rem auto;
+      background: var(--card-light);
+      padding: 0.5rem;
+      border-radius: 14px;
+      font-weight: 800;
+      font-size: 1.2rem;
+    }
     /* VISTAS DE JUEGOS */
     .game-view {
       display: none;
@@ -1921,6 +1967,7 @@
     [data-theme="light"] .tabu-hud,
     [data-theme="light"] #diceDisplayArea,
     [data-theme="light"] .generala-table-wrap,
+    [data-theme="light"] .tateti-scores,
     [data-theme="light"] .team-score-card,
     [data-theme="light"] .name-slot,
     [data-theme="light"] .player-input,
@@ -1962,6 +2009,7 @@
     
     [data-theme="light"] .player-turn-badge, [data-theme="light"] .tap-cta { background: rgba(0, 0, 0, 0.06); }
     
+    [data-theme="light"] .tateti-cell { background: #f8fafc; border-color: rgba(0,0,0,0.1); }
     [data-theme="light"] .die { background-color: #ffffff; box-shadow: inset 0 4px #f8fafc, inset 0 -4px #e2e8f0, 0 4px 10px rgba(0,0,0,0.15); }
     [data-theme="light"] .die-dot { background-color: #334155; }
     [data-theme="light"] .generala-table th, [data-theme="light"] .generala-table td { border-color: rgba(0,0,0,0.1); }
@@ -2840,28 +2888,30 @@
     <!-- VISTA 20: ANOTADOR DE TRUCO / PUNTOS -->
     <main id="view-anotador" class="game-view">
       <div class="sub-header">
-        <span class="game-subtitle">Anotador en papel</span>
+        <span class="game-subtitle">Anotador múltiple</span>
         <div class="counter" id="anotadorMax">A 30 pts</div>
       </div>
       
       <div class="cat-selector" id="anotadorModeSelector">
         <button class="cat-pill active" data-mode="truco" onclick="setAnotadorMode('truco', this)">
-          <span class="cat-title">Truco (Cuadrados)</span>
+          <span class="cat-title">Truco</span>
+          <span class="cat-age">30 pts</span>
+        </button>
+        <button class="cat-pill" data-mode="escoba" onclick="setAnotadorMode('escoba', this)">
+          <span class="cat-title">Escoba</span>
+          <span class="cat-age">15 pts</span>
         </button>
         <button class="cat-pill" data-mode="numeros" onclick="setAnotadorMode('numeros', this)">
-          <span class="cat-title">Números Normales</span>
+          <span class="cat-title">Números</span>
+          <span class="cat-age">Libre</span>
         </button>
       </div>
 
-      <div style="display:flex; width:100%; gap:0.5rem; margin-top:0.2rem;">
+      <div id="anoTrucoContainer" style="display:flex; width:100%; gap:0.5rem; margin-top:0.2rem;">
         <!-- Equipo 1 -->
         <div style="flex:1; background:var(--card); border-radius:20px; border:2px solid var(--truco-bg1); padding:0.8rem; display:flex; flex-direction:column; align-items:center; gap:0.8rem;">
           <input type="text" class="team-name-input" id="anoName1" value="Nosotros" style="font-size:1.1rem; color:var(--truco-eq1); border-bottom:1px dashed var(--truco-eq1);" onchange="updateAnoName('eq1', this.value)" onfocus="this.select()">
-          
-          <div id="anoVisual1" style="min-height: 230px; display:flex; flex-direction:column; align-items:center; justify-content:flex-start; gap:0.4rem; width:100%;">
-            <!-- Truco boxes or giant number -->
-          </div>
-          
+          <div id="anoVisual1" style="min-height: 230px; display:flex; flex-direction:column; align-items:center; justify-content:flex-start; gap:0.4rem; width:100%;"></div>
           <div style="display:flex; gap:0.4rem; width:100%; margin-top:auto;">
             <button class="t-btn" style="flex:1; background:var(--truco-bg1); color:var(--truco-eq1); font-size:1.3rem; height: 42px;" onclick="changeAnoScore('eq1', -1)">-</button>
             <button class="t-btn" style="flex:1; background:var(--truco-bg1); color:var(--truco-eq1); font-size:1.1rem; height: 42px;" onclick="changeAnoScore('eq1', 1)">+1</button>
@@ -2872,11 +2922,7 @@
         <!-- Equipo 2 -->
         <div style="flex:1; background:var(--card); border-radius:20px; border:2px solid var(--truco-bg2); padding:0.8rem; display:flex; flex-direction:column; align-items:center; gap:0.8rem;">
           <input type="text" class="team-name-input" id="anoName2" value="Ellos" style="font-size:1.1rem; color:var(--truco-eq2); border-bottom:1px dashed var(--truco-eq2);" onchange="updateAnoName('eq2', this.value)" onfocus="this.select()">
-          
-          <div id="anoVisual2" style="min-height: 230px; display:flex; flex-direction:column; align-items:center; justify-content:flex-start; gap:0.4rem; width:100%;">
-            <!-- Truco boxes or giant number -->
-          </div>
-          
+          <div id="anoVisual2" style="min-height: 230px; display:flex; flex-direction:column; align-items:center; justify-content:flex-start; gap:0.4rem; width:100%;"></div>
           <div style="display:flex; gap:0.4rem; width:100%; margin-top:auto;">
             <button class="t-btn" style="flex:1; background:var(--truco-bg2); color:var(--truco-eq2); font-size:1.3rem; height: 42px;" onclick="changeAnoScore('eq2', -1)">-</button>
             <button class="t-btn" style="flex:1; background:var(--truco-bg2); color:var(--truco-eq2); font-size:1.1rem; height: 42px;" onclick="changeAnoScore('eq2', 1)">+1</button>
@@ -2885,10 +2931,18 @@
         </div>
       </div>
       
+      <div id="anoNumContainer" style="display:none; width:100%; flex-direction:column; gap:0.5rem; margin-top:0.2rem;">
+        <div id="anoNumList" style="display:flex; flex-direction:column; gap:0.5rem; width:100%;"></div>
+        <form onsubmit="addAnoNumPlayer(event)" style="display:flex; gap:0.4rem; margin-top:0.2rem;">
+            <input type="text" id="anoNewPlayerInput" class="player-input" placeholder="Nuevo jugador..." autocomplete="off" style="border:1px solid rgba(255,255,255,0.15);">
+            <button type="submit" class="add-btn" style="padding: 0 0.8rem; font-size:0.85rem;">+ Sumar</button>
+        </form>
+      </div>
+
       <div id="anoWinnerBanner" class="rules-tip-box" style="display:none; text-align:center; font-size:1.1rem; font-weight:900; color:var(--ninos); border-left-color:var(--ninos); width:100%; border-radius:10px; margin-top:0.5rem; background:rgba(74, 222, 128, 0.1);"></div>
 
       <div class="controls-row">
-        <button class="reset-btn" onclick="resetAnotador()">Poner el partido en 0</button>
+        <button class="reset-btn" onclick="resetAnotador()">Poner en 0</button>
       </div>
     </main>
 
@@ -2940,6 +2994,42 @@
       <div class="controls-row">
         <button class="btn" id="relojStartBtn" style="flex:2; font-size:1.2rem; padding:1rem;" onclick="toggleReloj()">▶ Iniciar</button>
         <button class="secondary-btn" style="flex:1;" onclick="resetReloj()">↻ Reset</button>
+      </div>
+    </main>
+
+    
+    <!-- VISTA 22: TA-TE-TI -->
+    <main id="view-tateti" class="game-view">
+      <div class="sub-header">
+        <span class="game-subtitle">El clásico 3 en línea</span>
+        <div class="counter">2 Jugadores</div>
+      </div>
+      
+      <div style="background:var(--card); padding:1.5rem 1rem; border-radius:24px; border:2px solid rgba(255,255,255,0.1); display:flex; flex-direction:column; align-items:center; width: 100%;">
+        
+        <div class="tateti-scores">
+          <span style="color:#ef4444;">❌ <span id="tttScoreX">0</span></span>
+          <span style="color:#38bdf8;">⭕ <span id="tttScoreO">0</span></span>
+        </div>
+
+        <div class="tateti-status" id="tttStatus">Turno de ❌</div>
+        
+        <div class="tateti-board" id="tttBoard">
+          <div class="tateti-cell" onclick="playTateti(0)"></div>
+          <div class="tateti-cell" onclick="playTateti(1)"></div>
+          <div class="tateti-cell" onclick="playTateti(2)"></div>
+          <div class="tateti-cell" onclick="playTateti(3)"></div>
+          <div class="tateti-cell" onclick="playTateti(4)"></div>
+          <div class="tateti-cell" onclick="playTateti(5)"></div>
+          <div class="tateti-cell" onclick="playTateti(6)"></div>
+          <div class="tateti-cell" onclick="playTateti(7)"></div>
+          <div class="tateti-cell" onclick="playTateti(8)"></div>
+        </div>
+      </div>
+
+      <div class="controls-row">
+        <button class="btn" style="flex:2; background:linear-gradient(135deg, #38bdf8, #0284c7); color:#fff; font-size:1.1rem; padding:1rem;" onclick="resetTatetiBoard()">↻ Nueva partida</button>
+        <button class="secondary-btn" style="flex:1; font-size:0.9rem;" onclick="resetTatetiScores()">Resetear</button>
       </div>
     </main>
 
@@ -2999,7 +3089,8 @@
       { id: 'dados', title: 'TIRADA DADOS', icon: '🎲' },
       { id: 'generala', title: 'GENERALA', icon: '📝' },
       { id: 'anotador', title: 'ANOTADOR', icon: '✏️' },
-      { id: 'reloj', title: 'RELOJ ARENA', icon: '⏳' }
+      { id: 'reloj', title: 'RELOJ ARENA', icon: '⏳' },
+      { id: 'tateti', title: 'TA-TE-TI', icon: '❌' }
     ];
 
     const DECKS = {"ninos": ["Perro", "Gato", "León", "Elefante", "Jirafa", "Mono", "Tigre", "Oso", "Cebra", "Hipopótamo", "Cocodrilo", "Serpiente", "Tortuga", "Conejo", "Caballo", "Vaca", "Cerdo", "Oveja", "Gallina", "Pato", "Pingüino", "Delfín", "Ballena", "Tiburón", "Pulpo", "Cangrejo", "Estrella de mar", "Medusa", "Foca", "Caballito de mar", "Águila", "Búho", "Loro", "Flamenco", "Tucán", "Paloma", "Colibrí", "Pavo real", "Avestruz", "Murciélago", "Mariposa", "Abeja", "Hormiga", "Araña", "Mariquita", "Grillo", "Mosquito", "Caracol", "Gusano", "Libélula", "Rana", "Sapo", "Camaleón", "Iguana", "Dinosaurio", "Tiranosaurio", "Dragón", "Unicornio", "Canguro", "Koala", "Panda", "Lobo", "Zorro", "Ardilla", "Erizo", "Castor", "Mapache", "Ciervo", "Camello", "Llama", "Burro", "Cabra", "Ratón", "Hámster", "Pez payaso", "Pez globo", "Reno", "Oso polar", "Morsa", "Gorila", "Helado", "Pizza", "Hamburguesa", "Papas fritas", "Chocolate", "Caramelo", "Chupetín", "Alfajor", "Dulce de leche", "Galletitas", "Torta de cumpleaños", "Pochoclo", "Pancho", "Milanesa", "Fideos", "Arroz", "Sopa", "Ensalada", "Huevo frito", "Queso", "Pan", "Manteca", "Mermelada", "Miel", "Cereal", "Leche", "Jugo de naranja", "Limonada", "Licuado", "Chocolatada", "Manzana", "Banana", "Naranja", "Frutilla", "Sandía", "Melón", "Uva", "Durazno", "Pera", "Ananá", "Limón", "Cereza", "Kiwi", "Zanahoria", "Tomate", "Lechuga", "Papa", "Choclo", "Brócoli", "Zapallo", "Empanada", "Taco", "Sushi", "Donas", "Medialuna", "Churros", "Panqueques", "Waffles", "Gelatina", "Flan", "Budín", "Magdalena", "Malvavisco", "Algodón de azúcar", "Gomitas", "Chicle", "Turrón", "Huevos de Pascua", "Rosca de Reyes", "Sándwich", "Tostada", "Yogur", "Aceituna", "Palta", "Salchicha", "Escuela", "Mochila", "Lápiz", "Goma de borrar", "Sacapuntas", "Regla", "Tijera", "Plasticola", "Cuaderno", "Carpeta", "Cartuchera", "Marcadores", "Lápices de colores", "Crayones", "Témperas", "Pincel", "Acuarelas", "Plastilina", "Pizarrón", "Tiza", "Fibrón", "Maestra", "Profesor", "Recreo", "Patio", "Aula", "Biblioteca", "Libro", "Cuento", "Diccionario", "Mapa", "Globo terráqueo", "Compás", "Escuadra", "Calculadora", "Computadora", "Tablet", "Campana", "Timbre", "Bandera", "Acto escolar", "Excursión", "Tarea", "Examen", "Boletín", "Guardapolvo", "Uniforme", "Merienda", "Cantimplora", "Lonchera", "Microscopio", "Lupa", "Imán", "Flauta", "Tambor", "Pelota", "Muñeca", "Auto de juguete", "Tren de juguete", "Bloques", "Rompecabezas", "Yoyó", "Trompo", "Barrilete", "Patines", "Patineta", "Bicicleta", "Triciclo", "Monopatín", "Tobogán", "Hamaca", "Sube y baja", "Calesita", "Pelotero", "Castillo inflable", "Escondidas", "Mancha", "Rayuela", "Saltar la soga", "Piedra, papel o tijera", "Adivinanza", "Trabalenguas", "Chiste", "Títere", "Marioneta", "Disfraz", "Antifaz", "Varita mágica", "Espada de madera", "Escudo", "Corona", "Peluche", "Osito", "Robot", "Cohete", "Canicas", "Bolitas", "Cartas", "Dados", "Dominó", "Ajedrez", "Damas", "Lotería", "Bingo", "Videojuego", "Joystick", "Consola", "Burbuja", "Pistola de agua", "Bombucha", "Aro hula-hula", "Cama elástica", "Zancos", "Casa del árbol", "Carpa", "Linterna", "Binoculares", "Walkie-talkie", "Alcancia", "Figuritas", "Superhéroe", "Princesa", "Príncipe", "Rey", "Reina", "Caballero", "Mago", "Bruja", "Hada", "Duende", "Gigante", "Ogro", "Pirata", "Sirena", "Fantasma", "Vampiro", "Momia", "Hombre lobo", "Zombi", "Monstruo", "Extraterrestre", "Astronauta", "Ninja", "Samurái", "Vaquero", "Indio", "Detective", "Espía", "Payaso", "Acróbata", "Malabarista", "Domador", "Genio de la lámpara", "Caperucita Roja", "Pinocho", "Cenicienta", "Blancanieves", "Peter Pan", "Papá Noel", "Ratón Pérez", "Reyes Magos", "Conejo de Pascua", "Elfo", "Centauro", "Fénix", "Pegaso", "Yeti", "Cíclope", "Troll", "Gnomo", "Capitán", "Marinero", "Explorador", "Científico loco", "Inventor", "Cazador de tesoros", "Espantapájaros", "Muñeco de nieve", "Ángel", "Playa", "Mar", "Océano", "Isla", "Montaña", "Volcán", "Bosque", "Selva", "Desierto", "Río", "Lago", "Cascada", "Cueva", "Nieve", "Hielo", "Nube", "Lluvia", "Tormenta", "Arcoíris", "Sol", "Luna", "Estrella", "Planeta", "Espacio", "Galaxia", "Cometa", "Tierra", "Cielo", "Viento", "Trueno", "Relámpago", "Charco", "Barro", "Arena", "Piedra", "Árbol", "Flor", "Pasto", "Hoja", "Rama", "Semilla", "Raíz", "Jardín", "Plaza", "Parque", "Zoológico", "Acuario", "Granja", "Circo", "Cine", "Teatro", "Museo", "Castillo", "Palacio", "Faro", "Puente", "Túnel", "Piscina", "Camping", "Hospital", "Cuartel de bomberos", "Comisaría", "Supermercado", "Panadería", "Juguetería", "Casa", "Cama", "Almohada", "Frazada", "Pijama", "Pantuflas", "Cepillo de dientes", "Pasta dental", "Jabón", "Shampoo", "Toalla", "Espejo", "Peine", "Bañera", "Ducha", "Inodoro", "Sillón", "Mesa", "Silla", "Lámpara", "Reloj", "Teléfono", "Televisor", "Control remoto", "Heladera", "Horno", "Escoba", "Balde", "Llave", "Puerta", "Ventana", "Escalera", "Techo", "Chimenea", "Zapatillas", "Medias", "Pantalón", "Remera", "Buzo", "Campera", "Gorro", "Bufanda", "Guantes", "Paraguas", "Piloto de lluvia", "Gafas de sol", "Malla", "Ojotas", "Cinturón", "Bolso", "Cumpleaños", "Piñata", "Velitas", "Regalo", "Globo", "Auto", "Colectivo", "Tren", "Subte", "Avión", "Helicóptero", "Barco", "Submarino", "Cohete espacial", "Camión", "Ambulancia", "Camión de bomberos", "Patrullero", "Tractor", "Grúa", "Moto", "Globo aerostático", "Teleférico", "Fútbol", "Básquet", "Tenis", "Natación", "Karate", "Taekwondo", "Gimnasia artística", "Danza", "Atletismo", "Ciclismo", "Surf", "Esquí", "Rojo", "Azul", "Amarillo", "Verde", "Violeta", "Rosa", "Blanco", "Negro", "Dorado", "Círculo", "Cuadrado", "Triángulo", "Estrella fugaz", "Corazón", "Granjero", "Bombero"], "familia": ["Rockero", "Azul", "Asado", "Playa", "Invierno", "Verano", "Otoño", "Primavera", "Navidad", "Año Nuevo", "Cumpleaños", "Boda", "Luna de miel", "Mudanza", "Vacaciones", "Camping", "Hotel", "Aeropuerto", "Avión", "Crucero", "Tren", "Subte", "Colectivo", "Taxi", "Autopista", "Peaje", "Estación de servicio", "Taller mecánico", "Supermercado", "Feria", "Shopping", "Cine", "Teatro", "Concierto", "Estadio", "Gimnasio", "Peluquería", "Dentista", "Hospital", "Farmacia", "Banco", "Correo", "Biblioteca", "Museo", "Zoológico", "Parque de diversiones", "Circo", "Casino", "Restaurante", "Pizzería", "Cafetería", "Heladería", "Panadería", "Carnicería", "Verdulería", "Kiosco", "Ferretería", "Librería", "Juguetería", "Veterinaria", "Granja", "Campo", "Montaña", "Desierto", "Selva", "Bosque", "Isla desierta", "Volcán", "Terremoto", "Tormenta", "Inundación", "Apagón", "Incendio", "Robo", "Juicio", "Cárcel", "Detective", "Espía", "Vampiro", "Fantasma", "Extraterrestre", "Pirata", "Vaquero", "Astronauta", "Mago", "Payaso", "Científico", "Artista", "Fotógrafo", "Periodista", "Abogado", "Arquitecto", "Ingeniero", "Médico", "Enfermero", "Bombero", "Policía", "Piloto", "Capitán", "Chef", "Desayuno", "Almuerzo", "Merienda", "Cena", "Picada", "Mate", "Café", "Té", "Vino", "Cerveza", "Pizza", "Empanadas", "Milanesa", "Pasta", "Sushi", "Hamburguesa", "Ensalada", "Postre", "Helado", "Chocolate", "Domingo en familia", "Sobremesa", "Reunión familiar", "Foto familiar", "Álbum de fotos", "Herencia", "Apellido", "Árbol genealógico", "Mascota", "Pasear al perro", "Limpieza general", "Lavar los platos", "Lavar la ropa", "Planchar", "Cocinar", "Hacer las compras", "Lista del súper", "Heladera vacía", "Tupper", "Microondas", "Lavarropas", "Aspiradora", "Aire acondicionado", "Estufa", "Ventilador", "Cortina", "Alfombra", "Sillón", "Colchón", "Almohada", "Despertador", "Siesta", "Insomnio", "Pesadilla", "Sueño", "Bostezo", "Resfrío", "Fiebre", "Curita", "Termómetro", "Botiquín", "Receta médica", "Análisis de sangre", "Vacuna", "Anteojos", "Lentes de contacto", "Paraguas", "Valija", "Pasaporte", "Documento", "Billetera", "Llaves", "Llave perdida", "Celular sin batería", "Cargador", "Wi-Fi", "Contraseña", "Control remoto", "Televisor", "Serie", "Película", "Noticiero", "Publicidad", "Radio", "Podcast", "Música", "Guitarra", "Piano", "Batería", "Karaoke", "Baile", "Fiesta", "Disfraz", "Carnaval", "Halloween", "Pascuas", "Día del Padre", "Día de la Madre", "Día del Niño", "Día del Amigo", "Regalo", "Sorpresa", "Tarjeta de felicitación", "Ramo de flores", "Bombones", "Brindis", "Vela", "Fuegos artificiales", "Globos", "Piñata", "Jardín", "Parrilla", "Piscina", "Balcón", "Terraza", "Garaje", "Sótano", "Altillo", "Ascensor", "Escalera", "Fútbol", "Mundial", "Penal", "Árbitro", "Gol", "Hinchada", "Camiseta", "Tenis", "Pádel", "Básquet", "Vóley", "Rugby", "Golf", "Natación", "Ciclismo", "Maratón", "Boxeo", "Artes marciales", "Yoga", "Meditación", "Ajedrez", "Truco", "Póker", "Chinchón", "Generala", "Dominó", "Rompecabezas", "Crucigrama", "Sopa de letras", "Sudoku", "Bingo", "Lotería", "Rifa", "Bingo familiar", "Juego de mesa", "Dados", "Cartas", "Fichas", "Tablero", "Trampa", "Empate", "Victoria", "Derrota", "Trofeo", "Medalla", "Entrenamiento", "Lesión", "Calambre", "Transpiración", "Ducha fría", "Pesca", "Caza", "Senderismo", "Escalada", "Esquí", "Surf", "Buceo", "Navegar", "Velero", "Kayak", "Bicicleta", "Patineta", "Patines", "Lectura", "Novela", "Historieta", "Poesía", "Pintura", "Escultura", "Cerámica", "Carpintería", "Costura", "Tejido", "Jardinería", "Huerta", "Colección", "Antigüedad", "Subasta", "Reciclaje", "Ecología", "Egipto", "Pirámide", "Faraón", "Roma", "Gladiador", "Grecia", "Mitología", "Edad Media", "Castillo", "Caballero", "Vikingo", "Renacimiento", "Revolución", "Independencia", "Dinosaurio", "Fósil", "Evolución", "Prehistoria", "Cavernícola", "Fuego", "Rueda", "Invención", "Electricidad", "Gravedad", "Telescopio", "Microscopio", "Satélite", "Cohete", "Luna", "Marte", "Sistema Solar", "Eclipse", "Meteorito", "Agujero negro", "Ovni", "Robot", "Inteligencia Artificial", "Internet", "Redes sociales", "Correo electrónico", "Fotografía", "Selfie", "Video", "Cine mudo", "Dibujos animados", "Ciencia ficción", "Terror", "Comedia", "Drama", "Documental", "Circo Romano", "Ópera", "Ballet", "Orquesta", "Rock", "Jazz", "Tango", "Folklore", "Pop", "Reggaetón", "Arcoíris", "Amanecer", "Atardecer", "Medianoche", "Mediodía", "Calendario", "Reloj de arena", "Brújula", "Mapa", "Frontera", "Aduana", "Idioma", "Diccionario", "Acento", "Traducción", "Viaje", "Turista", "Guía turístico", "Souvenir", "Postal", "Moneda", "Billete", "Ahorro", "Alcancía", "Impuesto", "Factura", "Presupuesto", "Oferta", "Descuento", "Garantía", "Devolución", "Queja", "Propina", "Cuenta", "Reserva", "Fila", "Espera", "Turno", "Puntualidad", "Alegría", "Tristeza", "Enojo", "Miedo", "Vergüenza", "Orgullo", "Envidia", "Celos", "Nostalgia", "Paciencia", "Curiosidad", "Valentía", "Generosidad", "Honestidad", "Mentira", "Secreto", "Chisme", "Rumor", "Promesa", "Perdón", "Disculpa", "Agradecimiento", "Saludo", "Despedida", "Abrazo", "Beso", "Risa", "Carcajada", "Llanto", "Lágrima", "Suspiro", "Grito", "Susurro", "Silencio", "Ruido", "Eco", "Sombra", "Reflejo", "Espejo", "Laberinto", "Misterio", "Pista", "Sospechoso", "Coartada", "Testigo", "Tesoro", "Mapa del tesoro", "Nudo", "Cuerda", "Puente", "Muro", "Puerta cerrada", "Candado", "Llave maestra", "Caja fuerte", "Alarma", "Semáforo", "Multa", "Embotellamiento", "Choque", "Grúa", "Pinchazo", "Rueda de auxilio", "Gato hidráulico", "GPS", "Perdido", "Atajo", "Desvío", "Curva", "Túnel", "Maleta", "Equipaje de mano", "Turbulencia", "Despegue", "Aterrizaje", "Jet lag", "Bronceado", "Quemadura de sol", "Protector solar", "Repelente", "Picadura", "Mosquito", "Alergia", "Estornudo", "Tos", "Dolor de cabeza", "Dolor de muelas", "Vendas", "Yeso", "Muletas", "Silla de ruedas", "Ambulancia", "Camilla", "Carpintero", "Plomero", "Electricista", "Pintor", "Albañil", "Jardinero", "Cerrajero", "Sastre"], "adultos": ["Reunión de consorcio", "Expensas", "Alquiler", "Hipoteca", "Garantía propietaria", "Inflación", "Dólar", "Plazo fijo", "Tarjeta de crédito", "Resumen de tarjeta", "Cuotas sin interés", "Débito automático", "Transferencia", "CBU", "Clave fiscal", "AFIP / ARCA", "Contador", "Factura", "Recibo de sueldo", "Aguinaldo", "Bono anual", "Aumento de sueldo", "Entrevista laboral", "Currículum", "LinkedIn", "Renuncia", "Despido", "Indemnización", "Jubilación", "Pensión", "Obra social", "Prepaga", "Reintegro", "Copago", "Turno médico", "Chequeo anual", "Colesterol", "Presión arterial", "Estrés", "Burnout", "Terapia", "Psicólogo", "Psiquiatra", "Ansiedad", "Crisis de los 30", "Crisis de los 40", "Canas", "Calvicie", "Arrugas", "Crema antiage", "Dieta", "Gimnasio en enero", "Nutricionista", "Ayuno intermitente", "Proteína", "Suplementos", "Dolor de espalda", "Ciático", "Contractura", "Masajista", "Osteópata", "Kinesiología", "Home office", "Reunión por Zoom", "Micrófono muteado", "Compartir pantalla", "Correo corporativo", "En copia", "Para ayer", "Urgente", "Minuta", "Excel", "Presentación", "Jefe", "Subordinado", "Compañero tóxico", "Radio pasillo", "After office", "Fiesta de fin de año", "Amigo invisible", "Licencia por enfermedad", "Vacaciones pendientes", "Feriado puente", "Fin de semana largo", "Trámite bancario", "Fila en el banco", "Cajero automático sin plata", "Home banking", "Token", "Estafa virtual", "Spam", "Grupo de WhatsApp", "Audio de 5 minutos", "Visto", "Última conexión", "Bloqueado", "Silenciar grupo", "Sticker", "Meme", "Hilo de Twitter", "Algoritmo", "Suscripción", "Contraseña olvidada", "Autenticación en dos pasos", "Nube llena", "Backup", "Actualización", "Pantalla azul", "Router", "Cortes de luz", "Primera cita", "Tinder", "Match", "Ghosting", "Friendzone", "Casi algo", "Ex pareja", "Bloqueo de ex", "Stalkear", "Celos", "Infidelidad", "Amante", "Trampa", "Mentira piadosa", "Discusión de pareja", "Dormir en el sillón", "Aniversario", "Propuesta de matrimonio", "Anillo de compromiso", "Despedida de soltero", "Despedida de soltera", "Casamiento civil", "Iglesia", "Mesa de los solteros", "Ramo de novia", "Liga", "Vals", "Barra libre", "Cotillón", "Luna de miel", "Suegra", "Suegro", "Cuñado", "Concuñado", "Familia política", "Divorcio", "Separación", "División de bienes", "Cuota alimentaria", "Tenencia", "Convivencia", "Mudarse juntos", "Compartir gastos", "Reparto de tareas", "Lado de la cama", "Ronquidos", "Robar la frazada", "Baño ocupado", "Pelo en la ducha", "Tapa del inodoro", "Boda de plata", "Boda de oro", "Terapia de pareja", "Amor a primera vista", "Flechazo", "Beso", "Caricia", "Abrazo", "Chamuyo", "Levante", "Boliche", "Patovica", "Lista VIP", "Consumición", "Previas", "Trago", "Fernet", "Cerveza artesanal", "Vino tinto", "Espumante", "Brindis", "Shot", "Tequila", "Resaca", "Ibuprofeno", "Acidez", "Gastritis", "Café negro", "Bajón", "Pancho a las 5 AM", "Taxi de madrugada", "Uber", "Control de alcoholemia", "Multa de tránsito", "Acarreo", "Estacionamiento medido", "Trapito", "VTV", "Seguro del auto", "Choque", "Piquete", "Corte de calle", "Paro de transporte", "Hora pico", "Subte lleno", "Aire acondicionado roto", "Vecino ruidoso", "Fiesta arriba", "Perro que ladra", "Consorcio", "Grupo de mamis y papis", "Acto escolar", "Disfraz a último momento", "Cartulina el domingo", "Feria de ciencias", "Reunión de padres", "Cuaderno de comunicados", "Piojos", "Pediatra", "Guardia médica", "Pañales", "Mamadera", "Chupete", "Cochecito", "Sillita del auto", "Berrinche", "Cuento antes de dormir", "Vaso de agua", "Pesadilla", "Diente flojo", "Ratón Pérez", "Cumpleaños infantil", "Salón de fiestas", "Animador", "Souvenir", "Piñata", "Torta temática", "Niñera", "Abuelos al rescate", "Colonia de vacaciones", "Club", "Cuota del club", "Partido el sábado", "Torneo", "Tribuna", "Viaje de egresados", "Bariloche", "Previa adolescente", "Permiso para salir", "Horario de vuelta", "Primer auto", "Registro de conducir", "Examen práctico", "Estacionar en paralelo", "Universidad", "Carrera", "Tesis", "Recibida", "Huevos y harina", "Independizarse", "Primer departamento", "Garantía", "Flete", "Pintar antes de entregar", "Depósito", "Inmobiliaria", "Comisión", "Escritura", "Mudanza", "Cajas sin abrir", "Elecciones", "Cuarto oscuro", "Boleta", "Presidente de mesa", "Veda electoral", "Encuesta", "Debate presidencial", "Campaña", "Promesa electoral", "Corrupción", "Impuestos", "Subsidio", "Paritarias", "Sindicato", "Huelga", "Manifestación", "Noticiero", "Cadena nacional", "Infiltrado news", "Conspiración", "Horóscopo", "Carta natal", "Mercurio retrógrado", "Tarot", "Brujería", "Cábala", "Superstición", "Martes 13", "Gato negro", "Espejo roto", "Bingo", "Quiniela", "Lotería", "Casino", "Tragamonedas", "Ruleta", "Apuesta", "Póker", "Farol", "All-in", "Serie de Netflix", "Maratón de series", "Spoiler", "Tráiler", "Crítica", "Premios Oscar", "Alfombra roja", "Paparazzi", "Famoso", "Influencer", "Canje", "Publicidad encubierta", "Cancelación", "Hater", "Troll", "Viral", "Trending topic", "Podcast", "Streaming", "Suscriptor", "Ovni", "Área 51", "Fantasmas", "Espiritismo", "Ouija", "Casa embrujada", "Cementerio", "Velorio", "Testamento", "Cremación", "Seguros de vida", "Inmortalidad", "Reencarnación", "Karma", "Destino", "Casualidad", "Deja vu", "Intuición", "Corazonada", "Nostalgia", "Infancia", "Adolescencia", "Juventud", "Vejez", "Sabiduría", "Experiencia", "Arrepentimiento", "Segundas oportunidades", "Propósitos de año nuevo", "Motel", "Albergue transitorio", "Lencería", "Juguete sexual", "Sex shop", "Kamasutra", "Fantasía", "Fetiche", "Striptease", "Despedida", "Borrachera", "Laguna mental", "Mensaje borracho", "Llamada a las 3 AM", "Vergüenza ajena", "Papelón", "Trágame tierra", "Error de grupo", "Mandar captura al interesado", "Audio equivocado", "Saludar a quien no te saluda", "Confundir nombre", "Preguntar si está embarazada", "Mal aliento", "Transpiración", "Mancha en la ropa", "Cierre abierto", "Papel en el zapato", "Flatulencia", "Eructo", "Baño sin papel", "Inodoro tapado", "Olor en el ascensor", "Invitado que no se va", "Indirecta", "Sarcasmo", "Ironía", "Doble sentido", "Albur", "Chiste verde", "Humor negro", "Tabú", "Censura", "Secreto a voces", "Chisme de oficina", "Escándalo", "Infidelidad descubierta", "Mensaje comprometedor", "Contraseña del celular", "Modo incógnito", "Historial de búsqueda", "Cámara encendida por error", "Micrófono abierto", "Filtro fallido", "Foto comprometida", "Tatuaje de ex", "Tatuaje arrepentido", "Piercing", "Cirugía estética", "Botox", "Peluca", "Implante capilar", "Viagra", "Menopausia", "Andropausia", "Sofocos", "Insomnio", "Pastilla para dormir", "Antidepresivo", "Relajante muscular", "Colonoscopia", "Proctólogo", "Urólogo", "Ginecólogo", "Mamografía", "Análisis de orina", "Dieta líquida", "Intoxicación", "Empacho", "Vómito", "Maratón de baño", "Guardia de hospital", "Sueros", "Inyección", "Miedo a las agujas", "Desmayo", "Golpe de calor", "Insolación", "Resaca moral", "Culpabilidad", "Excusa barata", "Llegar tarde", "Plantón", "Dejar plantado", "Cobrar deuda", "Prestar plata", "Amigo ratón", "Dividir la cuenta", "El que pide lo más caro", "Propina rata", "Impuesto a las ganancias", "Bienes personales", "Monotributo", "Recategorización", "Factura electrónica", "Vencimiento", "Mora", "Intereses", "Veraz", "Préstamo personal", "Plazo fijo UVA", "Criptomoneda", "Bitcoin", "Billetera virtual", "QR", "Posnet sin señal", "Efectivo", "Cambio chico", "Billete falso", "Cajero roto", "Seguro de hogar", "Siniestro", "Franquicia", "Perito", "Denuncia policial", "Testigo", "Mediación", "Carta documento", "Telegrama", "Burocracia", "Sellado", "Apostilla", "Trámite online", "Página caída", "Captcha", "Soy un robot", "Términos y condiciones", "Cookies", "Suscripción oculta", "Dar de baja", "Call center"]};
@@ -3129,7 +3220,7 @@
       adultos: "Mazo Adultos (+18 años)"
     };
 
-    const STORAGE_KEY = "boardgame_hub_v25";
+    const STORAGE_KEY = "boardgame_hub_v28";
 
     let state = {
       activeView: 'menu',
@@ -3257,6 +3348,7 @@
       anoNames: { eq1: 'Nosotros', eq2: 'Ellos' },
       generalaScores: {},
       teamScores: { A: 0, B: 0 },
+      tatetiScores: { X: 0, O: 0 },
       players: []
     };
 
@@ -3379,8 +3471,15 @@
             if (!state.anoMode) state.anoMode = 'truco';
             if (!state.anoScores) state.anoScores = { eq1: 0, eq2: 0 };
             if (!state.anoNames) state.anoNames = { eq1: 'Nosotros', eq2: 'Ellos' };
+            if (!state.anoNumPlayers || state.anoNumPlayers.length === 0) {
+              state.anoNumPlayers = [
+                { id: Date.now(), name: 'Jugador 1', score: 0 },
+                { id: Date.now()+1, name: 'Jugador 2', score: 0 }
+              ];
+            }
             if (!state.generalaScores) state.generalaScores = {};
             if (!state.teamScores) state.teamScores = { A: 0, B: 0 };
+            if (!state.tatetiScores) state.tatetiScores = { X: 0, O: 0 };
             if (!state.tuttiRemaining || state.tuttiRemaining.length === 0) {
               state.tuttiRemaining = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
             }
@@ -3423,6 +3522,15 @@
     // ==========================================
 
     const GAME_RULES = {
+      tateti: {
+        goal: "Alinear 3 de tus símbolos (cruces o círculos) en el tablero de 3x3.",
+        steps: [
+          "<strong>1. Turnos:</strong> Un jugador usa la ❌ y el otro la ⭕. Se turnan para tocar un casillero vacío.",
+          "<strong>2. Ganar:</strong> El primero en formar una línea de 3 (horizontal, vertical o diagonal) gana un punto.",
+          "<strong>3. Revancha:</strong> Toca 'Nueva partida' para limpiar el tablero. Los puntos se guardan automáticamente."
+        ],
+        tip: "¡Cuidado con la clásica trampa de armar dos líneas posibles al mismo tiempo!"
+      },
       unanimo: {
         goal: "Pensar exactamente lo mismo que los demás jugadores, no ser original.",
         steps: [
@@ -6507,6 +6615,12 @@
             if (!state.anoMode) state.anoMode = 'truco';
             if (!state.anoScores) state.anoScores = { eq1: 0, eq2: 0 };
             if (!state.anoNames) state.anoNames = { eq1: 'Nosotros', eq2: 'Ellos' };
+            if (!state.anoNumPlayers || state.anoNumPlayers.length === 0) {
+              state.anoNumPlayers = [
+                { id: Date.now(), name: 'Jugador 1', score: 0 },
+                { id: Date.now()+1, name: 'Jugador 2', score: 0 }
+              ];
+            }
             if (!state.generalaScores) state.generalaScores = {};
       state.players.forEach(p => {
         if (!state.generalaScores[p.id]) {
@@ -6664,13 +6778,33 @@
 
     
     // ==========================================
-    // LÓGICA ANOTADOR DE TRUCO / PUNTOS
+    // LÓGICA ANOTADOR MÚLTIPLE (TRUCO / ESCOBA / NÚMEROS)
     // ==========================================
     function setAnotadorMode(mode, btnElement) {
       state.anoMode = mode;
       document.querySelectorAll('#anotadorModeSelector .cat-pill').forEach(b => b.classList.remove('active'));
       if(btnElement) btnElement.classList.add('active');
       else document.querySelector(`#anotadorModeSelector .cat-pill[data-mode="${mode}"]`).classList.add('active');
+      
+      if (mode === 'truco') document.getElementById('anotadorMax').innerText = 'A 30 pts';
+      else if (mode === 'escoba') document.getElementById('anotadorMax').innerText = 'A 15 pts';
+      else document.getElementById('anotadorMax').innerText = 'Sin límite';
+
+      if (mode === 'escoba' || mode === 'numeros') {
+          document.getElementById('anoTrucoContainer').style.display = 'none';
+          document.getElementById('anoNumContainer').style.display = 'flex';
+      } else {
+          document.getElementById('anoTrucoContainer').style.display = 'flex';
+          document.getElementById('anoNumContainer').style.display = 'none';
+      }
+      
+      if (mode === 'escoba' && state.anoNumPlayers) {
+          state.anoNumPlayers.forEach(p => {
+             if (p.score > 15) p.score = 15;
+             if (p.score < 0) p.score = 0;
+          });
+      }
+
       renderAnotador();
       saveState();
     }
@@ -6681,16 +6815,16 @@
     }
 
     function changeAnoScore(eq, delta) {
-      // Prevent changing score if game is over (somebody reached 30)
-      if (state.anoScores.eq1 >= 30 || state.anoScores.eq2 >= 30) {
-        if (delta > 0) return; // Allow reverting a mistaken point even after winning, but not adding more
+      const limit = state.anoMode === 'escoba' ? 15 : 30;
+      if (state.anoScores.eq1 >= limit || state.anoScores.eq2 >= limit) {
+        if (delta > 0) return; // Allow reverting a mistaken point even after winning
       }
       
-      state.anoScores[eq] = Math.min(30, Math.max(0, state.anoScores[eq] + delta));
+      state.anoScores[eq] = Math.min(limit, Math.max(0, state.anoScores[eq] + delta));
       
       if (navigator.vibrate) {
-        if (state.anoScores[eq] === 30) navigator.vibrate([200, 100, 200, 100, 400]); // Victory haptic
-        else navigator.vibrate(15); // Normal tick
+        if (state.anoScores[eq] === limit) navigator.vibrate([200, 100, 200, 100, 400]);
+        else navigator.vibrate(15);
       }
       
       renderAnotador();
@@ -6699,25 +6833,33 @@
 
     function resetAnotador() {
       if (navigator.vibrate) navigator.vibrate(40);
-      state.anoScores = { eq1: 0, eq2: 0 };
+      if (state.anoMode === \'numeros\' || state.anoMode === \'escoba\') {
+          if(state.anoNumPlayers) state.anoNumPlayers.forEach(p => p.score = 0);
+      } else {
+          state.anoScores = { eq1: 0, eq2: 0 };
+      }
       renderAnotador();
       saveState();
     }
 
     function getTrucoBox(points, color) {
-      // 1: vertical izq | 2: horizontal abajo | 3: vertical der | 4: horizontal arriba | 5: diagonal
       let svg = `<svg width="45" height="45" viewBox="0 0 100 100" style="stroke:${color}; stroke-width:8; fill:none; stroke-linecap:round; stroke-linejoin:round; filter: drop-shadow(0 2px 3px rgba(0,0,0,0.3));">`;
-      if (points >= 1) svg += `<line x1="20" y1="20" x2="20" y2="80" />`; // Izquierda
-      if (points >= 2) svg += `<line x1="20" y1="80" x2="80" y2="80" />`; // Abajo
-      if (points >= 3) svg += `<line x1="80" y1="80" x2="80" y2="20" />`; // Derecha
-      if (points >= 4) svg += `<line x1="80" y1="20" x2="20" y2="20" />`; // Arriba
-      if (points >= 5) svg += `<line x1="20" y1="20" x2="80" y2="80" />`; // Diagonal
+      if (points >= 1) svg += `<line x1="20" y1="20" x2="20" y2="80" />`;
+      if (points >= 2) svg += `<line x1="20" y1="80" x2="80" y2="80" />`;
+      if (points >= 3) svg += `<line x1="80" y1="80" x2="80" y2="20" />`;
+      if (points >= 4) svg += `<line x1="80" y1="20" x2="20" y2="20" />`;
+      if (points >= 5) svg += `<line x1="20" y1="20" x2="80" y2="80" />`;
       svg += `</svg>`;
       return svg;
     }
 
     function renderAnotador() {
-      // Tomamos los colores del theme actual a través del root style o los devolvemos por defecto si falla
+      if (state.anoMode === \'numeros\' || state.anoMode === \'escoba\') {
+          renderAnoNumList();
+          checkAnoWinner();
+          return;
+      }
+
       const style = getComputedStyle(document.documentElement);
       const color1 = style.getPropertyValue('--truco-eq1').trim() || '#fca5a5';
       const color2 = style.getPropertyValue('--truco-eq2').trim() || '#7dd3fc';
@@ -6727,36 +6869,32 @@
         const score = state.anoScores[eq];
         const color = eq === 'eq1' ? color1 : color2;
         
-        if (state.anoMode === 'numeros') {
-          container.innerHTML = `<div style="font-size: 6rem; font-weight: 900; color: ${color}; line-height:1; display:flex; align-items:center; height:100%; text-shadow: 0 4px 10px rgba(0,0,0,0.5);">${score}</div>`;
-        } else {
-          // Modo Cuadrados de Truco
-          let html = '';
-          let remaining = score;
-          let boxes = [];
-          
-          while(remaining > 0) {
-            if (remaining >= 5) {
-              boxes.push(getTrucoBox(5, color));
-              remaining -= 5;
-            } else {
-              boxes.push(getTrucoBox(remaining, color));
-              remaining = 0;
-            }
+        let html = '';
+        let remaining = score;
+        let boxes = [];
+        
+        while(remaining > 0) {
+          if (remaining >= 5) {
+            boxes.push(getTrucoBox(5, color));
+            remaining -= 5;
+          } else {
+            boxes.push(getTrucoBox(remaining, color));
+            remaining = 0;
           }
-          
-          if (boxes.length === 0) {
-            container.innerHTML = `<div style="opacity:0.3; margin-top:2rem; font-size:0.9rem; color:var(--text); text-transform:uppercase; letter-spacing:1px; font-weight:700;">Sin puntos</div>`;
-            return;
-          }
-          
-          for (let i = 0; i < boxes.length; i++) {
-             // Separador de Malas y Buenas (después del cuadrado 3, es decir a los 15 pts)
-             if (i === 3) html += `<div style="width: 80%; height:2px; background: var(--muted); opacity: 0.4; margin: 0.1rem 0; border-radius:2px;"></div>`;
-             html += `<div>${boxes[i]}</div>`;
-          }
-          container.innerHTML = html;
         }
+        
+        if (boxes.length === 0) {
+          container.innerHTML = `<div style="opacity:0.3; margin-top:2rem; font-size:0.9rem; color:var(--text); text-transform:uppercase; letter-spacing:1px; font-weight:700;">Sin puntos</div>`;
+          return;
+        }
+        
+        for (let i = 0; i < boxes.length; i++) {
+           if (state.anoMode === 'truco' && i === 3) {
+               html += `<div style="width: 80%; height:2px; background: var(--muted); opacity: 0.4; margin: 0.1rem 0; border-radius:2px;"></div>`;
+           }
+           html += `<div>${boxes[i]}</div>`;
+        }
+        container.innerHTML = html;
       });
       checkAnoWinner();
     }
@@ -6764,10 +6902,17 @@
     function checkAnoWinner() {
       const banner = document.getElementById('anoWinnerBanner');
       if (!banner) return;
-      if (state.anoScores.eq1 >= 30) {
+      
+      if (state.anoMode === \'numeros\' || state.anoMode === \'escoba\') {
+          banner.style.display = 'none';
+          return;
+      }
+
+      const limit = state.anoMode === 'escoba' ? 15 : 30;
+      if (state.anoScores.eq1 >= limit) {
         banner.style.display = 'block';
         banner.innerHTML = `🏆 ¡${escapeHtml(state.anoNames.eq1.toUpperCase())} GANARON EL PARTIDO!<br><span style="font-size:0.85rem; color:var(--text); font-weight:600;">${escapeHtml(state.anoNames.eq2)} perdieron.</span>`;
-      } else if (state.anoScores.eq2 >= 30) {
+      } else if (state.anoScores.eq2 >= limit) {
         banner.style.display = 'block';
         banner.innerHTML = `🏆 ¡${escapeHtml(state.anoNames.eq2.toUpperCase())} GANARON EL PARTIDO!<br><span style="font-size:0.85rem; color:var(--text); font-weight:600;">${escapeHtml(state.anoNames.eq1)} perdieron.</span>`;
       } else {
@@ -6775,7 +6920,113 @@
       }
     }
 
+    function renderAnoNumList() {
+        const list = document.getElementById('anoNumList');
+        if (!state.anoNumPlayers || state.anoNumPlayers.length === 0) {
+            state.anoNumPlayers = [
+                { id: Date.now(), name: 'Jugador 1', score: 0 },
+                { id: Date.now()+1, name: 'Jugador 2', score: 0 }
+            ];
+        }
+        
+        const style = getComputedStyle(document.documentElement);
+        const color = style.getPropertyValue('--accent').trim() || '#38bdf8';
+        
+        list.innerHTML = state.anoNumPlayers.map(p => {
+            let scoreHtml = '';
+            let buttonsHtml = '';
+            
+            if (state.anoMode === 'escoba') {
+                let remaining = p.score;
+                let boxes = [];
+                while(remaining > 0) {
+                  if (remaining >= 5) {
+                    boxes.push(getTrucoBox(5, color));
+                    remaining -= 5;
+                  } else {
+                    boxes.push(getTrucoBox(remaining, color));
+                    remaining = 0;
+                  }
+                }
+                
+                if (boxes.length === 0) {
+                    scoreHtml = `<div style="opacity:0.3; font-size:0.8rem; text-transform:uppercase; font-weight:700; flex:1; text-align:center;">0 pts</div>`;
+                } else {
+                    scoreHtml = `<div style="display:flex; gap:0.2rem; align-items:center; flex:1; justify-content:center;">${boxes.map(b => `<div>${b}</div>`).join('')}</div>`;
+                }
+                
+                buttonsHtml = `
+                    <button class="step-btn" style="flex:1; max-width:45px;" onclick="changeAnoNumScore(${p.id}, -1)">-1</button>
+                    ${scoreHtml}
+                    <button class="step-btn plus" style="flex:1; max-width:45px;" onclick="changeAnoNumScore(${p.id}, 1)">+1</button>
+                `;
+            } else {
+                scoreHtml = `<span style="font-size:1.6rem; font-weight:900; min-width:60px; text-align:center; font-variant-numeric:tabular-nums;">${p.score}</span>`;
+                buttonsHtml = `
+                    <button class="step-btn" style="flex:1; max-width:40px;" onclick="changeAnoNumScore(${p.id}, -10)">-10</button>
+                    <button class="step-btn" style="flex:1; max-width:40px;" onclick="changeAnoNumScore(${p.id}, -1)">-1</button>
+                    ${scoreHtml}
+                    <button class="step-btn plus" style="flex:1; max-width:40px;" onclick="changeAnoNumScore(${p.id}, 1)">+1</button>
+                    <button class="step-btn plus" style="flex:1; max-width:40px;" onclick="changeAnoNumScore(${p.id}, 10)">+10</button>
+                `;
+            }
+
+            return `
+            <div class="player-row" style="background:var(--bg); border: 1px solid rgba(255,255,255,0.06); flex-direction:column; align-items:stretch; padding: 0.8rem; gap:0.6rem;">
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <input type="text" class="slot-input" style="font-size: 1.05rem; font-weight: 800; padding:0; background:transparent;" value="${escapeHtml(p.name)}" oninput="updateAnoNumName(${p.id}, this.value)" onfocus="this.select()">
+                    <button class="del-player" onclick="removeAnoNumPlayer(${p.id})">✕</button>
+                </div>
+                <div style="display:flex; justify-content:space-between; align-items:center; min-height: 45px;">
+                    ${buttonsHtml}
+                </div>
+            </div>
+            `;
+        }).join('');
+    }
     
+    window.updateAnoNumName = function(id, val) {
+        const p = state.anoNumPlayers.find(x => x.id === id);
+        if (p) p.name = val;
+        saveState();
+    };
+    window.changeAnoNumScore = function(id, delta) {
+        const p = state.anoNumPlayers.find(x => x.id === id);
+        if (p) {
+            const limit = state.anoMode === 'escoba' ? 15 : Infinity;
+            if (p.score >= limit && delta > 0) return;
+            
+            p.score += delta;
+            if (state.anoMode === 'escoba') {
+                if (p.score < 0) p.score = 0;
+                if (p.score > limit) p.score = limit;
+            }
+            
+            saveState();
+            renderAnotador();
+            
+            if (navigator.vibrate) {
+                if (state.anoMode === 'escoba' && p.score === limit) navigator.vibrate([200, 100, 200, 100, 400]);
+                else navigator.vibrate(15);
+            }
+        }
+    };
+    window.removeAnoNumPlayer = function(id) {
+        state.anoNumPlayers = state.anoNumPlayers.filter(x => x.id !== id);
+        saveState();
+        renderAnoNumList();
+    };
+    window.addAnoNumPlayer = function(e) {
+        e.preventDefault();
+        const input = document.getElementById('anoNewPlayerInput');
+        const name = input.value.trim() || `Jugador ${state.anoNumPlayers.length + 1}`;
+        if (!state.anoNumPlayers) state.anoNumPlayers = [];
+        state.anoNumPlayers.push({ id: Date.now(), name, score: 0 });
+        input.value = '';
+        saveState();
+        renderAnoNumList();
+    };
+
     // ==========================================
     // LÓGICA RELOJ DE ARENA
     // ==========================================
@@ -6805,6 +7056,7 @@
       
       saveState();
       renderRelojSetup();
+    renderTateti();
     }
 
     function setRelojPreset(sec) {
@@ -6814,6 +7066,7 @@
       event.target.classList.add('active');
       saveState();
       renderRelojSetup();
+    renderTateti();
     }
 
     function toggleReloj() {
@@ -6948,6 +7201,7 @@
     renderAnotador();
 
     renderRelojSetup();
+    renderTateti();
 
 
     
@@ -6970,6 +7224,80 @@
     updateTuttiCounter();
 
     renderPlayers();
+
+    // ==========================================
+    // LÓGICA TA-TE-TI
+    // ==========================================
+    let tttBoard = ['', '', '', '', '', '', '', '', ''];
+    let tttCurrent = 'X';
+    let tttActive = true;
+
+    function renderTateti() {
+      const cells = document.querySelectorAll('.tateti-cell');
+      cells.forEach((cell, i) => {
+        cell.innerText = tttBoard[i] === 'X' ? '❌' : (tttBoard[i] === 'O' ? '⭕' : '');
+        cell.className = 'tateti-cell ' + (tttBoard[i] === 'X' ? 'x' : (tttBoard[i] === 'O' ? 'o' : ''));
+      });
+      document.getElementById('tttScoreX').innerText = state.tatetiScores.X;
+      document.getElementById('tttScoreO').innerText = state.tatetiScores.O;
+    }
+
+    function playTateti(idx) {
+      if (!tttActive || tttBoard[idx] !== '') return;
+      if (navigator.vibrate) navigator.vibrate(15);
+      
+      tttBoard[idx] = tttCurrent;
+      renderTateti();
+      checkTatetiWin();
+      
+      if (tttActive) {
+        tttCurrent = tttCurrent === 'X' ? 'O' : 'X';
+        document.getElementById('tttStatus').innerText = `Turno de ${tttCurrent === 'X' ? '❌' : '⭕'}`;
+      }
+    }
+
+    function checkTatetiWin() {
+      const winLines = [
+        [0, 1, 2], [3, 4, 5], [6, 7, 8],
+        [0, 3, 6], [1, 4, 7], [2, 5, 8],
+        [0, 4, 8], [2, 4, 6]
+      ];
+      for (let line of winLines) {
+        const [a, b, c] = line;
+        if (tttBoard[a] && tttBoard[a] === tttBoard[b] && tttBoard[a] === tttBoard[c]) {
+          tttActive = false;
+          const winner = tttBoard[a];
+          document.getElementById('tttStatus').innerHTML = `<span style="color:${winner === 'X' ? '#ef4444' : '#38bdf8'}">¡GANÓ ${winner === 'X' ? '❌' : '⭕'}!</span>`;
+          state.tatetiScores[winner]++;
+          saveState();
+          renderTateti();
+          if (navigator.vibrate) navigator.vibrate([100, 50, 100, 50, 200]);
+          return;
+        }
+      }
+      if (!tttBoard.includes('')) {
+        tttActive = false;
+        document.getElementById('tttStatus').innerText = '¡EMPATE!';
+        if (navigator.vibrate) navigator.vibrate(80);
+      }
+    }
+
+    function resetTatetiBoard() {
+      tttBoard = ['', '', '', '', '', '', '', '', ''];
+      tttCurrent = 'X';
+      tttActive = true;
+      document.getElementById('tttStatus').innerText = 'Turno de ❌';
+      renderTateti();
+      if (navigator.vibrate) navigator.vibrate(30);
+    }
+
+    function resetTatetiScores() {
+      state.tatetiScores = { X: 0, O: 0 };
+      saveState();
+      renderTateti();
+      if (navigator.vibrate) navigator.vibrate(40);
+    }
+
   </script>
 </body>
 </html>
