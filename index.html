@@ -2019,7 +2019,7 @@
     <!-- HEADER PRINCIPAL -->
     <header class="main-header" id="mainHeader">
       <div class="header-left">
-        <button class="back-btn" id="backToMenuBtn" onclick="openMenu()" style="display:none;">◀ Menú</button>
+        <button class="back-btn" id="backToMenuBtn" onclick="openMenu(true)" style="display:none;">◀ Menú</button>
       </div>
       <div class="header-center">
         <span class="game-kicker" id="gameKicker" style="display:none;">JUGANDO</span>
@@ -5540,7 +5540,7 @@
       }).join('');
     }
 
-    function openMenu() {
+    function openMenu(isUserClick = false) {
       if (navigator.vibrate) navigator.vibrate(15);
       // Detener todos los intervalos activos
       if (timerInterval) { clearInterval(timerInterval); timerInterval = null; releaseWakeLock(); document.getElementById('timerBtn').innerText = 'Reanudar tiempo'; }
@@ -5572,7 +5572,9 @@
       document.getElementById('resetBtn').style.display = 'none';
       
       saveState();
-      window.location.reload();
+      if (isUserClick) {
+        window.location.reload();
+      }
     }
 
     function openGame(gameId) {
